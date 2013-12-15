@@ -1,5 +1,5 @@
 defmodule Hound.Supervisor do
-  use Hound.Behaviour
+  use Supervisor.Behaviour
 
   def start_link do
     :supervisor.start_link(__MODULE__, [])
