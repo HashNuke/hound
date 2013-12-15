@@ -7,14 +7,4 @@ defmodule Hound do
     Hound.Supervisor.start_link
   end
 
-  #TODO move all below to a genserver
-
-  def get_status(config) do
-    run_cmd("/status", config)
-  end
-
-
-  def create_session(config) do
-    run_cmd("/session", config, :post)
-  end
 end
