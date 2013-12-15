@@ -5,6 +5,8 @@
 
 ### TODO
 
+* Cookie
+* Window size, position, maximize, close window, focus frame
 * Mouse
 * Geo location
 * Local storage
