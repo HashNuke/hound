@@ -2,16 +2,16 @@ defmodule Hound.PageBehaviour do
   use Behaviour
 
   @doc "Get source of current page"
-  defcallback source(session_id :: String.t) :: String.t
+  defcallback page_source(session_id :: String.t) :: String.t
 
   @doc "Get the title of the current page"
-  defcallback title(session_id :: String.t) :: String.t
+  defcallback page_title(session_id :: String.t) :: String.t
 
   @doc "Find element on current page"
-  defcallback find(session_id :: String.t, strategy :: String.t, selector :: String.t)
+  defcallback find_element(session_id :: String.t, strategy :: String.t, selector :: String.t)
 
   @doc "Find elements on current page"
-  defcallback find_all(session_id :: String.t, strategy :: atom, selector :: String.t) :: List.t
+  defcallback find_all_elements(session_id :: String.t, strategy :: atom, selector :: String.t) :: List.t
 
   @doc "Find element within element"
   defcallback find_within_element(session_id :: String.t, strategy :: atom, selector :: String.t) :: Dict.t
