@@ -2,7 +2,7 @@ defmodule Hound.Behaviours.Session do
   use Behaviour
 
   @doc "Get server's current status"
-  defcallback session_status() :: Dict.t
+  defcallback server_status() :: Dict.t
 
   @doc "Get list of active sessions"
   defcallback active_sessions() :: Dict.t
@@ -17,5 +17,5 @@ defmodule Hound.Behaviours.Session do
   defcallback delete_session(session_id :: String.t) :: :ok
 
   @doc "Set the timeout for a particular type of operation"
-  defcallback set_timeout(operation :: String.t, time :: Integer.t) :: :ok
+  defcallback set_timeout(session_id :: String.t, operation :: String.t, time :: Integer.t) :: :ok
 end
