@@ -1,4 +1,4 @@
-defmodule Hound.WindowBehaviour do
+defmodule Hound.Behaviours.Window do
   use Behaviour
 
   @doc "Get all window handles available to the session"

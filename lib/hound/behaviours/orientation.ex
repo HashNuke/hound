@@ -1,4 +1,4 @@
-defmodule Hound.OrientationBehaviour do
+defmodule Hound.Behaviours.Orientation do
   use Behaviour
 
   @doc "Get browser's orientation"

@@ -1,4 +1,4 @@
-defmodule Hound.PageBehaviour do
+defmodule Hound.Behaviours.Page do
   use Behaviour
 
   @doc "Get source of current page"

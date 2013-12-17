@@ -1,4 +1,4 @@
-defmodule Hound.ElementBehaviour do
+defmodule Hound.Behaviours.Element do
   use Behaviour
 
   @doc "Get visible text of element"

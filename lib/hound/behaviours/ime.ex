@@ -1,4 +1,4 @@
-defmodule Hound.ImeBehaviour do
+defmodule Hound.Behaviours.Ime do
   use Behaviour
 
   @doc "List available IME engines"

@@ -1,4 +1,4 @@
-defmodule Hound.NavigationBehaviour do
+defmodule Hound.Behaviours.Navigation do
   use Behaviour
 
   @doc "Get url of the current page"

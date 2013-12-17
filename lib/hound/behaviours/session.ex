@@ -1,4 +1,4 @@
-defmodule Hound.SessionBehaviour do
+defmodule Hound.Behaviours.Session do
   use Behaviour
 
   @doc "Get server's current status"

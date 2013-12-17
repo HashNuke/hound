@@ -1,4 +1,4 @@
-defmodule Hound.DialogBehaviour do
+defmodule Hound.Behaviours.Dialog do
   use Behaviour
 
   @doc "Get text of a javascript alert(), confirm() or prompt()"

@@ -1,5 +1,5 @@
 defmodule Hound.SeleniumDriver.Session do
-  use Hound.SessionBehaviour
+  @behaviour Hound.Behaviours.Session
 
   def create_session() do
   end

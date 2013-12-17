@@ -1,4 +1,4 @@
-defmodule Hound.ScriptExecutionBehaviour do
+defmodule Hound.Behaviours.ScriptExecution do
   use Behaviour
 
   @doc "Execute javascript synchoronously"

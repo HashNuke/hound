@@ -1,4 +1,4 @@
-defmodule Hound.ScreenshotBehaviour do
+defmodule Hound.Behaviours.Screenshot do
   use Behaviour
 
   @doc "Take screenshot of the current page"
