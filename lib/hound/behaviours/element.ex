@@ -5,7 +5,7 @@ defmodule Hound.Behaviours.Element do
   defcallback visible_text(session_id :: String.t, element_identifier :: String.t) :: String.t
 
   @doc "Set value of element. Sends a sequence of key strokes"
-  defcallback set_value(session_id :: String.t, element_identifier :: String.t, List.t) :: :ok
+  defcallback set_value(session_id :: String.t, element_identifier :: String.t, input :: String.t) :: :ok
 
   @doc "Get an element's tag name"
   defcallback tag_name(session_id :: String.t, element_identifier :: String.t) :: String.t

@@ -2,7 +2,7 @@ defmodule Hound.TestHelpers.Dialog do
 
   defmacro dialog_text do
     quote do
-      hi(var!(meta[:session_id]))
+      dialog_text(var!(meta[:session_id]))
     end
   end
 
