@@ -1,4 +1,4 @@
-defmodule Hound.Behaviours.Page do
+defmodule Hound.Helpers.Page do
 
   @doc "Get source of current page"
   defmacro page_source do
