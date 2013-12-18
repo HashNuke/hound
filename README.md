@@ -20,11 +20,6 @@ Hound.start
 
 # Start Hound for remote webdriver server at port 5555
 Hound.start [host: "http://example.com", port: 5555]
-
-# Start hound with a different driver.
-# Right now Json driver is the default and only driver available.
-# If you write a driver for a different webdriver server, then you can use it like this.
-Hound.start [driver: Hound.YourFavouriteDriver]
 ```
 
 ### Usage
@@ -47,16 +42,10 @@ defmodule HoundTest do
 end
 ```
 
-### TODO
+### Helpers
 
-* Cookie
-* Window size, position, maximize, close window, focus frame
-* Mouse
-* Geo location
-* Local storage
-* Session storage
-* Session log
-* Application cache status
+TODO
+
 
 ### Reference
 
