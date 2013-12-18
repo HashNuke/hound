@@ -18,7 +18,7 @@ defmodule Hound.ExUnitHelpers.Session do
   defmacro hound_session do
     quote do
       setup do
-        { connection, session_id } = :gen_server.call(:hound, {:get_session, :default})
+        { :ok, connection, session_id } = :gen_server.call(:hound, {:get_session, :default}, 30000)
         { :ok, hound_connection: connection, hound_session_id: session_id }
       end
     end

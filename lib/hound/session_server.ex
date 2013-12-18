@@ -22,24 +22,18 @@ defmodule Hound.SessionServer do
     if session_id do
       {:reply, {state[:options], session_id}, state}
     else
-      #TODO fix: Hound.JsonDriver should be suffixed to result "Hound.JsonDriver.Session"
-      {:ok, _status, _headers, resp_body} = apply(
-        state[:options][:driver],
+      reply = apply(
+        :"#{state[:options][:driver]}.Session",
         :create_session,
         [state[:options][:connection]]
       )
 
-      {:ok, resp} = JSEX.decode(resp_body)
-      if resp["sessionId"] == 0 do
-        session_id = resp["sessionId"]
-        reply = {:ok, state[:options][:connection], session_id}
-      else
-        reply = {:error, resp["value"]["message"]}
+      case reply do
+        {:ok, _, session_id} ->
+          new_state = ListDict.merge(state, [sessions: [ [{session_name, session_id}] | state[:sessions] ] ])
+        _ ->
+          new_state = state
       end
-
-      new_state = ListDict.merge(state, [sessions: [ [{session_name, session_id}] | state[:sessions] ] ])
-      IO.inspect "NEW STATE"
-      IO.inspect new_state
 
       { :reply, reply, new_state }
     end

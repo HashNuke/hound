@@ -18,12 +18,12 @@ defmodule Hound.JsonDriver.Utils do
       {:ok, _status, _headers, content} = :ibrowse.send_req(url, [], type)
     end
 
-    resp = JSEX.decode('#{content}')
+    {:ok, resp} = JSEX.decode("#{content}")
     cond do
       resp["status"] == 0 && path == "session" ->
-        resp["sessionId"]
+        {:ok, connection, resp["sessionId"]}
       true ->
-        resp["value"]
+        {:error, resp["value"]}
     end
   end
 
