@@ -12,7 +12,7 @@ defmodule Hound.ExUnitHelpers.Navigation do
       navigate_to(
         var!(meta)[:hound_connection],
         var!(meta)[:hound_session_id],
-        url
+        unquote(url)
       )
     end
   end

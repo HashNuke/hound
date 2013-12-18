@@ -2,6 +2,8 @@ defmodule Hound.ExUnitHelpers do
 
   defmacro __using__([]) do
     quote do
+      use unquote(:gen_server.call(:hound, :driver))
+
       import Hound.ExUnitHelpers.Dialog
       import Hound.ExUnitHelpers.Element
       import Hound.ExUnitHelpers.Navigation

@@ -40,6 +40,11 @@ defmodule Hound.SessionServer do
   end
 
 
+  def handle_call(:driver, _from, state) do
+    {:reply, state[:options][:driver], state}
+  end
+
+
   def handle_call(:active_sessions, _from, state) do
     {:reply, {:ok, state[:sessions]}, state}
   end

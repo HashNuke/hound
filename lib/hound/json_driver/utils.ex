@@ -7,21 +7,28 @@ defmodule Hound.JsonDriver.Utils do
 
     if params != [] && type == :post do
       {:ok, json} = JSEX.encode params
-      IO.inspect json
-      {:ok, _status, _headers, content} = :ibrowse.send_req(
+      {:ok, status, headers, content} = :ibrowse.send_req(
         url,
         [{'Content-Type', 'application/x-www-form-urlencoded'}],
-        type,
-        json
+        type, json
       )
     else
-      {:ok, _status, _headers, content} = :ibrowse.send_req(url, [], type)
+      {:ok, status, headers, content} = :ibrowse.send_req(url, [], type)
     end
 
-    {:ok, resp} = JSEX.decode("#{content}")
+    if headers && content != [] do
+      {:ok, resp} = JSEX.decode("#{content}")
+    else
+      resp = []
+    end
+
     cond do
       resp["status"] == 0 && path == "session" ->
         {:ok, connection, resp["sessionId"]}
+      resp["status"] == 0 ->
+        resp["value"]
+      status < 300 || status == nil ->
+        :ok
       true ->
         {:error, resp["value"]}
     end
