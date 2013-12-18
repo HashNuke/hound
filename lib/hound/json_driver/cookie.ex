@@ -1,5 +1,5 @@
-defmodule Hound.CookieBehaviour do
-  use Behaviour
+defmodule Hound.JsonDriver.Cookie do
+  import Hound.JsonDriver.Utils
 
 #TODO
 #   @doc "Get cookies"
