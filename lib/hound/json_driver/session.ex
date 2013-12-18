@@ -18,8 +18,7 @@ defmodule Hound.JsonDriver.Session do
   @doc "Create a session"
   @spec create_session(Dict.t) :: String.t
   def create_session(connection) do
-    "some-session-id"
-    # make_req(connection, :post, "sessions")
+    make_req(connection, :post, "sessions")
   end
 
 
