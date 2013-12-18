@@ -4,7 +4,7 @@ defmodule Hound.Mixfile do
   def project do
     [ app: :hound,
       version: "0.0.1",
-      elixir: "~> 0.11.2",
+      elixir: "> 0.12.0",
       deps: deps ]
   end
 
@@ -24,7 +24,8 @@ defmodule Hound.Mixfile do
   defp deps do
     [
       { :ibrowse, github: "cmullaparthi/ibrowse", tag: "v4.0.2" },
-      { :jsex,    github: "talentdeficit/jsex" }
+      { :jsex,    github: "talentdeficit/jsex" },
+      { :ex_doc,  github: "elixir-lang/ex_doc" }
     ]
   end
 end
