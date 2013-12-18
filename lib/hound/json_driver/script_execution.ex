@@ -6,7 +6,7 @@ defmodule Hound.JsonDriver.ScriptExecution do
   def execute_script(connection, session_id, script_function, function_args) do
     make_req(connection,
       :post,
-      "/session/#{session_id}/execute",
+      "session/#{session_id}/execute",
       [script: script_function, args: function_args]
     )
   end
@@ -17,7 +17,7 @@ defmodule Hound.JsonDriver.ScriptExecution do
   def execute_script_async(connection, session_id, script_function, function_args) do
     make_req(connection,
       :post,
-      "/session/#{session_id}/execute_async",
+      "session/#{session_id}/execute_async",
       [script: script_function, args: function_args]
     )
   end

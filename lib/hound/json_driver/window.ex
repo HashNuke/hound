@@ -4,13 +4,13 @@ defmodule Hound.JsonDriver.Window do
   @doc "Get all window handles available to the session"
   @spec current_window_handle(Dict.t, String.t) :: String.t
   def current_window_handle(connection, session_id) do
-    make_req(connection, :get, "/session/#{session_id}/window_handle")
+    make_req(connection, :get, "session/#{session_id}/window_handle")
   end
 
   @doc "Get list of window handles available to the session"
   @spec window_handles(String.t, String.t) :: List.t
   def window_handles(connection, session_id) do
-    make_req(connection, :get, "/session/#{session_id}/window_handles")
+    make_req(connection, :get, "session/#{session_id}/window_handles")
   end
 
 # TODO
