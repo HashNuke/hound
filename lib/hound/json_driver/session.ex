@@ -30,7 +30,7 @@ defmodule Hound.JsonDriver.Session do
         platform: "ANY"
       ]
     ]
-    make_req(connection, :post, "session", params)
+    {:ok, _status, _headers, content} = make_req(connection, :post, "session", params)
   end
 
 
