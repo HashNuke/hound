@@ -5,6 +5,7 @@ defmodule HoundTest do
   hound_session
 
   test "the truth", meta do
+    navigate_to "http://google.com"
     assert(true)
   end
 end
