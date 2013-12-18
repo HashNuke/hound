@@ -18,14 +18,14 @@ defmodule Hound.SessionServer do
   end
 
   def handle_call({:get_session, session_name}, from, state) do
-    session_id = state.sessions[session_name]
+    session_id = state[:sessions][session_name]
     if session_id do
-      {:reply, {state.options, "TODO sessionID"}, state}
+      {:reply, {state[:options], "TODO sessionID"}, state}
     else
       #TODO create session from config
       { :reply,
-        {state.options, "TODO sessionID"},
-        ListDict.merge(state, [sessions: [ [{session_name, session_id}] | state.sessions ] ])
+        {state[:options][:connection], "TODO sessionID"},
+        ListDict.merge(state, [sessions: [ [{session_name, session_id}] | state[:sessions] ] ])
       }
     end
   end
