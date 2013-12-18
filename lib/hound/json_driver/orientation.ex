@@ -1,4 +1,4 @@
-defmodule Hound.Behaviours.Orientation do
+defmodule Hound.JsonDriver.Orientation do
   import Hound.JsonDriver.Utils
 
   @doc "Get browser's orientation"

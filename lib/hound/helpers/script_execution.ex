@@ -1,4 +1,4 @@
-defmodule Hound.Helpers.ScriptExecution do
+defmodule Hound.ExUnitHelpers.ScriptExecution do
 
   @doc "Execute javascript synchoronously"
   defmacro execute_script(script_function, function_args) do

@@ -1,4 +1,4 @@
-defmodule Hound.Helpers.Screenshot do
+defmodule Hound.ExUnitHelpers.Screenshot do
 
   @doc "Take screenshot of the current page"
   defmacro take_screenshot do

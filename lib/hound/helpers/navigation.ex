@@ -1,4 +1,4 @@
-defmodule Hound.Helpers.Navigation do
+defmodule Hound.ExUnitHelpers.Navigation do
 
   @doc "Get url of the current page"
   defmacro current_url do

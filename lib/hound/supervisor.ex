@@ -1,13 +1,13 @@
 defmodule Hound.Supervisor do
   use Supervisor.Behaviour
 
-  def start_link do
-    :supervisor.start_link(__MODULE__, [])
+  def start_link(options) do
+    :supervisor.start_link(__MODULE__, [options])
   end
 
-  def init([]) do
+  def init([options]) do
     children = [
-      worker(Hound.SessionServer, [])
+      worker(Hound.SessionServer, [options])
     ]
 
     # See http://elixir-lang.org/docs/stable/Supervisor.Behaviour.html

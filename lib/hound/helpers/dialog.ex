@@ -1,4 +1,4 @@
-defmodule Hound.TestHelpers.Dialog do
+defmodule Hound.ExUnitHelpers.Dialog do
 
   defmacro dialog_text do
     quote do
