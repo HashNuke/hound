@@ -28,7 +28,7 @@ defmodule Hound.ExUnitHelpers.Session do
   @doc "Get capabilities of the current session"
   defmacro session_info do
     quote do
-      session_info(var!(meta[:hound_connection]), var!(meta[:hound_session_id]))
+      session_info(var!(meta)[:hound_connection], var!(meta)[:hound_session_id])
     end
   end
 
@@ -36,7 +36,7 @@ defmodule Hound.ExUnitHelpers.Session do
   @doc "Set the timeout for a particular type of operation"
   defmacro set_timeout(operation, time) do
     quote do
-      set_timeout(var!(meta[:hound_connection]), var!(meta[:hound_session_id]), operation, time)
+      set_timeout(var!(meta)[:hound_connection], var!(meta)[:hound_session_id], operation, time)
     end
   end
 

@@ -2,7 +2,7 @@ defmodule Hound.ExUnitHelpers.Dialog do
 
   defmacro dialog_text do
     quote do
-      dialog_text(var!(meta[:hound_connection]), var!(meta[:hound_session_id]))
+      dialog_text(var!(meta)[:hound_connection], var!(meta)[:hound_session_id])
     end
   end
 
@@ -11,7 +11,7 @@ defmodule Hound.ExUnitHelpers.Dialog do
     quote do
       input_into_prompt(
         var!(meta[:hound_connection]),
-        var!(meta[:hound_session_id]),
+        var!(meta)[:hound_session_id],
         unquote(input)
       )
     end
@@ -20,14 +20,14 @@ defmodule Hound.ExUnitHelpers.Dialog do
 
   defmacro accept_dialog do
     quote do
-      accept_dialog var!(meta[:hound_connection]), var!(meta[:hound_session_id])
+      accept_dialog var!(meta)[:hound_connection], var!(meta)[:hound_session_id]
     end
   end
 
 
   defmacro dismiss_dialog do
     quote do
-      dismiss_dialog var!(meta[:hound_connection]), var!(meta[:hound_session_id])
+      dismiss_dialog var!(meta)[:hound_connection], var!(meta)[:hound_session_id]
     end
   end
 
