@@ -17,7 +17,7 @@ defmodule Hound.SessionServer do
     {:ok, state}
   end
 
-  def handle_call({:get_session, session_name}, from, state) do
+  def handle_call({:get_session, session_name}, _from, state) do
     session_id = state[:sessions][session_name]
     if session_id do
       {:reply, {state[:options], session_id}, state}
@@ -46,13 +46,12 @@ defmodule Hound.SessionServer do
   end
 
 
-  def handle_call(:active_sessions, from, state) do
-    #TODO destroy specified session
+  def handle_call(:active_sessions, _from, state) do
     {:reply, {:ok, state[:sessions]}, state}
   end
 
 
-  def handle_call({:delete_session, session_id}, from, state) do
+  def handle_call({:delete_session, session_id}, _from, state) do
     #TODO destroy specified session
     {:reply, :ok, state}
   end

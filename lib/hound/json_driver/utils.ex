@@ -22,7 +22,7 @@ defmodule Hound.JsonDriver.Utils do
     cond do
       resp["status"] == 0 && path == "session" ->
         resp["sessionId"]
-      _ ->
+      true ->
         resp["value"]
     end
   end

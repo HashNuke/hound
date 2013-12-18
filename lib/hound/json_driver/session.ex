@@ -35,8 +35,8 @@ defmodule Hound.JsonDriver.Session do
 
 
   @doc "Get capabilities of a particular session"
-  @spec session(Dict.t, String.t) :: Dict.t
-  def session(connection, session_id) do
+  @spec session_info(Dict.t, String.t) :: Dict.t
+  def session_info(connection, session_id) do
     make_req(connection, :get, "sessions/#{session_id}")
   end
 
