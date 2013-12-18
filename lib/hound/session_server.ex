@@ -20,18 +20,40 @@ defmodule Hound.SessionServer do
   def handle_call({:get_session, session_name}, from, state) do
     session_id = state[:sessions][session_name]
     if session_id do
-      {:reply, {state[:options], "TODO sessionID"}, state}
+      {:reply, {state[:options], session_id}, state}
     else
-      #TODO create session from config
-      { :reply,
-        {state[:options][:connection], "TODO sessionID"},
-        ListDict.merge(state, [sessions: [ [{session_name, session_id}] | state[:sessions] ] ])
-      }
+      #TODO fix: Hound.JsonDriver should be suffixed to result "Hound.JsonDriver.Session"
+      {:ok, _status, _headers, resp_body} = apply(
+        state[:options][:driver],
+        :create_session,
+        [state[:options][:connection]]
+      )
+
+      {:ok, resp} = JSEX.decode(resp_body)
+      if resp["sessionId"] == 0 do
+        session_id = resp["sessionId"]
+        reply = {:ok, state[:options][:connection], session_id}
+      else
+        reply = {:error, resp["value"]["message"]}
+      end
+
+      new_state = ListDict.merge(state, [sessions: [ [{session_name, session_id}] | state[:sessions] ] ])
+      IO.inspect "NEW STATE"
+      IO.inspect new_state
+
+      { :reply, reply, new_state }
     end
   end
 
+
+  def handle_call(:active_sessions, from, state) do
+    #TODO destroy specified session
+    {:reply, {:ok, state[:sessions]}, state}
+  end
+
+
   def handle_call({:delete_session, session_id}, from, state) do
-    #TODO create session from config    
+    #TODO destroy specified session
     {:reply, :ok, state}
   end
 

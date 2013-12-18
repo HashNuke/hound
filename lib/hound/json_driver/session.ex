@@ -18,27 +18,39 @@ defmodule Hound.JsonDriver.Session do
   @doc "Create a session"
   @spec create_session(Dict.t) :: String.t
   def create_session(connection) do
-    make_req(connection, :post, "sessions")
+    params = [
+      desiredCapabilities: [
+        javascriptEnabled: false,
+        version: "",
+        rotatable: false,
+        takesScreenshot: true,
+        cssSelectorsEnabled: true,
+        browserName: "firefox",
+        nativeEvents: false,
+        platform: "ANY"
+      ]
+    ]
+    make_req(connection, :post, "session", params)
   end
 
 
   @doc "Get capabilities of a particular session"
   @spec session(Dict.t, String.t) :: Dict.t
   def session(connection, session_id) do
-    make_req(connection, :get, "session/#{session_id}")
+    make_req(connection, :get, "sessions/#{session_id}")
   end
 
 
   @doc "Delete a session"
   @spec delete_session(Dict.t, String.t) :: :ok
   def delete_session(connection, session_id) do
-    make_req(connection, :delete, "session/#{session_id}")
+    make_req(connection, :delete, "sessions/#{session_id}")
   end
 
 
   @doc "Set the timeout for a particular type of operation"
   @spec set_timeout(Dict.t, String.t, String.t, Integer.t) :: :ok
   def set_timeout(connection, session_id, operation, time) do
-    make_req(connection, :post, "session/#{session_id}/timeouts", [type: operation, ms: time])
+    make_req(connection, :post, "sessions/#{session_id}/timeouts", [type: operation, ms: time])
   end
 end
