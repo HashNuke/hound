@@ -7,10 +7,13 @@ defmodule Hound do
     Hound.Supervisor.start_link(options)
   end
 
+  def get_driver_info do
+    :gen_server.call(:hound, :driver_info)
+  end
 
   def start(options // []) do
     :application.start :hound, options
   end
 end
 
-defrecord Hound.Info, [driver_opts: nil, driver: Hound.JsonDriver]
+defrecord Hound.Info, [driver: Hound.JsonDriver, driver_options: nil, sessions: []]
