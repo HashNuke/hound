@@ -12,3 +12,5 @@ defmodule Hound do
     :application.start :hound, options
   end
 end
+
+defrecord Hound.Info, [driver_opts: nil, driver: Hound.JsonDriver]
