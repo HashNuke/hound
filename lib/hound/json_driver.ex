@@ -2,7 +2,7 @@ defmodule Hound.JsonDriver do
 
   defmacro __using__([]) do
     quote do
-      import __MODULE__
+      import unquote(__MODULE__)
       import Hound.JsonDriver.Page
       import Hound.JsonDriver.Navigation
       import Hound.JsonDriver.Element

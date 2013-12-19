@@ -24,7 +24,7 @@ defmodule Hound.JsonDriver.Utils do
 
     cond do
       resp["status"] == 0 && path == "session" ->
-        {:ok, connection, resp["sessionId"]}
+        {:ok, resp["sessionId"]}
       resp["status"] == 0 ->
         resp["value"]
       status < 300 || status == nil ->
