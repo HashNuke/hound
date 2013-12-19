@@ -7,6 +7,7 @@ defmodule Hound.Supervisor do
 
   def init([options]) do
     children = [
+      worker(Hound.SessionServer, [])
       worker(Hound.Server, [options])
     ]
 
