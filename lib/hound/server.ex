@@ -1,4 +1,4 @@
-defmodule Hound.SessionServer do
+defmodule Hound.Server do
   use GenServer.Behaviour
 
   def start_link(options // []) do
@@ -12,7 +12,6 @@ defmodule Hound.SessionServer do
   def init(state), do: {:ok, state}
 
   def handle_call(:driver_info, _from, state) do
-    {:ok, state[:driver], state[:driver_options]}
+    {:reply, {:ok, state[:driver], state[:driver_options]}, state}
   end
-
 end
