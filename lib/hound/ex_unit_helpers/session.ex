@@ -18,8 +18,14 @@ defmodule Hound.ExUnitHelpers.Session do
   defmacro hound_session do
     quote do
       setup do
-        { :ok, connection, session_id } = :gen_server.call(:hound, {:get_session, :default}, 30000)
-        { :ok, hound_connection: connection, hound_session_id: session_id }
+        {:ok, driver, driver_options} = :gen_server.call(:hound, :driver_info)
+        {:ok, session_id} = driver.create_session(driver_options)
+        hound_info = Hound.Info[
+          driver: driver,
+          driver_options: driver_options,
+          sessions: [default: session_id]
+        ]
+        { :ok, hound_info: hound_info, hound_session_id: session_id }
       end
     end
   end
