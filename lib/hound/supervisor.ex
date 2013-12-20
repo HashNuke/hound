@@ -1,4 +1,6 @@
 defmodule Hound.Supervisor do
+  @moduledoc false
+
   use Supervisor.Behaviour
 
   def start_link(options) do

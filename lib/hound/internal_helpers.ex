@@ -1,4 +1,6 @@
 defmodule Hound.InternalHelpers do
+  @moduledoc false
+
   def selector_strategy(:class), do: "class name"
   def selector_strategy(:css), do: "css selector"
   def selector_strategy(:id), do: "id"

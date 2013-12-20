@@ -1,4 +1,5 @@
 defmodule Hound.JsonDriver.Utils do
+  @moduledoc false
 
   def make_req(type, path, params // []) do
     url = get_url(path)

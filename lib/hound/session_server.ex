@@ -1,4 +1,6 @@
 defmodule Hound.SessionServer do
+  @moduledoc false
+
   use GenServer.Behaviour
 
   def start_link do

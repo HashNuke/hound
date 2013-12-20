@@ -1,4 +1,6 @@
 defmodule Hound.ConnectionServer do
+  @moduledoc false
+
   use GenServer.Behaviour
 
   def start_link(options // []) do
