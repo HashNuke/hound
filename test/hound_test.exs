@@ -7,13 +7,27 @@ defmodule HoundTest do
     :ok
   end
 
-  test "the truth" do
+  test "should return driver info" do
     navigate_to "http://google.com"
     assert(true)
   end
 
-  teardown do
+
+  test "should return the current session ID" do
+  end
+
+
+  test "should be able to run multiple sessions" do
+  end
+
+
+  test "Should destroy all sessions for current process" do
     Hound.end_session
-    :ok
+    assert :gen_server.call(:hound_sessions, :all_sessions_for_pid), []
+  end
+
+
+  teardown do
+    :ok = Hound.end_session
   end
 end
