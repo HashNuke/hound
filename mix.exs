@@ -5,7 +5,10 @@ defmodule Hound.Mixfile do
     [ app: :hound,
       version: "0.0.1",
       elixir: ">= 0.12.0",
-      deps: deps ]
+      deps: deps,
+      source_url: "http://github.com/HashNuke/hound",
+      docs: [readme: true, main: "README"]
+    ]
   end
 
   # Configuration for the OTP application
