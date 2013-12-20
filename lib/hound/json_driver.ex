@@ -28,7 +28,7 @@ defmodule Hound.JsonDriver do
   end
 
 
-  @doc "Create a session"
+  @doc "Creates a session associated with the current pid"
   @spec create_session() :: String.t
   def create_session do
     params = [

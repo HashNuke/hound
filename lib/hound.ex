@@ -28,6 +28,11 @@ defmodule Hound do
   end
 
 
+  def change_to_default_session do
+    change_session_to(:default)
+  end
+
+
   def get_current_session_id do
     :gen_server.call(:hound_sessions, :get_session_for_pid, 30000)
   end
