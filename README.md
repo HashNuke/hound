@@ -8,6 +8,23 @@ Elixir WebDriver library
 * Implements the [WebDriver Wire Protocol](https://code.google.com/p/selenium/wiki/JsonWireProtocol) based on the W3C WebDriver spec.
 
 
+#### Example
+
+```elixir
+defmodule HoundTest do
+  use ExUnit.Case
+  use Hound.Helpers
+
+  hound_session
+
+  test "the truth", meta do
+    navigate_to("http://google.com")
+    assert(true)
+  end
+
+end
+```
+
 ## Setup
 
 * Add dependency to your mix project
@@ -35,23 +52,6 @@ use Hound.Helpers
 
 # Start hound session and destroy when tests are run
 hound_session
-```
-
-#### Example
-
-```elixir
-defmodule HoundTest do
-  use ExUnit.Case
-  use Hound.Helpers
-
-  hound_session
-
-  test "the truth", meta do
-    navigate_to("http://google.com")
-    assert(true)
-  end
-
-end
 ```
 
 If you prefer to manually start and end sessions, use `Hound.start_session` and `Hound.end_session` in the setup and teardown blocks of your tests.
