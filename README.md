@@ -24,14 +24,14 @@ Hound.start [host: "http://example.com", port: 5555]
 
 ### Usage
 
-* In your test files, add `use Hound.ExUnitHelpers` to add helpers for ExUnit.
+* In your test files, add `use Hound.Helpers` to add helpers for ExUnit.
 
-* Add `hound_session` to create a hound session for your tests.
+* Use the `hound_session` macro to start and end the hound sessions.
 
 ```elixir
 defmodule HoundTest do
   use ExUnit.Case
-  use Hound.ExUnitHelpers
+  use Hound.Helpers
 
   hound_session
 
@@ -39,8 +39,13 @@ defmodule HoundTest do
     navigate_to("http://google.com")
     assert(true)
   end
+
 end
 ```
+
+### Other stuff
+
+If you don't prefer using `hound_session`, you can then manually use `Hound.start_session` and `Hound.end_session` in the setup and teardown blocks of your tests.
 
 ### Helpers
 
