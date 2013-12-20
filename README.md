@@ -30,13 +30,17 @@ __You'll need a webdriver server__, like Selenium server, running before you sta
 
 ## Usage
 
-#### Add `use Hound.Helpers` line in test file to add helpers
+Add the following lines to your test files
 
-It adds all the necessary test helpers you'll need to use Hound.
+```elixir
+use Hound.Helpers
 
-#### Use `hound_session` macro
+hound_session
+```
 
-The hound_session macro adds setup and teardown blocks to start and end Hound browser sessions.
+The first line imports helpers. The second line starts a Hound session and destroys it once all the tests are run.
+
+#### Example
 
 ```elixir
 defmodule HoundTest do
@@ -53,7 +57,7 @@ defmodule HoundTest do
 end
 ```
 
-If you don't prefer using the `hound_session` macro, you can then manually use `Hound.start_session` and `Hound.end_session` in the setup and teardown blocks of your tests.
+If you prefer to manually start and end sessions, use `Hound.start_session` and `Hound.end_session` in the setup and teardown blocks of your tests.
 
 
 ### Multiple browser support
