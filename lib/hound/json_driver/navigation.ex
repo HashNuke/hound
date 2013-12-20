@@ -34,8 +34,8 @@ defmodule Hound.JsonDriver.Navigation do
 
 
   @doc "Refresh current page"
-  @spec refresh() :: :ok
-  def refresh do
+  @spec refresh_page() :: :ok
+  def refresh_page do
     session_id = Hound.get_current_session_id
     make_req(:post, "session/#{session_id}/refresh")
   end
