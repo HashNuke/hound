@@ -61,7 +61,7 @@ defmodule Hound.JsonDriver.Element do
   @spec displayed?(String.t) :: :true | :false
   def displayed?(element_id) do
     session_id = Hound.get_current_session_id
-    make_req(:get, "session/#{element_id}/element/#{element_id}/displayed")
+    make_req(:get, "session/#{session_id}/element/#{element_id}/displayed")
   end
 
   @doc "Get element's location on page"

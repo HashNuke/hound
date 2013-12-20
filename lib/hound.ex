@@ -19,12 +19,12 @@ defmodule Hound do
 
 
   def start_session do
-    :gen_server.call(:hound_sessions, :get_session_for_pid, 30000)
+    :gen_server.call(:hound_sessions, :get_session_for_pid, 60000)
   end
 
 
   def change_session_to(session_name) do
-    :gen_server.call(:hound_sessions, :change_current_session_for_pid, 30000)
+    :gen_server.call(:hound_sessions, {:change_current_session_for_pid, session_name}, 30000)
   end
 
 

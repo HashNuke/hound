@@ -50,21 +50,21 @@ defmodule Hound.JsonDriver do
   @doc "Get capabilities of a particular session"
   @spec session_info(String.t) :: Dict.t
   def session_info(session_id) do
-    make_req(:get, "sessions/#{session_id}")
+    make_req(:get, "session/#{session_id}")
   end
 
 
-  @doc "Delete a session"
-  @spec delete_session(String.t) :: :ok
-  def delete_session(session_id) do
-    make_req(:delete, "sessions/#{session_id}")
+  @doc "Destroy a session"
+  @spec destroy_session(String.t) :: :ok
+  def destroy_session(session_id) do
+    make_req(:delete, "session/#{session_id}")
   end
 
 
   @doc "Set the timeout for a particular type of operation"
   @spec set_timeout(String.t, String.t, Integer.t) :: :ok
   def set_timeout(session_id, operation, time) do
-    make_req(:post, "sessions/#{session_id}/timeouts", [type: operation, ms: time])
+    make_req(:post, "session/#{session_id}/timeouts", [type: operation, ms: time])
   end
 
 end
