@@ -23,7 +23,7 @@ Elixir WebDriver library
         Hound.start [host: "http://example.com", port: 5555]
 
 
-__You'll need a webdriver server__, like Selenium server, running before you start your tests. If you aren't sure what it is, then r[read this](https://github.com/HashNuke/hound/wiki/Starting-a-webdriver-server)
+__You'll need a webdriver server__ running, like Selenium Server or Chrome Driver. If you aren't sure what it is, then [read this](https://github.com/HashNuke/hound/wiki/Starting-a-webdriver-server)
 
 ## Usage
 
