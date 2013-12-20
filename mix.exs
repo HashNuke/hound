@@ -14,10 +14,16 @@ defmodule Hound.Mixfile do
   # Configuration for the OTP application
   def application do
     [
-      applications: [:ibrowse],
+      applications: apps(Mix.env),
       mod: { Hound, [] }
     ]
   end
+
+
+  def apps(:prod), do: [:ibrowse]
+  def apps(:test), do: apps(:prod) ++ [:inets]
+  def apps(_),     do: apps(:prod)
+
 
   # Returns the list of dependencies in the format:
   # { :foobar, git: "https://github.com/elixir-lang/foobar.git", tag: "0.1" }
