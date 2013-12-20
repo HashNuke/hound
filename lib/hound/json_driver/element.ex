@@ -87,8 +87,8 @@ defmodule Hound.JsonDriver.Element do
 
 
   @doc "Click on element"
-  @spec click_on(String.t) :: :ok
-  def click_on(element_id) do
+  @spec click(String.t) :: :ok
+  def click(element_id) do
     session_id = Hound.get_current_session_id
     make_req(:post, "session/#{session_id}/element/#{element_id}/click")
   end
