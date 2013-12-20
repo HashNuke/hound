@@ -12,19 +12,16 @@ Elixir WebDriver library
 
 * Add dependency to your mix project
 
-        ```elixir
         { :hound, github: "HashNuke/hound" }
-        ```
 
 * Start Hound in `test_helper.exs`
 
-        ```elixir
         # Start Hound for localhost webdriver server (Selenium assumed at port 4444)
         Hound.start
 
         # Start Hound for remote webdriver server at port 5555
         Hound.start [host: "http://example.com", port: 5555]
-        ```
+
 
 __You'll need a webdriver server__, like Selenium server, running before you start your tests. If you aren't sure what it is, then r[read this](https://github.com/HashNuke/hound/wiki/Starting-a-webdriver-server)
 
