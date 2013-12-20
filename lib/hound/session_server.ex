@@ -43,6 +43,15 @@ defmodule Hound.SessionServer do
   end
 
 
+  def handle_call(:all_sessions_for_pid, {pid, _tag}, state) do
+    if state[pid] do
+      {:reply, state[pid][:all_sessions], state}
+    else
+      {:reply, [], state}
+    end
+  end
+
+
   def handle_call(:destroy_sessions_for_pid, {pid, _tag}, state) do
     {:ok, driver, _driver_options} = Hound.get_driver_info
     pid_sessions = state[pid]
