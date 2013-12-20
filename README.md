@@ -1,18 +1,22 @@
 # Hound (work in progress)
 
-Elixir WebDriver library. Implements the W3C WebDriver spec. Supports Selenium.
+Elixir WebDriver library
 
-Ships with free helpers for ExUnit.
+## Features
 
-### Setup
+* Supports running __multiple browser sessions__ !!!
+* Implements the [WebDriver Wire Protocol](https://code.google.com/p/selenium/wiki/JsonWireProtocol) based on the W3C WebDriver spec.
 
-* Add `hound` as a dependency to your mix project
+
+## Setup
+
+#### Add `hound` as a dependency to your mix project
 
 ```elixir
 { :hound, github: "HashNuke/hound" }
 ```
 
-* In your `mix` project, start the Hound application. See below for examples.
+#### Start Hound in `test_helper.exs`
 
 ```elixir
 # Start Hound for localhost webdriver server (Selenium assumed at port 4444)
@@ -22,11 +26,17 @@ Hound.start
 Hound.start [host: "http://example.com", port: 5555]
 ```
 
-### Usage
+__You'll need a webdriver server__, like Selenium server, running before you start your tests. If you aren't sure what it is, then r[read this](https://github.com/HashNuke/hound/wiki/Starting-a-webdriver-server)
 
-* In your test files, add `use Hound.Helpers` to add helpers for ExUnit.
+## Usage
 
-* Use the `hound_session` macro to start and end the hound sessions.
+#### Add `use Hound.Helpers` line in test file to add helpers
+
+It adds all the necessary test helpers you'll need to use Hound.
+
+#### Use `hound_session` macro
+
+The hound_session macro adds setup and teardown blocks to start and end Hound browser sessions.
 
 ```elixir
 defmodule HoundTest do
@@ -43,13 +53,15 @@ defmodule HoundTest do
 end
 ```
 
-### Other stuff
+If you don't prefer using the `hound_session` macro, you can then manually use `Hound.start_session` and `Hound.end_session` in the setup and teardown blocks of your tests.
 
-If you don't prefer using `hound_session`, you can then manually use `Hound.start_session` and `Hound.end_session` in the setup and teardown blocks of your tests.
+
+### Multiple browser support
+
+
 
 ### Helpers
 
-TODO
 
 
 ### Reference
