@@ -10,21 +10,21 @@ Elixir WebDriver library
 
 ## Setup
 
-#### Add `hound` as a dependency to your mix project
+* Add dependency to your mix project
 
-```elixir
-{ :hound, github: "HashNuke/hound" }
-```
+        ```elixir
+        { :hound, github: "HashNuke/hound" }
+        ```
 
-#### Start Hound in `test_helper.exs`
+* Start Hound in `test_helper.exs`
 
-```elixir
-# Start Hound for localhost webdriver server (Selenium assumed at port 4444)
-Hound.start
+        ```elixir
+        # Start Hound for localhost webdriver server (Selenium assumed at port 4444)
+        Hound.start
 
-# Start Hound for remote webdriver server at port 5555
-Hound.start [host: "http://example.com", port: 5555]
-```
+        # Start Hound for remote webdriver server at port 5555
+        Hound.start [host: "http://example.com", port: 5555]
+        ```
 
 __You'll need a webdriver server__, like Selenium server, running before you start your tests. If you aren't sure what it is, then r[read this](https://github.com/HashNuke/hound/wiki/Starting-a-webdriver-server)
 
@@ -33,12 +33,12 @@ __You'll need a webdriver server__, like Selenium server, running before you sta
 Add the following lines to your test files
 
 ```elixir
+# Import helpers
 use Hound.Helpers
 
+# Start hound session and destroy when tests are run
 hound_session
 ```
-
-The first line imports helpers. The second line starts a Hound session and destroys it once all the tests are run.
 
 #### Example
 
