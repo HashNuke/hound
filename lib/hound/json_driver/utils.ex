@@ -1,22 +1,21 @@
 defmodule Hound.JsonDriver.Utils do
 
-  def make_req(connection, type, path, params // []) do
-    host = connection[:host] || "http://localhost"
-    port = connection[:port] || 4444
+  def make_req(type, path, params // []) do
+    {:ok, _driver, driver_info} = Hound.get_driver_info
+    host = driver_info[:host] || "http://localhost"
+    port = driver_info[:port] || 4444
     url  = '#{host}:#{port}/wd/hub/#{path}'
 
     if params != [] && type == :post do
       {:ok, json} = JSEX.encode params
       {:ok, status, headers, content} = :ibrowse.send_req(
-        url,
-        [{'Content-Type', 'application/x-www-form-urlencoded'}],
-        type, json
+        url, [{'Content-Type', 'application/x-www-form-urlencoded'}], type, json
       )
     else
       {:ok, status, headers, content} = :ibrowse.send_req(url, [], type)
     end
 
-    if headers && content != [] do
+    if content != [] do
       {:ok, resp} = JSEX.decode("#{content}")
     else
       resp = []

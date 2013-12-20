@@ -2,88 +2,102 @@ defmodule Hound.JsonDriver.Element do
   import Hound.JsonDriver.Utils
 
   @doc "Get visible text of element"
-  @spec visible_text(Dict.t, String.t, String.t) :: String.t
-  def visible_text(connection, session_id, element_id) do
-    make_req(connection, :get, "session/#{session_id}/element/#{element_id}")
+  @spec visible_text(String.t) :: String.t
+  def visible_text(element_id) do
+    session_id = Hound.get_current_session_id
+    make_req(:get, "session/#{session_id}/element/#{element_id}")
   end
 
   @doc "Set value of element. Sends a sequence of key strokes"
-  @spec set_value(Dict.t, String.t, String.t, String.t) :: :ok
-  def set_value(connection, session_id, element_id, input) do
-    make_req(connection, :post, "session/#{session_id}/element/#{element_id}/value", [value: input])
+  @spec set_value(String.t, String.t) :: :ok
+  def set_value(element_id, input) do
+    session_id = Hound.get_current_session_id
+    make_req(:post, "session/#{session_id}/element/#{element_id}/value", [value: input])
   end
 
   @doc "Get an element's tag name"
-  @spec tag_name(Dict.t, String.t, String.t) :: String.t
-  def tag_name(connection, session_id, element_id) do
-    make_req(connection, :get, "session/#{session_id}/element/#{element_id}/name")
+  @spec tag_name(String.t) :: String.t
+  def tag_name(element_id) do
+    session_id = Hound.get_current_session_id
+    make_req(:get, "session/#{session_id}/element/#{element_id}/name")
   end
 
   @doc "Clear textarea or input element's value"
-  @spec clear_field(Dict.t, String.t, String.t) :: :ok
-  def clear_field(connection, session_id, element_id) do
-    make_req(connection, :post, "session/#{session_id}/element/#{element_id}/clear")
+  @spec clear_field(String.t) :: :ok
+  def clear_field(element_id) do
+    session_id = Hound.get_current_session_id
+    make_req(:post, "session/#{session_id}/element/#{element_id}/clear")
   end
 
   @doc "Check if a checkbox or radio input group has any option selected"
-  @spec selected?(Dict.t, String.t, String.t) :: :true | :false
-  def selected?(connection, session_id, element_id) do
-    make_req(connection, :get, "session/#{session_id}/element/#{element_id}/selected")
+  @spec selected?(String.t) :: :true | :false
+  def selected?(element_id) do
+    session_id = Hound.get_current_session_id
+    make_req(:get, "session/#{session_id}/element/#{element_id}/selected")
   end
 
   @doc "Check if an input field is enabled"
-  @spec enabled?(Dict.t, String.t, String.t) :: :true | :false
-  def enabled?(connection, session_id, element_id) do
-    make_req(connection, :get, "session/#{session_id}/element/#{element_id}/enabled")
+  @spec enabled?(String.t) :: :true | :false
+  def enabled?(element_id) do
+    session_id = Hound.get_current_session_id
+    make_req(:get, "session/#{session_id}/element/#{element_id}/enabled")
   end
 
   @doc "Get an element's attribute value"
-  @spec attribute_value(Dict.t, String.t, String.t, String.t) :: String.t | :nil
-  def attribute_value(connection, session_id, element_id, attribute_name) do
-    make_req(connection, :get, "session/#{session_id}/element/#{element_id}/attribute/#{attribute_name}")
+  @spec attribute_value(String.t, String.t) :: String.t | :nil
+  def attribute_value(element_id, attribute_name) do
+    session_id = Hound.get_current_session_id
+    make_req(:get, "session/#{session_id}/element/#{element_id}/attribute/#{attribute_name}")
   end
 
   @doc "Check if two element IDs refer to the same DOM element"
-  @spec same?(Dict.t, String.t, String.t, String.t) :: :true | :false
-  def same?(connection, session_id, element_id1, element_id2) do
-    make_req(connection, :get, "session/#{session_id}/element/#{element_id1}/equals/#{element_id2}")
+  @spec same?(String.t, String.t) :: :true | :false
+  def same?(element_id1, element_id2) do
+    session_id = Hound.get_current_session_id
+    make_req(:get, "session/#{session_id}/element/#{element_id1}/equals/#{element_id2}")
   end
 
   @doc "Check if an element is currently displayed"
-  @spec displayed?(Dict.t, String.t, String.t) :: :true | :false
-  def displayed?(connection, session_id, element_id) do
-    make_req(connection, :get, "session/#{element_id}/element/#{element_id}/displayed")
+  @spec displayed?(String.t) :: :true | :false
+  def displayed?(element_id) do
+    session_id = Hound.get_current_session_id
+    make_req(:get, "session/#{element_id}/element/#{element_id}/displayed")
   end
 
   @doc "Get element's location on page"
-  @spec element_location(Dict.t, String.t, String.t) :: tuple
-  def element_location(connection, session_id, element_id) do
-    make_req(connection, :get, "session/#{session_id}/element/#{element_id}/location")
+  @spec element_location(String.t) :: tuple
+  def element_location(element_id) do
+    session_id = Hound.get_current_session_id
+    make_req(:get, "session/#{session_id}/element/#{element_id}/location")
   end
 
   @doc "Get element size pixels"
-  @spec element_size(Dict.t, String.t, String.t) :: tuple
-  def element_size(connection, session_id, element_id) do
-    make_req(connection, :get, "session/#{session_id}/element/#{element_id}/size")
+  @spec element_size(String.t) :: tuple
+  def element_size(element_id) do
+    session_id = Hound.get_current_session_id
+    make_req(:get, "session/#{session_id}/element/#{element_id}/size")
   end
 
   @doc "Get an element's computed CSS property"
-  @spec css_property(Dict.t, String.t, String.t, String.t) :: String.t
-  def css_property(connection, session_id, element_id, property_name) do
-    make_req(connection, :get, "session/#{session_id}/element/#{element_id}/css/#{property_name}")
+  @spec css_property(String.t, String.t) :: String.t
+  def css_property(element_id, property_name) do
+    session_id = Hound.get_current_session_id
+    make_req(:get, "session/#{session_id}/element/#{element_id}/css/#{property_name}")
   end
 
 
   @doc "Click on element"
-  @spec click_on(Dict.t, String.t, String.t) :: :ok
-  def click_on(connection, session_id, element_id) do
-    make_req(connection, :post, "session/#{session_id}/element/#{element_id}/click")
+  @spec click_on(String.t) :: :ok
+  def click_on(element_id) do
+    session_id = Hound.get_current_session_id
+    make_req(:post, "session/#{session_id}/element/#{element_id}/click")
   end
 
 
   @doc "Submit form"
-  @spec submit(Dict.t, String.t, String.t) :: :ok
-  def submit(connection, session_id, element_id) do
-    make_req(connection, :post, "session/#{session_id}/element/#{element_id}/submit")
+  @spec submit(String.t) :: :ok
+  def submit(element_id) do
+    session_id = Hound.get_current_session_id
+    make_req(:post, "session/#{session_id}/element/#{element_id}/submit")
   end
 end

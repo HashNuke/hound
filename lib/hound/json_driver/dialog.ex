@@ -2,30 +2,34 @@ defmodule Hound.JsonDriver.Dialog do
   import Hound.JsonDriver.Utils
 
   @doc "Get text of a javascript alert(), confirm() or prompt()"
-  @spec dialog_text(Dict.t, String.t) :: String.t
-  def dialog_text(connection, session_id) do
-    make_req(connection, :get, "session/#{session_id}/alert_text")
+  @spec dialog_text() :: String.t
+  def dialog_text() do
+    session_id = Hound.get_current_session_id
+    make_req(:get, "session/#{session_id}/alert_text")
   end
 
 
   @doc "Send input to a javascript prompt()"
-  @spec input_into_prompt(Dict.t, String.t, String.t) :: :ok 
-  def input_into_prompt(connection, session_id, input) do
-    make_req(connection, :post, "session/#{session_id}/alert_text", [text: input])
+  @spec input_into_prompt(String.t) :: :ok 
+  def input_into_prompt(input) do
+    session_id = Hound.get_current_session_id
+    make_req(:post, "session/#{session_id}/alert_text", [text: input])
   end
 
 
   @doc "Accept javascript dialog"
-  @spec accept_dialog(Dict.t, String.t) :: :ok
-  def accept_dialog(connection, session_id) do
-    make_req(connection, :post, "session/#{session_id}/accept_alert")
+  @spec accept_dialog() :: :ok
+  def accept_dialog() do
+    session_id = Hound.get_current_session_id
+    make_req(:post, "session/#{session_id}/accept_alert")
   end
 
 
   @doc "Dismiss javascript dialog"
-  @spec dismiss_dialog(Dict.t, String.t) :: :ok
-  def dismiss_dialog(connection, session_id) do
-    make_req(connection, :post, "session/#{session_id}/dismiss_alert", [])
+  @spec dismiss_dialog() :: :ok
+  def dismiss_dialog() do
+    session_id = Hound.get_current_session_id
+    make_req(:post, "session/#{session_id}/dismiss_alert", [])
   end
 
 end

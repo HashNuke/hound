@@ -1,17 +1,9 @@
-defmodule Hound.ExUnitHelpers do
+defmodule Hound.Helpers do
 
   defmacro __using__([]) do
-    {:ok, driver, _} = :gen_server.call(:hound, :driver_info)
+    {:ok, driver, _} = Hound.get_driver_info
     quote do
       use unquote(driver)
-
-      import Hound.ExUnitHelpers.Dialog
-      import Hound.ExUnitHelpers.Element
-      import Hound.ExUnitHelpers.Navigation
-      import Hound.ExUnitHelpers.Page
-      import Hound.ExUnitHelpers.Screenshot
-      import Hound.ExUnitHelpers.ScriptExecution
-      import Hound.ExUnitHelpers.Session
     end
   end
 

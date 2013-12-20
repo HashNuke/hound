@@ -2,37 +2,42 @@ defmodule Hound.JsonDriver.Navigation do
   import Hound.JsonDriver.Utils
 
   @doc "Get url of the current page"
-  @spec current_url(Dict.t, String.t) :: String.t
-  def current_url(connection, session_id) do
-    make_req(connection, :get, "session/#{session_id}/url")
+  @spec current_url() :: String.t
+  def current_url do
+    session_id = Hound.get_current_session_id
+    make_req(:get, "session/#{session_id}/url")
   end
 
 
   @doc "Navigate to a url"
-  @spec navigate_to(Dict.t, String.t, String.t) :: :ok
-  def navigate_to(connection, session_id, url) do
-    make_req(connection, :post, "session/#{session_id}/url", [url: url])
+  @spec navigate_to(String.t) :: :ok
+  def navigate_to(url) do
+    session_id = Hound.get_current_session_id
+    make_req(:post, "session/#{session_id}/url", [url: url])
   end
 
 
   @doc "Navigate forward in browser history"
-  @spec navigate_forward(Dict.t, String.t) :: :ok
-  def navigate_forward(connection, session_id) do
-    make_req(connection, :post, "session/#{session_id}/forward")
+  @spec navigate_forward() :: :ok
+  def navigate_forward do
+    session_id = Hound.get_current_session_id
+    make_req(:post, "session/#{session_id}/forward")
   end
 
 
   @doc "Navigate back in browser history"
-  @spec navigate_back(Dict.t, String.t) :: :ok
-  def navigate_back(connection, session_id) do
-    make_req(connection, :post, "session/#{session_id}/back")
+  @spec navigate_back() :: :ok
+  def navigate_back do
+    session_id = Hound.get_current_session_id
+    make_req(:post, "session/#{session_id}/back")
   end
 
 
   @doc "Refresh current page"
-  @spec refresh(Dict.t, String.t) :: :ok
-  def refresh(connection, session_id) do
-    make_req(connection, :post, "session/#{session_id}/refresh")
+  @spec refresh() :: :ok
+  def refresh do
+    session_id = Hound.get_current_session_id
+    make_req(:post, "session/#{session_id}/refresh")
   end
 
 end
