@@ -1,5 +1,5 @@
 defmodule NavigationTest do
-  use ExUnit.Case, async: true
+  use ExUnit.Case
   use Hound.Helpers
 
   hound_session

@@ -1,4 +1,4 @@
-ExUnit.start [autorun: false]
+ExUnit.start [autorun: false, max_cases: 5]
 Hound.start
 
 System.at_exit fn(_exit_status) ->
