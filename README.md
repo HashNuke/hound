@@ -1,10 +1,10 @@
-# Hound (work in progress)
+# Hound
 
 Elixir WebDriver library
 
 ## Features
 
-* Supports running __multiple browser sessions__ !!!
+* Supports running __multiple browser sessions__ simultaneously !!!
 * Implements the [WebDriver Wire Protocol](https://code.google.com/p/selenium/wiki/JsonWireProtocol) based on the W3C WebDriver spec.
 
 
@@ -18,6 +18,7 @@ defmodule HoundTest do
   hound_session
 
   test "the truth", meta do
+    #TODO need a better example
     navigate_to("http://google.com")
     assert(true)
   end
@@ -57,14 +58,27 @@ hound_session
 If you prefer to manually start and end sessions, use `Hound.start_session` and `Hound.end_session` in the setup and teardown blocks of your tests.
 
 
-### Multiple browser support
+### Multiple browser sessions simultaneously
 
-
+I know, you are curious, check it out
 
 ### Helpers
 
+TODO add links to the following
 
+* Page
+* Element
+* Navigation
+* Orientation
+* Cookies
+* Dialog
+* Javascript execution
 
 ### Reference
 
 https://code.google.com/p/selenium/wiki/JsonWireProtocol
+
+
+## License
+
+Copyright &copy; 2013, Akash Manohar J, under the MIT License
