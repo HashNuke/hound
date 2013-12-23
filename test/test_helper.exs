@@ -12,7 +12,8 @@ System.at_exit fn(_exit_status) ->
 
   {:ok, pid} = :inets.start(:httpd, test_server_config)
 
-  ExUnit.run
+  test_result = ExUnit.run
 
   :ok = :inets.stop(:httpd, pid)
+  test_result
 end
