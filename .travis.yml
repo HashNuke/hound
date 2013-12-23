@@ -1,0 +1,16 @@
+language: erlang
+otp_release:
+   - R16B
+
+before_install:
+  - "export DISPLAY=:99.0"
+  - "/sbin/start-stop-daemon --start --quiet --pidfile /tmp/custom_xvfb_99.pid --make-pidfile --background --exec /usr/bin/Xvfb -- :99 -ac -screen 0 1280x1024x16"
+  - mkdir $HOME/src
+  - git clone https://github.com/elixir-lang/elixir.git $HOME/src/elixir
+  - cd $HOME/src/elixir && git checkout $ELIXIR_VERSION && make clean test && cd -
+
+env:
+  - PATH=$PATH:$HOME/src/elixir/bin/ ELIXIR_VERSION=v0.12.0
+
+install: mix deps.get
+script:  mix test
