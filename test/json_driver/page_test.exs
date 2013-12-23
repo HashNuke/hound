@@ -16,26 +16,48 @@ defmodule PageTest do
   end
 
 
-  # test "should find elements within page" do
-  # end
+  test "should find elements within page" do
+    navigate_to("http://localhost:9090/page1.html")
+    assert is_binary(find_element(:class, "example"))
+  end
 
 
-  # test "should find single element within page" do
-  # end
+  test "should find all elements within page" do
+    navigate_to("http://localhost:9090/page1.html")
+    element_ids = find_all_elements(:tag, "p")
+    assert length(element_ids) == 3
+    lc element_id inlist element_ids do
+      assert is_binary(element_id)
+    end
+  end
 
 
-  # test "should find single element within another element" do
-  # end
+  test "should find a single element within another element" do
+    navigate_to("http://localhost:9090/page1.html")
+    container_id = find_element(:class, "container")
+    element_id = find_within_element(container_id, :class, "example")
+    assert is_binary(element_id)
+  end
 
 
-  # test "should find elements within another element" do
-  # end
+  test "should find all elements within another element" do
+    navigate_to("http://localhost:9090/page1.html")
+    container_id = find_element(:class, "container")
+    element_ids = find_all_within_element(container_id, :tag, "p")
+    assert length(element_ids) == 2
+    lc element_id inlist element_ids do
+      assert is_binary(element_id)
+    end
+  end
 
 
-  # test "should get element in focus" do
-  # end
+  test "should get element in focus" do
+    navigate_to("http://localhost:9090/page1.html")
+    assert is_binary(element_in_focus())
+  end
 
 
+  #TODO
   # test "should send keys" do
   #   # Show copy paste example.
   #   # Use cmd modifier on mac and ctrl on others.
