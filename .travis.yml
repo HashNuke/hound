@@ -6,6 +6,8 @@ before_install:
   - "export DISPLAY=:99.0"
   - "/sbin/start-stop-daemon --start --quiet --pidfile /tmp/custom_xvfb_99.pid --make-pidfile --background --exec /usr/bin/Xvfb -- :99 -ac -screen 0 1280x1024x16"
   - mkdir $HOME/src
+  - wget https://selenium.googlecode.com/files/selenium-server-standalone-2.39.0.jar
+  - nohup java -jar ~/Desktop/selenium-server-standalone-2.39.0.jar &
   - git clone https://github.com/elixir-lang/elixir.git $HOME/src/elixir
   - cd $HOME/src/elixir && git checkout $ELIXIR_VERSION && make clean test && cd -
 
