@@ -74,16 +74,6 @@ TODO add links to the following
 * Dialog
 * Javascript execution
 
-## Development
-
-Install PhantomJs
-
-    npm install phantomjs -g
-
-Start the webdriver server
-
-    phantomjs --webdriver='127.0.0.1:4444'
-
 ## Reference
 
 https://code.google.com/p/selenium/wiki/JsonWireProtocol
