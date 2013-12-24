@@ -2,12 +2,42 @@
 <html>
 <head>
   <title>Hound Test Page</title>
+  <style type="text/css">
+    .container {
+      display: block;
+    }
+
+    .example {
+      width: 400px;
+      height: 100px;
+    }
+  </style>
 </head>
 <body>
   <div class="container">
     <p class="example">Paragraph</p>
     <p class="another_example">Another Paragraph</p>
   </div>
+
   <p>Out of container paragraph</p>
+
+  <form action="page2.html" method="post">
+    <input type="text" name="username"/>
+    <input type="text" name="promocode" disabled/>
+
+    <p>
+      <input type="checkbox" name="superpower" value="flying"/>Flying
+      <br/>
+      <input type="checkbox" name="superpower" value="speed"/>Speed
+    </p>
+
+
+    <p>
+      <input type="radio" name="favourite_fruit" value="Apple"/>Apple
+      <br/>
+      <input type="radio" name="favourite_fruit" value="Custard Apple"/>Custard Apple
+    </p>
+  </form>
+
 </body>
 </html>
