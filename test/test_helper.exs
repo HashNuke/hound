@@ -1,5 +1,5 @@
 test_server_config = [
-  port: 9090,
+  port: 7070,
   server_name: 'hound_test_server',
   server_root: Path.absname('test/sample_pages'),
   document_root: Path.absname('test/sample_pages'),

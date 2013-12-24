@@ -11,13 +11,19 @@
       width: 400px;
       height: 100px;
     }
+
+    .hidden-element {
+      display: none;
+    }
   </style>
 </head>
 <body>
   <div class="container">
-    <p class="example">Paragraph</p>
+    <p class="example" data-greeting"hello">Paragraph</p>
     <p class="another_example">Another Paragraph</p>
   </div>
+
+  <div class="hidden-element">This is hidden</div>
 
   <p>Out of container paragraph</p>
 
@@ -26,9 +32,9 @@
     <input type="text" name="promocode" disabled/>
 
     <p>
-      <input type="checkbox" name="superpower" value="flying"/>Flying
+      <input type="checkbox" name="superpower" id="speed-flying" value="flying"/>Flying
       <br/>
-      <input type="checkbox" name="superpower" value="speed"/>Speed
+      <input type="checkbox" name="superpower" id="speed-superpower" value="speed"/>Speed
     </p>
 
 
@@ -37,6 +43,8 @@
       <br/>
       <input type="radio" name="favourite_fruit" value="Custard Apple"/>Custard Apple
     </p>
+
+    <input type="submit" class="submit-form"/>
   </form>
 
 </body>

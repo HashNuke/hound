@@ -26,16 +26,30 @@ defmodule ElementTest do
   end
 
 
-  # test "should clear field" do
-  # end
+  test "should clear field" do
+    navigate_to "http://localhost:9090/page1.html"
+    element_id = find_element(:name, "username")
+    set_value(element_id, "johndoe")
+    assert attribute_value(element_id, "value") == "johndoe"
+
+    clear_field(element_id)
+    assert attribute_value(element_id, "value") == ""
+  end
 
 
-  # test "should return true if item is selected in a checkbox or radio" do
-  # end
+  test "should return true if item is selected in a checkbox or radio" do
+    navigate_to "http://localhost:9090/page1.html"
+    element_id = find_element :id, "speed-superpower"
+    click element_id
+    assert selected?(element_id)
+  end
 
 
-  # test "should return false if item is *not* selected" do
-  # end
+  test "should return false if item is *not* selected" do
+    navigate_to "http://localhost:9090/page1.html"
+    element_id = find_element :id, "speed-flying"
+    assert selected?(element_id) == false
+  end
 
 
   test "Should return true if element is enabled" do
@@ -51,20 +65,35 @@ defmodule ElementTest do
     assert enabled?(element_id) == false
   end
 
-  # test "should get attribute value of an element" do
-  # end
+
+  test "should get attribute value of an element" do
+    navigate_to "http://localhost:9090/page1.html"
+    element_id = find_element(:class, "example")
+    assert attribute_value("data-greeting") == "hello"
+  end
 
 
-  # test "should return true if an element is displayed" do
-  # end
+  test "should return true if an element is displayed" do
+    navigate_to "http://localhost:9090/page1.html"
+    element_id = find_element(:class, "example")
+    assert displayed?(element_id)
+  end
 
 
-  # test "should return false if an element is *not* displayed" do
-  # end
+  test "should return false if an element is *not* displayed" do
+    navigate_to "http://localhost:9090/page1.html"
+    element_id = find_element(:class, "hidden-element")
+    assert displayed?(element_id) == false
+  end
 
 
-  # test "should get an element's location on screen" do
-  # end
+  test "should get an element's location on screen" do
+    navigate_to "http://localhost:9090/page1.html"
+    element_id = find_element :class, "example"
+    location = element_location element_id
+    assert is_binary(location["x"])
+    assert is_binary(location["y"])
+  end
 
 
   test "should get an element's size" do
@@ -83,8 +112,12 @@ defmodule ElementTest do
   end
 
 
-  # test "should click on an element" do
-  # end
+  test "should click on an element" do
+    navigate_to "http://localhost:6060/page1.html"
+    element_id = find_element(:class, "submit-form")
+    click element_id
+    assert current_url == "http://localhost:6060/page2.html"
+  end
 
 
   test "should submit a form element" do

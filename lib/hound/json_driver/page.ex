@@ -8,12 +8,14 @@ defmodule Hound.JsonDriver.Page do
     make_req(:get, "session/#{session_id}/source")
   end
 
+
   @doc "Get the title of the current page"
   @spec page_title() :: String.t
   def page_title() do
     session_id = Hound.get_current_session_id
     make_req(:get, "session/#{session_id}/title")
   end
+
 
   @doc "Find element on current page"
   @spec find_element(String.t, String.t) :: Dict.t
@@ -27,6 +29,7 @@ defmodule Hound.JsonDriver.Page do
         value
     end
   end
+
 
   @doc "Find elements on current page"
   @spec find_all_elements(atom, String.t) :: List.t
