@@ -2,6 +2,8 @@
 
 Elixir WebDriver library
 
+[![Build Status](https://travis-ci.org/HashNuke/hound.png?branch=master)](https://travis-ci.org/HashNuke/hound)
+
 ## Features
 
 * Supports running __multiple browser sessions__ simultaneously !!!
