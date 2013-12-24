@@ -12,7 +12,7 @@ defmodule Hound.JsonDriver.Element do
   @spec set_value(String.t, String.t) :: :ok
   def set_value(element_id, input) do
     session_id = Hound.get_current_session_id
-    make_req(:post, "session/#{session_id}/element/#{element_id}/value", [value: input])
+    make_req(:post, "session/#{session_id}/element/#{element_id}/value", [value: [input]])
   end
 
   @doc "Get an element's tag name"
