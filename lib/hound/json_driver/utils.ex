@@ -15,6 +15,8 @@ defmodule Hound.JsonDriver.Utils do
     {:ok, status, _headers, content} = :ibrowse.send_req(url, headers, type, body)
     resp = decode_content(content)
 
+    {status, _} = :string.to_integer(status)
+
     cond do
       resp["status"] == 0 && path == "session" ->
         {:ok, resp["sessionId"]}
@@ -24,9 +26,12 @@ defmodule Hound.JsonDriver.Utils do
         :ok
       true ->
         if resp["value"] do
-          {:error, resp["value"]}
+          raise resp["value"]["message"]
         else
-          {:error, status}
+          raise """
+          Webdriver call status code #{status} for #{url}.
+          Check if webdriver server is running. Make sure it supports the feature being requested.
+          """
         end
     end
   end
