@@ -25,7 +25,7 @@ defmodule PageTest do
   test "should find all elements within page" do
     navigate_to("http://localhost:9090/page1.html")
     element_ids = find_all_elements(:tag, "p")
-    assert length(element_ids) == 3
+    assert length(element_ids) == 5
     lc element_id inlist element_ids do
       assert is_binary(element_id)
     end
