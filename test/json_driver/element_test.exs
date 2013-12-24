@@ -69,7 +69,7 @@ defmodule ElementTest do
   test "should get attribute value of an element" do
     navigate_to "http://localhost:9090/page1.html"
     element_id = find_element(:class, "example")
-    assert attribute_value("data-greeting") == "hello"
+    assert attribute_value(element_id, "data-greeting") == "hello"
   end
 
 
