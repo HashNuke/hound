@@ -91,8 +91,8 @@ defmodule ElementTest do
     navigate_to "http://localhost:9090/page1.html"
     element_id = find_element :class, "example"
     location = element_location element_id
-    assert is_binary(location["x"])
-    assert is_binary(location["y"])
+    assert is_integer(location["x"]) || is_float(location["x"])
+    assert is_integer(location["y"]) || is_float(location["y"])
   end
 
 
@@ -113,10 +113,10 @@ defmodule ElementTest do
 
 
   test "should click on an element" do
-    navigate_to "http://localhost:6060/page1.html"
+    navigate_to "http://localhost:9090/page1.html"
     element_id = find_element(:class, "submit-form")
     click element_id
-    assert current_url == "http://localhost:6060/page2.html"
+    assert current_url == "http://localhost:9090/page2.html"
   end
 
 
