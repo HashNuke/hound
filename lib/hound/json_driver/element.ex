@@ -20,13 +20,7 @@ defmodule Hound.JsonDriver.Element do
   def visible_text(element) do
     element_id = get_element_id(element)
     session_id = Hound.get_current_session_id
-    result = make_req(:get, "session/#{session_id}/element/#{element_id}")
-    cond do
-      is_list(result) ->
-        result["text"]
-      true ->
-        result
-    end
+    make_req(:get, "session/#{session_id}/element/#{element_id}/text")
   end
 
 
