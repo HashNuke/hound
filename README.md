@@ -1,14 +1,21 @@
 # Hound
 
-Elixir WebDriver library
+Elixir library to write integration tests using webdriver.
+
+[Documentation](http://akash.im/docs/hound)
 
 [![Build Status](https://travis-ci.org/HashNuke/hound.png?branch=master)](https://travis-ci.org/HashNuke/hound)
 
 ## Features
 
-* Supports running __multiple browser sessions__ simultaneously !!!
-* Implements the [WebDriver Wire Protocol](https://code.google.com/p/selenium/wiki/JsonWireProtocol) based on the W3C WebDriver spec.
+* Can run __multiple browser sessions__ simultaneously. [See example](https://github.com/HashNuke/hound/blob/master/test/multiple_browser_session_test.exs).
 
+* Supports Selenium (Firefox, Chrome) and PhantomJs.
+
+* Implements the WebDriver Wire Protocol.
+
+
+**IE may work, but hasn't been tested.
 
 #### Example
 
@@ -20,9 +27,13 @@ defmodule HoundTest do
   hound_session
 
   test "the truth", meta do
-    #TODO need a better example
-    navigate_to("http://google.com")
-    assert(true)
+    navigate_to("http://example.com/guestbook.html")
+
+    find_element(:name, "message")
+    |> fill_field("Happy Birthday ~!")
+    |> submit_element()
+
+    assert page_title() == "Thank you"
   end
 
 end
@@ -60,20 +71,23 @@ hound_session
 If you prefer to manually start and end sessions, use `Hound.start_session` and `Hound.end_session` in the setup and teardown blocks of your tests.
 
 
-### Helpers
+## Helpers
 
-TODO add links to the following
+* [Navigation](http://akash.im/docs/hound/Hound.JsonDriver.Navigation.html)
+* [Page](http://akash.im/docs/hound/Hound.JsonDriver.Page.html)
+* [Element](http://akash.im/docs/hound/Hound.JsonDriver.Element.html)
+* [Cookies](http://akash.im/docs/hound/Hound.JsonDriver.Cookie.html)
+* [Javascript execution](http://akash.im/docs/hound/Hound.JsonDriver.ScriptExecution.html)
+* [Javascript dialogs](http://akash.im/docs/hound/Hound.JsonDriver.Dialog.html)
+* [Screenshot](http://akash.im/docs/hound/Hound.JsonDriver.Screenshot.html)
 
-* Page
-* Element
-* Navigation
-* Orientation
-* Cookies
-* Dialog
-* Javascript execution
+The documentation pages includes examples under each function.
 
+The docs are at <http://akash.im/docs/hound>.
 
-### Multiple browser sessions simultaneously
+### More examples? [Checkout Hound's own test cases](https://github.com/HashNuke/hound/tree/master/test/json_driver)
+
+## Run multiple browser sessions simultaneously
 
 Oh yeah ~! Hound makes that possible. [Checkout our test case for that](https://github.com/HashNuke/hound/blob/master/test/multiple_browser_session_test.exs).
 
