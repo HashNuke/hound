@@ -1,7 +1,9 @@
 defmodule Hound.JsonDriver.Navigation do
+  @moduledoc "Provides navigation functions."
+
   import Hound.JsonDriver.Utils
 
-  @doc "Get url of the current page"
+  @doc "Gets url of the current page."
   @spec current_url() :: String.t
   def current_url do
     session_id = Hound.get_current_session_id
@@ -9,7 +11,11 @@ defmodule Hound.JsonDriver.Navigation do
   end
 
 
-  @doc "Navigate to a url"
+  @doc """
+  Navigates to a url.
+
+      navigate_to("http://example.com")
+  """
   @spec navigate_to(String.t) :: :ok
   def navigate_to(url) do
     session_id = Hound.get_current_session_id
@@ -17,7 +23,7 @@ defmodule Hound.JsonDriver.Navigation do
   end
 
 
-  @doc "Navigate forward in browser history"
+  @doc "Navigates forward in browser history."
   @spec navigate_forward() :: :ok
   def navigate_forward do
     session_id = Hound.get_current_session_id
@@ -25,7 +31,7 @@ defmodule Hound.JsonDriver.Navigation do
   end
 
 
-  @doc "Navigate back in browser history"
+  @doc "Navigates back in browser history."
   @spec navigate_back() :: :ok
   def navigate_back do
     session_id = Hound.get_current_session_id
@@ -33,7 +39,7 @@ defmodule Hound.JsonDriver.Navigation do
   end
 
 
-  @doc "Refresh current page"
+  @doc "Refreshes the current page."
   @spec refresh_page() :: :ok
   def refresh_page do
     session_id = Hound.get_current_session_id
