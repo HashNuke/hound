@@ -9,6 +9,7 @@ defmodule Hound.JsonDriver do
       import Hound.JsonDriver.Window
       import Hound.JsonDriver.Screenshot
       import Hound.JsonDriver.Dialog
+      import Hound.JsonDriver.Cookie
     end
   end
 
