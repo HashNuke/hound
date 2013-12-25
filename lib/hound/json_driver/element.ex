@@ -125,11 +125,11 @@ defmodule Hound.JsonDriver.Element do
   Checks if an input field is enabled.
 
       element_id = find_element(:name, "example")
-      enabled?(element_id)
+      element_enabled?(element_id)
 
   You can also pass the selector as a tuple.
 
-      enabled?({:name, "example"})
+      element_enabled?({:name, "example"})
   """
   @spec element_enabled?(element) :: :true | :false
   def element_enabled?(element) do
@@ -157,7 +157,13 @@ defmodule Hound.JsonDriver.Element do
   end
 
 
-  @doc "Check if two element IDs refer to the same DOM element"
+  @doc """
+  Checks if two element IDs refer to the same DOM element.
+
+      element_id1 = find_element(:name, "username")
+      element_id2 = find_element(:id, "user_name")
+      same_element?(element_id1, element_id2)
+  """
   @spec same_element?(String.t, String.t) :: :true | :false
   def same_element?(element_id1, element_id2) do
     session_id = Hound.get_current_session_id
@@ -165,7 +171,16 @@ defmodule Hound.JsonDriver.Element do
   end
 
 
-  @doc "Check if an element is currently displayed"
+  @doc """
+  Checks if an element is currently displayed.
+
+      element_id = find_element(:name, "example")
+      element_displayed?(element_id)
+
+  You can also pass the selector as a tuple.
+
+      element_displayed?({:name, "example"})
+  """
   @spec element_displayed?(element) :: :true | :false
   def element_displayed?(element) do
     element_id = get_element_id(element)
@@ -174,7 +189,16 @@ defmodule Hound.JsonDriver.Element do
   end
 
 
-  @doc "Get element's location on page"
+  @doc """
+  Gets an element's location on page. It returns the size as a tuple of the form {width, height}.
+
+      element_id = find_element(:name, "example")
+      element_location(element_id)
+
+  You can also pass the selector as a tuple.
+
+      element_location({:name, "example"})
+  """
   @spec element_location(element) :: tuple
   def element_location(element) do
     element_id = get_element_id(element)
@@ -184,7 +208,16 @@ defmodule Hound.JsonDriver.Element do
   end
 
 
-  @doc "Get element size pixels"
+  @doc """
+  Gets an element's size in pixels. It returns the location as a tuple of the form {x, y}.
+
+      element_id = find_element(:name, "example")
+      element_location(element_id)
+
+  You can also pass the selector as a tuple.
+
+      element_location({:name, "example"})
+  """
   @spec element_size(element) :: tuple
   def element_size(element) do
     element_id = get_element_id(element)
