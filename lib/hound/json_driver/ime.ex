@@ -1,18 +1,24 @@
 defmodule Hound.JsonDriver.Ime do
-  import Hound.JsonDriver.Utils
+  @moduledoc false
+  # import Hound.JsonDriver.Utils
 
   # @doc "List available IME engines"
-  # defcallback available_ime_engines(session_id :: String.t) :: Dict.t
+  # @spec available_ime_engines() :: Dict.t
+  # def available_ime_engines()
 
   # @doc "Get name of active IME engine"
-  # defcallback active_ime_engine(session_id :: String.t) :: String.t
+  # @spec active_ime_engine() :: String.t
+  # def active_ime_engine()
 
   # @doc "Checks if the IME input is currently active"
-  # defcallback ime_active?(session_id :: String.t) :: Boolean.t
+  # @spec ime_active?() :: Boolean.t
+  # def ime_active?()
 
   # @doc "Activate IME engine"
-  # defcallback activate_ime_engine(session_id :: String.t, engine_name :: String.t) :: :ok
+  # @spec activate_ime_engine(String.t) :: :ok
+  # def activate_ime_engine(engine_name)
 
   # @doc "Deactivate currently active IME engine"
-  # defcallback deactivate_current_ime_engine(session_id :: String.t) :: :ok
+  # @spec deactivate_current_img_engine() :: :ok
+  # def deactivate_current_ime_engine()
 end
