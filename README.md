@@ -89,18 +89,16 @@ The docs are at <http://akash.im/docs/hound>.
 
 ## Run multiple browser sessions simultaneously
 
-Oh yeah ~! Hound makes that possible. [Checkout our test case for that](https://github.com/HashNuke/hound/blob/master/test/multiple_browser_session_test.exs).
+Oh yeah ~! [Here is an example](https://github.com/HashNuke/hound/blob/master/test/multiple_browser_session_test.exs).
 
-It works perfectly fine with Selenium and Firefox.
-
-However, if you are running PhantomJs, take a look at the *Caveats* section below.
+If you are running PhantomJs, take a look at the *Caveats* section below.
 
 ## Caveats
 
 PhantomJs is extremely fast, but there are certain caveats. It uses Ghostdriver for it's webdriver server, which currently has unimplemented features or open issues.
 
 * Cookie jar isn't seperate for sessions - <https://github.com/ariya/phantomjs/issues/11417>
-  Which means all sessions share the same cookies. Make sure you run `delete_cookies()` in each cookies in each test case.
+  Which means all sessions share the same cookies. Make sure you run `delete_cookies()` at the end of each test.
 * Sessions are not isolated - <https://github.com/detro/ghostdriver/issues/170>.
 * Javascript alerts aren't yet supported - <https://github.com/detro/ghostdriver/issues/20>.
 
