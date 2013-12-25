@@ -1,4 +1,4 @@
-defmodule ElementTest do
+defmodule ElementTestWithIds do
   use ExUnit.Case
   use Hound.Helpers
 
