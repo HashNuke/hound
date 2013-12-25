@@ -1,15 +1,35 @@
 defmodule Hound.JsonDriver.Cookie do
   import Hound.JsonDriver.Utils
 
-  @doc "Get cookies"
+  @doc """
+  Gets cookies. Returns a list of ListDicts, each containing properties of the cookie.
+
+    get_cookies()
+  """
   @spec cookies() :: List.t
   def cookies() do
     session_id = Hound.get_current_session_id
     make_req(:get, "session/#{session_id}/cookie")
   end
 
-  @doc "Set cookie"
-  @spec set_cookie(String.t) :: :ok
+
+  @doc """
+  Sets cookie.
+
+  Accepts a ListDict with the following keys:
+
+  * name (string) - REQUIRED
+  * value (string) - REQUIRED
+  * path (string)
+  * domain (string)
+  * secure (boolean)
+  * expiry (integer, specified in seconds since midnight, January 1, 1970 UTC)
+
+      set_cookie([name: "cart_id", value: 123213])
+      set_cookie([name: "cart_id", value: "23fa0ev5a6er", secure: true])
+
+  """
+  @spec set_cookie(Dict.t) :: :ok
   def set_cookie(cookie) do
     session_id = Hound.get_current_session_id
     make_req(:post, "session/#{session_id}/cookie", [cookie: cookie])

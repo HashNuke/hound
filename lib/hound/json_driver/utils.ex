@@ -18,11 +18,11 @@ defmodule Hound.JsonDriver.Utils do
     {status, _} = :string.to_integer(status)
 
     cond do
-      resp["status"] == 0 && path == "session" ->
+      status < 300 && path == "session" ->
         {:ok, resp["sessionId"]}
       resp["status"] == 0 ->
         resp["value"]
-      status < 300 ->
+      status < 400 ->
         :ok
       true ->
         if resp["value"] do
