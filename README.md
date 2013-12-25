@@ -73,6 +73,8 @@ If you prefer to manually start and end sessions, use `Hound.start_session` and 
 
 ## Helpers
 
+The documentation pages include examples under each function.
+
 * [Navigation](http://akash.im/docs/hound/Hound.JsonDriver.Navigation.html)
 * [Page](http://akash.im/docs/hound/Hound.JsonDriver.Page.html)
 * [Element](http://akash.im/docs/hound/Hound.JsonDriver.Element.html)
@@ -80,8 +82,6 @@ If you prefer to manually start and end sessions, use `Hound.start_session` and 
 * [Javascript execution](http://akash.im/docs/hound/Hound.JsonDriver.ScriptExecution.html)
 * [Javascript dialogs](http://akash.im/docs/hound/Hound.JsonDriver.Dialog.html)
 * [Screenshot](http://akash.im/docs/hound/Hound.JsonDriver.Screenshot.html)
-
-The documentation pages includes examples under each function.
 
 The docs are at <http://akash.im/docs/hound>.
 
