@@ -240,8 +240,8 @@ defmodule Hound.JsonDriver.Element do
 
       submit({:name, "username"})
   """
-  @spec submit(element) :: :ok
-  def submit(element) do
+  @spec submit_element(element) :: :ok
+  def submit_element(element) do
     element_id = get_element_id(element)
     session_id = Hound.get_current_session_id
     make_req(:post, "session/#{session_id}/element/#{element_id}/submit")

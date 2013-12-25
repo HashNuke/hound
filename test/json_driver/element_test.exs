@@ -138,7 +138,7 @@ defmodule ElementTest do
   test "should submit a form element" do
     navigate_to "http://localhost:9090/page1.html"
     element_id = find_element(:name, "username")
-    submit(element_id)
+    submit_element(element_id)
     assert current_url == "http://localhost:9090/page2.html"
   end
 end
