@@ -60,10 +60,6 @@ hound_session
 If you prefer to manually start and end sessions, use `Hound.start_session` and `Hound.end_session` in the setup and teardown blocks of your tests.
 
 
-### Multiple browser sessions simultaneously
-
-I know, you are curious, check it out
-
 ### Helpers
 
 TODO add links to the following
@@ -76,9 +72,23 @@ TODO add links to the following
 * Dialog
 * Javascript execution
 
-## Reference
 
-https://code.google.com/p/selenium/wiki/JsonWireProtocol
+### Multiple browser sessions simultaneously
+
+Oh yeah ~! Hound makes that possible. [Checkout our test case for that](https://github.com/HashNuke/hound/blob/master/test/multiple_browser_session_test.exs).
+
+It works perfectly fine with Selenium and Firefox.
+
+However, if you are running PhantomJs, take a look at the *Caveats* section below.
+
+## Caveats
+
+PhantomJs is extremely fast, but there are certain caveats. It uses Ghostdriver for it's webdriver server, which currently has unimplemented features or open issues.
+
+* Cookie jar isn't seperate for sessions - <https://github.com/ariya/phantomjs/issues/11417>
+  Which means all sessions share the same cookies. Make sure you run `delete_cookies()` in each cookies in each test case.
+* Sessions are not isolated - <https://github.com/detro/ghostdriver/issues/170>.
+* Javascript alerts aren't yet supported - <https://github.com/detro/ghostdriver/issues/20>.
 
 
 ## License
