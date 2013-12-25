@@ -11,11 +11,27 @@ defmodule ElementTest do
   end
 
 
-  test "should set value of a field" do
+  test "should input value into field" do
     navigate_to "http://localhost:9090/page1.html"
     element_id = find_element(:name, "username")
-    set_value(element_id, "johndoe")
+
+    input_into_field(element_id, "john")
+    assert attribute_value(element_id, "value") == "john"
+
+    input_into_field(element_id, "doe")
     assert attribute_value(element_id, "value") == "johndoe"
+  end
+
+
+  test "should fill a field with a value" do
+    navigate_to "http://localhost:9090/page1.html"
+    element_id = find_element(:name, "username")
+
+    fill_field(element_id, "johndoe")
+    assert attribute_value(element_id, "value") == "johndoe"
+
+    fill_field(element_id, "janedoe")
+    assert attribute_value(element_id, "value") == "janedoe"
   end
 
 

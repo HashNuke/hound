@@ -15,10 +15,20 @@ defmodule Hound.JsonDriver.Element do
   end
 
 
-  @doc "Set value of element. Sends a sequence of key strokes"
-  @spec set_value(String.t, String.t) :: :ok
-  def set_value(element_id, input) do
+  @doc "Inputs value into field.
+  It does not clear the field before entering the new value. Anything passed is added to the value already present"
+  @spec input_into_field(String.t, String.t) :: :ok
+  def input_into_field(element_id, input) do
     session_id = Hound.get_current_session_id
+    make_req(:post, "session/#{session_id}/element/#{element_id}/value", [value: [input]])
+  end
+
+
+  @doc "Clear the existing value in a value and enter a new one"
+  @spec fill_field(String.t, String.t) :: :ok
+  def fill_field(element_id, input) do
+    session_id = Hound.get_current_session_id
+    clear_field(element_id)
     make_req(:post, "session/#{session_id}/element/#{element_id}/value", [value: [input]])
   end
 
