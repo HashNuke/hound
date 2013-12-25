@@ -4,7 +4,16 @@ defmodule Hound.JsonDriver.Element do
   @type element_selector :: {atom, String.t}
   @type element :: element_selector | String.t
 
-  @doc "Get visible text of element"
+  @doc """
+  Gets visible text of element. Requires the element ID.
+
+      element_id = find_element(:css, ".example")
+      visible_text(element_id)
+
+  You can also directly pass the selector as a tuple.
+
+      visible_text({:css, ".example"})
+  """
   @spec visible_text(element) :: String.t
   def visible_text(element) do
     element_id = get_element_id(element)
@@ -19,8 +28,18 @@ defmodule Hound.JsonDriver.Element do
   end
 
 
-  @doc "Inputs value into field.
-  It does not clear the field before entering the new value. Anything passed is added to the value already present"
+  @doc """
+  Enters value into field.
+
+  It does not clear the field before entering the new value. Anything passed is added to the value already present.
+
+      element_id = find_element(:id, "example")
+      input_into_field(element_id, "John Doe")
+
+  You can also pass the selector as a tuple, for the first argument.
+
+      input_into_field({:id, "example"}, "John Doe")
+  """
   @spec input_into_field(element, String.t) :: :ok
   def input_into_field(element, input) do
     element_id = get_element_id(element)
@@ -29,7 +48,16 @@ defmodule Hound.JsonDriver.Element do
   end
 
 
-  @doc "Clear the existing value in a value and enter a new one"
+  @doc """
+  Sets a field's value. The difference with `input_info_field` is that, the field is cleared before entering the new value.
+
+      element_id = find_element(:id, "example")
+      fill_field(element_id, "John Doe")
+
+  You can also pass the selector as a tuple, for the first argument.
+
+      fill_field({:id, "example"}, "John Doe")
+  """
   @spec fill_field(element, String.t) :: :ok
   def fill_field(element, input) do
     element_id = get_element_id(element)
@@ -39,7 +67,16 @@ defmodule Hound.JsonDriver.Element do
   end
 
 
-  @doc "Get an element's tag name"
+  @doc """
+  Gets an element's tag name.
+
+      element_id = find_element(:class, "example")
+      tag_name(element_id)
+
+  You can also directly pass the selector as a tuple.
+
+      tag_name({:class, "example"})
+  """
   @spec tag_name(element) :: String.t
   def tag_name(element) do
     element_id = get_element_id(element)
@@ -48,7 +85,16 @@ defmodule Hound.JsonDriver.Element do
   end
 
 
-  @doc "Clear textarea or input element's value"
+  @doc """
+  Clears textarea or input field's value
+
+      element_id = find_element(:class, "example")
+      clear_field(element_id)
+
+  You can also directly pass the selector as a tuple.
+
+      clear_field({:class, "example"})
+  """
   @spec clear_field(element) :: :ok
   def clear_field(element) do
     element_id = get_element_id(element)
@@ -57,7 +103,16 @@ defmodule Hound.JsonDriver.Element do
   end
 
 
-  @doc "Check if a checkbox or radio input group has any option selected"
+  @doc """
+  Checks if a radio input group or checkbox has any value selected.
+
+      element_id = find_element(:name, "example")
+      selected?(element_id)
+
+  You can also pass the selector as a tuple.
+
+      selected?({:name, "example"})
+  """
   @spec selected?(element) :: :true | :false
   def selected?(element) do
     element_id = get_element_id(element)
@@ -66,7 +121,16 @@ defmodule Hound.JsonDriver.Element do
   end
 
 
-  @doc "Check if an input field is enabled"
+  @doc """
+  Checks if an input field is enabled.
+
+      element_id = find_element(:name, "example")
+      enabled?(element_id)
+
+  You can also pass the selector as a tuple.
+
+      enabled?({:name, "example"})
+  """
   @spec enabled?(element) :: :true | :false
   def enabled?(element) do
     element_id = get_element_id(element)
@@ -75,7 +139,16 @@ defmodule Hound.JsonDriver.Element do
   end
 
 
-  @doc "Get an element's attribute value"
+  @doc """
+  Gets an element's attribute value.
+
+      element_id = find_element(:name, "example")
+      attribute_value(element_id, "data-greeting")
+
+  You can also pass the selector as a tuple, for the first argument
+
+      attribute_value({:name, "example"}, "data-greeting")
+  """
   @spec attribute_value(element, String.t) :: String.t | :nil
   def attribute_value(element, attribute_name) do
     element_id = get_element_id(element)
@@ -119,7 +192,16 @@ defmodule Hound.JsonDriver.Element do
   end
 
 
-  @doc "Get an element's computed CSS property"
+  @doc """
+  Gets an element's computed CSS property.
+
+      element_id = find_element(:name, "example")
+      css_property(element_id, "display")
+
+  You can also pass the selector as a tuple, for the first argument
+
+      css_property({:name, "example"}, "display")
+  """
   @spec css_property(element, String.t) :: String.t
   def css_property(element, property_name) do
     element_id = get_element_id(element)
