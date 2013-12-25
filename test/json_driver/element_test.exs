@@ -71,14 +71,14 @@ defmodule ElementTest do
   test "Should return true if element is enabled" do
     navigate_to "http://localhost:9090/page1.html"
     element_id = find_element(:name, "username")
-    assert enabled?(element_id) == true
+    assert element_enabled?(element_id) == true
   end
 
 
   test "Should return false if element is *not* enabled" do
     navigate_to "http://localhost:9090/page1.html"
     element_id = find_element(:name, "promocode")
-    assert enabled?(element_id) == false
+    assert element_enabled?(element_id) == false
   end
 
 
@@ -92,23 +92,23 @@ defmodule ElementTest do
   test "should return true if an element is displayed" do
     navigate_to "http://localhost:9090/page1.html"
     element_id = find_element(:class, "example")
-    assert displayed?(element_id)
+    assert element_displayed?(element_id)
   end
 
 
   test "should return false if an element is *not* displayed" do
     navigate_to "http://localhost:9090/page1.html"
     element_id = find_element(:class, "hidden-element")
-    assert displayed?(element_id) == false
+    assert element_displayed?(element_id) == false
   end
 
 
   test "should get an element's location on screen" do
     navigate_to "http://localhost:9090/page1.html"
     element_id = find_element :class, "example"
-    location = element_location element_id
-    assert is_integer(location["x"]) || is_float(location["x"])
-    assert is_integer(location["y"]) || is_float(location["y"])
+    {loc_x, loc_y} = element_location(element_id)
+    assert is_integer(loc_x) || is_float(loc_x)
+    assert is_integer(loc_y) || is_float(loc_y)
   end
 
 
@@ -116,8 +116,7 @@ defmodule ElementTest do
     navigate_to "http://localhost:9090/page1.html"
     element_id = find_element(:class, "example")
     size = element_size(element_id)
-    assert size["height"] == 100
-    assert size["width"]  == 400
+    assert size == {400, 100}
   end
 
 

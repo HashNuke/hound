@@ -131,8 +131,8 @@ defmodule Hound.JsonDriver.Element do
 
       enabled?({:name, "example"})
   """
-  @spec enabled?(element) :: :true | :false
-  def enabled?(element) do
+  @spec element_enabled?(element) :: :true | :false
+  def element_enabled?(element) do
     element_id = get_element_id(element)
     session_id = Hound.get_current_session_id
     make_req(:get, "session/#{session_id}/element/#{element_id}/enabled")
@@ -158,16 +158,16 @@ defmodule Hound.JsonDriver.Element do
 
 
   @doc "Check if two element IDs refer to the same DOM element"
-  @spec same?(String.t, String.t) :: :true | :false
-  def same?(element_id1, element_id2) do
+  @spec same_element?(String.t, String.t) :: :true | :false
+  def same_element?(element_id1, element_id2) do
     session_id = Hound.get_current_session_id
     make_req(:get, "session/#{session_id}/element/#{element_id1}/equals/#{element_id2}")
   end
 
 
   @doc "Check if an element is currently displayed"
-  @spec displayed?(element) :: :true | :false
-  def displayed?(element) do
+  @spec element_displayed?(element) :: :true | :false
+  def element_displayed?(element) do
     element_id = get_element_id(element)
     session_id = Hound.get_current_session_id
     make_req(:get, "session/#{session_id}/element/#{element_id}/displayed")
@@ -179,7 +179,8 @@ defmodule Hound.JsonDriver.Element do
   def element_location(element) do
     element_id = get_element_id(element)
     session_id = Hound.get_current_session_id
-    make_req(:get, "session/#{session_id}/element/#{element_id}/location")
+    result = make_req(:get, "session/#{session_id}/element/#{element_id}/location")
+    {result["x"], result["y"]}
   end
 
 
@@ -188,7 +189,8 @@ defmodule Hound.JsonDriver.Element do
   def element_size(element) do
     element_id = get_element_id(element)
     session_id = Hound.get_current_session_id
-    make_req(:get, "session/#{session_id}/element/#{element_id}/size")
+    result = make_req(:get, "session/#{session_id}/element/#{element_id}/size")
+    {result["width"], result["height"]}
   end
 
 
@@ -210,7 +212,16 @@ defmodule Hound.JsonDriver.Element do
   end
 
 
-  @doc "Click on element"
+  @doc """
+  Click on an element. You can also use this to click on checkboxes and radio buttons.
+
+      element_id = find_element(:id, ".example")
+      click(element_id)
+
+  You can also directly pass the selector as a tuple.
+
+      click({:id, "example"})
+  """
   @spec click(element) :: :ok
   def click(element) do
     element_id = get_element_id(element)
@@ -219,7 +230,16 @@ defmodule Hound.JsonDriver.Element do
   end
 
 
-  @doc "Submit form"
+  @doc """
+  Sends a submit event to any field or form element.
+
+      element_id = find_element(:name, "username")
+      submit(element_id)
+
+  You can also directly pass the selector as a tuple.
+
+      submit({:name, "username"})
+  """
   @spec submit(element) :: :ok
   def submit(element) do
     element_id = get_element_id(element)
