@@ -45,7 +45,7 @@ defmodule ElementTest do
   test "should clear field" do
     navigate_to "http://localhost:9090/page1.html"
     element_id = find_element(:name, "username")
-    set_value(element_id, "johndoe")
+    fill_field(element_id, "johndoe")
     assert attribute_value(element_id, "value") == "johndoe"
 
     clear_field(element_id)
