@@ -1,7 +1,13 @@
 defmodule Hound.JsonDriver.Dialog do
+  @moduledoc "Provides functions to handle Javascript dialogs alert(), prompt() and confirm()."
+
   import Hound.JsonDriver.Utils
 
-  @doc "Get text of a javascript alert(), confirm() or prompt()"
+  @doc """
+  Gets text of a javascript alert(), confirm() or prompt().
+
+      dialog_text()
+  """
   @spec dialog_text() :: String.t
   def dialog_text() do
     session_id = Hound.get_current_session_id
@@ -9,7 +15,11 @@ defmodule Hound.JsonDriver.Dialog do
   end
 
 
-  @doc "Send input to a javascript prompt()"
+  @doc """
+  Inputs text to a javascript prompt().
+
+      input_into_prompt("John Doe")
+  """
   @spec input_into_prompt(String.t) :: :ok 
   def input_into_prompt(input) do
     session_id = Hound.get_current_session_id
@@ -17,7 +27,11 @@ defmodule Hound.JsonDriver.Dialog do
   end
 
 
-  @doc "Accept javascript dialog"
+  @doc """
+  Accepts javascript dialog.
+
+      accept_dialog()
+  """
   @spec accept_dialog() :: :ok
   def accept_dialog() do
     session_id = Hound.get_current_session_id
@@ -25,7 +39,11 @@ defmodule Hound.JsonDriver.Dialog do
   end
 
 
-  @doc "Dismiss javascript dialog"
+  @doc """
+  Dismiss a javascript dialog.
+
+      dismiss_dialog()
+  """
   @spec dismiss_dialog() :: :ok
   def dismiss_dialog() do
     session_id = Hound.get_current_session_id

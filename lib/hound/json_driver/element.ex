@@ -1,4 +1,6 @@
 defmodule Hound.JsonDriver.Element do
+  @moduledoc "Provides functions related to elements."
+
   import Hound.JsonDriver.Utils
 
   @type element_selector :: {atom, String.t}
