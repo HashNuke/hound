@@ -154,9 +154,64 @@ defmodule Hound.JsonDriver.Page do
   end
 
 
-  @doc "Send sequence of key strokes to active element. The modifier keys are not released after this command is run."
+  @doc """
+  Perform actions when holding modifier keys.
+  """
+  defmacro with_modifier_keys(keys, blocks) do
+    do_block = Keyword.get(blocks, :do, nil)
+    quote do
+      send_keys()
+      unquote(do_block)
+    end
+  end
+
+
+  @doc """
+  Send sequence of key strokes to active element.
+  The keys are accepted as a list of atoms. The following are the atoms representing the keys.
+
+  * :alt - alt key
+  * :shift - shift key
+  * :command - command key (or meta key)
+  * :control - control key
+  * :backspace - backspace key
+  * :tab - tab key
+  * :clear - clear
+  * :return - return key
+  * :enter - enter key
+  * :escape - escape key
+  * :cancel - cancel key
+  * :help - help key
+  * :pause - pause key
+  * :num0 - numpad 0
+  * :num1 - numpad 1
+  * :num2 - numpad 2
+  * :num3 - numpad 3
+  * :num4 - numpad 4
+  * :num5 - numpad 5
+  * :num6 - numpad 6
+  * :num7 - numpad 7
+  * :num8 - numpad 8
+  * :num9 - numpad 9
+  * :add - add key
+  * :subtract - subtract key
+  * :multiply - multiply key
+  * :divide - divide key
+  * :seperator - seperator key
+  """
   @spec send_keys(List.t) :: :ok
   def send_keys(keys) do
+    session_id = Hound.get_current_session_id
+    make_req(:post,
+      "session/#{session_id}/keys",
+      Hound.InternalHelpers.key_codes_json(keys),
+      [json_encode: false])
+  end
+
+
+  @doc "Send text to active element."
+  @spec send_text(List.t) :: :ok
+  def send_text(keys) do
     session_id = Hound.get_current_session_id
     make_req(:post, "session/#{session_id}/keys", [value: keys])
   end

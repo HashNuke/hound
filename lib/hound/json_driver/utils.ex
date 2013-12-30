@@ -1,12 +1,14 @@
 defmodule Hound.JsonDriver.Utils do
   @moduledoc false
 
-  def make_req(type, path, params // []) do
+  def make_req(type, path, params // [], options // []) do
     url = get_url(path)
 
     if params != [] && type == :post do
       headers = [{'Content-Type', 'text/json'}]
-      {:ok, body} = JSEX.encode params
+      if options[:json_encode] != false do
+        {:ok, body} = JSEX.encode params
+      end
     else
       headers = []
       body = ""
