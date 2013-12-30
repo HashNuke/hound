@@ -156,6 +156,15 @@ defmodule Hound.JsonDriver.Page do
 
   @doc """
   Perform actions when holding modifier keys.
+  The modifier keys are released once the block has completed it's run.
+
+  The following are the modifier keys:
+
+  * :alt - alt key
+  * :shift - shift key
+  * :command - command key (or meta key)
+  * :control - control key
+  * :escape - escape key
   """
   defmacro with_keys(keys, blocks) do
     do_block = Keyword.get(blocks, :do, nil)
@@ -175,12 +184,12 @@ defmodule Hound.JsonDriver.Page do
   * :shift - shift key
   * :command - command key (or meta key)
   * :control - control key
+  * :escape - escape key
   * :backspace - backspace key
   * :tab - tab key
   * :clear - clear
   * :return - return key
   * :enter - enter key
-  * :escape - escape key
   * :cancel - cancel key
   * :help - help key
   * :pause - pause key
