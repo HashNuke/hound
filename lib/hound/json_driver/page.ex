@@ -157,11 +157,12 @@ defmodule Hound.JsonDriver.Page do
   @doc """
   Perform actions when holding modifier keys.
   """
-  defmacro with_modifier_keys(keys, blocks) do
+  defmacro with_keys(keys, blocks) do
     do_block = Keyword.get(blocks, :do, nil)
     quote do
-      send_keys()
+      send_keys(keys)
       unquote(do_block)
+      send_keys(:null)
     end
   end
 
@@ -199,8 +200,9 @@ defmodule Hound.JsonDriver.Page do
   * :divide - divide key
   * :seperator - seperator key
   """
-  @spec send_keys(List.t) :: :ok
+  @spec send_keys(List.t | atom) :: :ok
   def send_keys(keys) do
+    if is_atom(keys), do: keys = [keys]
     session_id = Hound.get_current_session_id
     make_req(:post,
       "session/#{session_id}/keys",
