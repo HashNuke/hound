@@ -220,9 +220,9 @@ defmodule Hound.JsonDriver.Page do
   end
 
 
-  @doc "Send text to active element."
-  @spec send_text(List.t) :: :ok
-  def send_text(keys) do
+  @doc "Send character keys to active element."
+  @spec send_characters(String.t) :: :ok
+  def send_characters(keys) do
     session_id = Hound.get_current_session_id
     make_req(:post, "session/#{session_id}/keys", [value: keys])
   end
