@@ -18,10 +18,6 @@ defmodule Hound.JsonDriver.Utils do
 
     {:ok, status, _headers, content} = :ibrowse.send_req(url, headers, type, body)
 
-    IO.inspect status
-    IO.inspect headers
-    IO.inspect content
-
     resp = decode_content(content)
     {status, _} = :string.to_integer(status)
 
