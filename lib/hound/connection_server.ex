@@ -12,7 +12,7 @@ defmodule Hound.ConnectionServer do
       "phantomjs" ->
         {8910, nil, "phantomjs"}
       _ -> # assume selenium
-        {4444, "wd/hub", "firefox"}
+        {4444, "wd/hub/", "firefox"}
     end
 
     driver_info = [
