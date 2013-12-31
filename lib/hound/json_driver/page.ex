@@ -224,6 +224,6 @@ defmodule Hound.JsonDriver.Page do
   @spec send_characters(String.t) :: :ok
   def send_characters(keys) do
     session_id = Hound.get_current_session_id
-    make_req(:post, "session/#{session_id}/keys", [value: keys])
+    make_req(:post, "session/#{session_id}/keys", [value: [keys]])
   end
 end

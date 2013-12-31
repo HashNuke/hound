@@ -44,9 +44,9 @@ defmodule Hound.InternalHelpers do
 
   def key_code(:command),   do: "\\uE03D"
 
-  def key_code_json(keys) do
-    key_string = Enum.map(keys, fn(key)-> key_code(key) end)
-    |> Enum.join()
-    "{\"value\":\"#{key_string}\"}"
+  def key_codes_json(keys) do
+    unicode_string = Enum.map(keys, fn(key)-> "\"#{key_code(key)}\"" end)
+    |> Enum.join(",")
+    "{\"value\": [#{unicode_string}]}"
   end
 end

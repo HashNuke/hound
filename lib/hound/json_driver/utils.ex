@@ -8,6 +8,8 @@ defmodule Hound.JsonDriver.Utils do
       headers = [{'Content-Type', 'text/json'}]
       if options[:json_encode] != false do
         {:ok, body} = JSEX.encode params
+      else
+        body = params
       end
     else
       headers = []
