@@ -1,10 +1,35 @@
 defmodule Hound.JsonDriver.Screenshot do
   import Hound.JsonDriver.Utils
 
-  @doc "Take screenshot of the current page"
-  @spec take_screenshot() :: String.t
-  def take_screenshot() do
+  @doc """
+  Takes screenshot of the current page. The screenshot is saved in the current working directory.
+
+  For Elixir mix projects, the saved screenshot can be found in the root of the project directory.
+
+      take_screenshot()
+
+  You can also pass a file path to which the screenshot must be saved to.
+
+      # Pass a full file path
+      take_screenshot("/media/screenshots/test.png")
+
+      # Or you can also pass a path relative to the current directory.
+      take_screenshot("screenshot-test.png")
+  """
+  @spec take_screenshot(String.t) :: String.t
+  def take_screenshot(path // nil) do
     session_id = Hound.get_current_session_id
-    make_req(:get, "session/#{session_id}/screenshot")
+    base64_png_data = make_req(:get, "session/#{session_id}/screenshot")
+
+    binary_image_data = :base64.decode(base64_png_data)
+    {hour, minutes, seconds} = :erlang.time()
+    {year, month, day} = :erlang.date()
+
+    if !path do
+      cwd = File.cwd!()
+      path = "#{cwd}/screenshot-#{year}-#{month}-#{day}-#{hour}-#{minutes}-#{seconds}.png"
+    end
+    :ok = File.write path, binary_image_data
+    path
   end
 end
