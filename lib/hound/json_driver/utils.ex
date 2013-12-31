@@ -16,6 +16,8 @@ defmodule Hound.JsonDriver.Utils do
       body = ""
     end
 
+    IO.inspect "---"
+    IO.inspect url
     IO.inspect body
     {:ok, status, _headers, content} = :ibrowse.send_req(url, headers, type, body)
 
