@@ -3,6 +3,7 @@ defmodule Hound.JsonDriver.Screenshot do
 
   @doc """
   Takes screenshot of the current page. The screenshot is saved in the current working directory.
+  It returns the path of the png file, to which the screenshot has been saved.
 
   For Elixir mix projects, the saved screenshot can be found in the root of the project directory.
 
