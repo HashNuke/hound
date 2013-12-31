@@ -63,4 +63,25 @@ defmodule Hound.InternalHelpers do
     |> Enum.join(",")
     "{\"value\": [#{unicode_string}]}"
   end
+
+
+  def driver_supports?(feature) do
+    {:ok, driver_info} = Hound.get_driver_info
+    unsupported_features = [
+      phantomjs: [
+        "dialog_text", "input_into_prompt", "accept_dialog", "dismiss_dialog"
+      ]
+    ]
+
+    if driver_info[:driver] == "phantomjs" do
+      if Enum.member?(unsupported_features[:phantomjs], feature) do
+        false
+      else
+        true
+      end
+    else
+      true
+    end
+  end
+
 end
