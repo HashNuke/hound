@@ -1,9 +1,9 @@
 if [[ $WEBDRIVER == "chrome_driver" ]]
 then
-    sudo apt-get install chromium-browser
-    wget http://chromedriver.storage.googleapis.com/2.8/chromedriver_linux64.zip
-    unzip chromedriver_linux64.zip
-    nohup ./chromedriver &
+    # sudo apt-get install chromium-browser
+    # wget http://chromedriver.storage.googleapis.com/2.8/chromedriver_linux64.zip
+    # unzip chromedriver_linux64.zip
+    /./$HOME/chromedriver
     echo "Running with ChromeDriver"
 elif [[ $WEBDRIVER == "phantomjs" ]]
 then
