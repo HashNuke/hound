@@ -93,7 +93,7 @@ Oh yeah ~! [Here is an example](https://github.com/HashNuke/hound/blob/master/te
 
 If you are running PhantomJs, take a look at the *Caveats* section below.
 
-## Caveats
+## PhantomJs caveats
 
 PhantomJs is extremely fast, but there are certain caveats. It uses Ghostdriver for it's webdriver server, which currently has unimplemented features or open issues.
 
