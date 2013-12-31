@@ -106,3 +106,6 @@ PhantomJs is extremely fast, but there are certain caveats. It uses Ghostdriver 
 ## License
 
 Copyright &copy; 2013, Akash Manohar J, under the MIT License
+
+[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/HashNuke/hound/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
+
