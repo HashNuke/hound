@@ -3,7 +3,7 @@ then
     # sudo apt-get install chromium-browser
     # wget http://chromedriver.storage.googleapis.com/2.8/chromedriver_linux64.zip
     # unzip chromedriver_linux64.zip
-    /./$HOME/chromedriver
+    /./$HOME/src/chromedriver
     echo "Running with ChromeDriver"
 elif [[ $WEBDRIVER == "phantomjs" ]]
 then
