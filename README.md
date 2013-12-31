@@ -45,13 +45,25 @@ end
 
         { :hound, github: "HashNuke/hound" }
 
-* Start Hound in `test_helper.exs`
+* Start Hound in `test_helper.exs`. Here are some examples:
 
-        # Start Hound for localhost webdriver server (Selenium assumed at port 4444)
+        # Start Hound for Selenium server (default port 4444 assumed)
         Hound.start
 
-        # Start Hound for remote webdriver server at port 5555
-        Hound.start [host: "http://example.com", port: 5555]
+        # Or, you can also use
+        Hound.start([driver: "selenium"])
+
+        # Start Hound for Selenium at port 1234 and use firefox browser
+        Hound.start [port: 1234, browser: "firefox"]
+
+        # Start Hound for ChromeDriver (default port 9515 assumed)
+        Hound.start [driver: "chrome_driver"]
+
+        # Start Hound for PhantomJs (default port 8910 assumed)
+        Hound.start [driver: "phantomjs"]
+
+        # Start Hound for remote phantomjs server at port 5555
+        Hound.start [driver: "phantomjs", host: "http://example.com", port: 5555]
 
 
 __You'll need a webdriver server__ running, like Selenium Server or Chrome Driver. If you aren't sure what it is, then [read this](https://github.com/HashNuke/hound/wiki/Starting-a-webdriver-server)
