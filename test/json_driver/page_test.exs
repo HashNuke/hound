@@ -57,10 +57,17 @@ defmodule PageTest do
   end
 
 
-  #TODO
-  # test "should send keys" do
-  #   # Show copy paste example.
-  #   # Use cmd modifier on mac and ctrl on others.
-  # end
+  test "should send text and keys to active element" do
+    navigate_to("http://localhost:9090/page1.html")
+    click {:name, "username"}
+    send_text "test"
+    send_keys :left_arrow
+    with_keys :control do
+      send_text "E"
+    end
+    send_text "123"
+
+    assert attribute_value({:name, "username"}, "value") == "test123"
+  end
 
 end

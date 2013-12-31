@@ -169,7 +169,7 @@ defmodule Hound.JsonDriver.Page do
   defmacro with_keys(keys, blocks) do
     do_block = Keyword.get(blocks, :do, nil)
     quote do
-      send_keys(keys)
+      send_keys(unquote(keys))
       unquote(do_block)
       send_keys(:null)
     end
@@ -221,8 +221,8 @@ defmodule Hound.JsonDriver.Page do
 
 
   @doc "Send character keys to active element."
-  @spec send_characters(String.t) :: :ok
-  def send_characters(keys) do
+  @spec send_text(String.t) :: :ok
+  def send_text(keys) do
     session_id = Hound.get_current_session_id
     make_req(:post, "session/#{session_id}/keys", [value: [keys]])
   end
