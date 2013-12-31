@@ -6,13 +6,22 @@ before_install:
   - "export DISPLAY=:99.0"
   - "/sbin/start-stop-daemon --start --quiet --pidfile /tmp/custom_xvfb_99.pid --make-pidfile --background --exec /usr/bin/Xvfb -- :99 -ac -screen 0 1280x1024x16"
   - mkdir $HOME/src
+  - sudo apt-get install chromium-browser --fix-mising --force-yes
+  - wget http://chromedriver.storage.googleapis.com/2.8/chromedriver_linux64.zip
+  - unzip chromedriver_linux64.zip
   - wget https://selenium.googlecode.com/files/selenium-server-standalone-2.39.0.jar
   - nohup java -jar selenium-server-standalone-2.39.0.jar &
   - git clone https://github.com/elixir-lang/elixir.git $HOME/src/elixir
+  - export PATH=$PATH:$HOME/src/elixir/bin/
+  - export ELIXIR_VERSION=v0.12.0
   - cd $HOME/src/elixir && git checkout $ELIXIR_VERSION && make clean compile && cd -
+  - nohup ./chromedriver &
+  - nohup phantomjs -w &
 
 env:
-  - PATH=$PATH:$HOME/src/elixir/bin/ ELIXIR_VERSION=v0.12.0
+  - WEBDRIVER_TYPE=selenium
+  - WEBDRIVER_TYPE=phantomjs
+  - WEBDRIVER_TYPE=chrome_driver
 
 install: mix deps.get
 script:  mix test
