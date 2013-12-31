@@ -2,7 +2,7 @@
 
 Elixir library to write integration tests using webdriver.
 
-<a href="http://akash.im/docs/hound" target="_parent">Documentation</a>
+<a href="http://github.com/HashNuke/Hound" target="_parent">Source</a> | <a href="http://akash.im/docs/hound" target="_parent">Documentation</a>
 
 [![Build Status](https://travis-ci.org/HashNuke/hound.png?branch=master)](https://travis-ci.org/HashNuke/hound)
 
