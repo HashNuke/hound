@@ -7,7 +7,7 @@ test_server_config = [
 ]
 {:ok, pid} = :inets.start(:httpd, test_server_config)
 
-Hound.start(System.get_env("WEBDRIVER_TYPE") || "selenium")
+{:ok, hound_pid} = Hound.start([driver: System.get_env("WEBDRIVER_TYPE")])
 
 System.at_exit fn(_exit_status) ->
   :ok = :inets.stop(:httpd, pid)
