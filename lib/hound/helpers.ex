@@ -2,9 +2,9 @@ defmodule Hound.Helpers do
   @moduledoc false
 
   defmacro __using__([]) do
-    {:ok, driver, _} = Hound.get_driver_info
+    {:ok, driver} = Hound.get_driver_info
     quote do
-      use unquote(driver)
+      use unquote(driver[:type])
       import unquote(__MODULE__)
     end
   end

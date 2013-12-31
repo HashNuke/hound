@@ -17,6 +17,11 @@ defmodule Hound.JsonDriver.Utils do
     end
 
     {:ok, status, _headers, content} = :ibrowse.send_req(url, headers, type, body)
+
+    IO.inspect status
+    IO.inspect headers
+    IO.inspect content
+
     resp = decode_content(content)
     {status, _} = :string.to_integer(status)
 
@@ -50,10 +55,13 @@ defmodule Hound.JsonDriver.Utils do
   end
 
   defp get_url(path) do
-    {:ok, _driver, driver_info} = Hound.get_driver_info
-    host = driver_info[:host] || "http://localhost"
-    port = driver_info[:port] || 4444
-    '#{host}:#{port}/wd/hub/#{path}'
+    {:ok, driver_info} = Hound.get_driver_info
+
+    host = driver_info[:host]
+    port = driver_info[:port]
+    path_prefix = driver_info[:path_prefix]
+
+    '#{host}:#{port}/#{path_prefix}#{path}'
   end
 
 end
