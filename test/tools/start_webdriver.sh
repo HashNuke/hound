@@ -1,7 +1,7 @@
 if [[ $WEBDRIVER == "chrome_driver" ]]
 then
     cd ~/src
-    sudo aptitude -y -q install unzip chromium-browser
+    sudo apt-get -y -q install unzip chromium-browser
     wget http://chromedriver.storage.googleapis.com/2.8/chromedriver_linux64.zip
     unzip chromedriver_linux64.zip
     nohup /./$HOME/src/chromedriver &
