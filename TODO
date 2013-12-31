@@ -1,16 +1,6 @@
 * Saving screenshot to a file
-* Play with Page's send keys function
 * tagged release
 * Blog post
-
-
-With modifier keys should be like this:
-
-with_modifier_keys [:cmd] do
-  # mouse clicks
-  # or
-  # anything else
-end
 
 
 * Window size, position, maximize, close window, focus frame
