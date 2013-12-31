@@ -13,7 +13,7 @@ before_install:
   - sudo apt-get install google-chrome-stable
   - wget http://chromedriver.storage.googleapis.com/2.8/chromedriver_linux64.zip
   - unzip chromedriver_linux64.zip
-  - nohup /./$HOME/src/chromedriver &
+  - nohup /./$HOME/src/chromedriver --no-sandbox &
   - git clone https://github.com/elixir-lang/elixir.git $HOME/src/elixir
   - export PATH=$PATH:$HOME/src/elixir/bin/
   - export ELIXIR_VERSION=v0.12.0
