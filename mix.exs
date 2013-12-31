@@ -14,8 +14,7 @@ defmodule Hound.Mixfile do
   # Configuration for the OTP application
   def application do
     [
-      applications: apps(Mix.env),
-      mod: []
+      applications: apps(Mix.env)
     ]
   end
 
