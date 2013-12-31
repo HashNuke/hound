@@ -30,8 +30,8 @@ defmodule Hound.JsonDriver do
 
 
   @doc "Creates a session associated with the current pid"
-  @spec create_session() :: String.t
-  def create_session do
+  @spec create_session(String.t) :: String.t
+  def create_session(browser_name) do
     params = [
       desiredCapabilities: [
         javascriptEnabled: false,
@@ -39,7 +39,7 @@ defmodule Hound.JsonDriver do
         rotatable: false,
         takesScreenshot: true,
         cssSelectorsEnabled: true,
-        browserName: "firefox",
+        browserName: browser_name,
         nativeEvents: false,
         platform: "ANY"
       ]
