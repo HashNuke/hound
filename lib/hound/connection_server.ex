@@ -4,12 +4,12 @@ defmodule Hound.ConnectionServer do
   use GenServer.Behaviour
 
   def start_link(options // []) do
-    driver = options[:driver] || :selenium
+    driver = options[:driver] || "selenium"
 
     {default_port, default_path_prefix, default_browser} = case driver do
-      :chrome_driver ->
+      "chrome_driver" ->
         {9515, nil, "chrome"}
-      :phantomjs ->
+      "phantomjs" ->
         {8910, nil, "phantomjs"}
       _ -> # assume selenium
         {4444, "wd/hub", "firefox"}
