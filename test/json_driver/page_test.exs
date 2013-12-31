@@ -57,14 +57,10 @@ defmodule PageTest do
   end
 
 
-  test "should send text and keys to active element" do
+  test "should send text to active element" do
     navigate_to("http://localhost:9090/page1.html")
     click {:name, "username"}
     send_text "test"
-    send_keys :left_arrow
-    with_keys :control do
-      send_text "e"
-    end
     send_text "123"
 
     assert attribute_value({:name, "username"}, "value") == "test123"
