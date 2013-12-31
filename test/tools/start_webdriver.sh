@@ -1,15 +1,15 @@
-if [ $WEBDRIVER == "chrome_driver" ]
+if [[ $WEBDRIVER == "chrome_driver" ]]
 then
     sudo apt-get install chromium-browser
     wget http://chromedriver.storage.googleapis.com/2.8/chromedriver_linux64.zip
     unzip chromedriver_linux64.zip
     nohup ./chromedriver &
     echo "Running with ChromeDriver"
-elif [ $WEBDRIVER == "phantomjs" ]
+elif [[ $WEBDRIVER == "phantomjs" ]]
 then
     nohup phantomjs -w &
     echo "Running with PhantomJs"
-elif [ $WEBDRIVER == "selenium" ]
+elif [[ $WEBDRIVER == "selenium" ]]
 then
   echo "Running with Selenium"
   "export DISPLAY=:99.0"
