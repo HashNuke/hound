@@ -15,7 +15,7 @@ defmodule Hound.Mixfile do
   def application do
     [
       applications: apps(Mix.env),
-      mod: { Hound, [] }
+      mod: []
     ]
   end
 
