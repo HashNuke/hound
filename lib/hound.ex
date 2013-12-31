@@ -5,7 +5,7 @@ defmodule Hound do
   # for more information on OTP Applications
   @doc false
   def start(_type, options) do
-    Hound.Supervisor.start_link(options)
+    start(options)
   end
 
   @doc """
@@ -18,7 +18,7 @@ defmodule Hound do
       Hound.start [host: "http://example.com", port: 5555]
   """
   def start(options // []) do
-    :application.start :hound, options
+    Hound.Supervisor.start_link(options)
   end
 
 
