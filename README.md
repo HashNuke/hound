@@ -43,7 +43,7 @@ end
 
 * Add dependency to your mix project
 
-        { :hound, github: "HashNuke/hound" }
+        { :hound, github: "HashNuke/hound", tag: "v0.5.0" }
 
 * Start Hound in `test_helper.exs`. Here are some examples:
 
