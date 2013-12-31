@@ -155,8 +155,17 @@ defmodule Hound.JsonDriver.Page do
 
 
   @doc """
-  Perform actions when holding modifier keys.
-  The modifier keys are released once the block has completed it's run.
+  Holds on to the spcified modifier keys when the block is executing.
+
+      # Simulates Ctrl + e
+      with_keys :control do
+        send_text "e"
+      end
+
+      # Simulates Ctrl + Shift + e
+      with_keys [:control, :shift] do
+        send_text "e"
+      end
 
   The following are the modifier keys:
 
@@ -178,7 +187,17 @@ defmodule Hound.JsonDriver.Page do
 
   @doc """
   Send sequence of key strokes to active element.
-  The keys are accepted as a list of atoms. The following are the atoms representing the keys.
+  The keys are accepted as a list of atoms.
+
+      send_keys :backspace
+      send_keys :tab
+
+  If you send the modifier keys shift, control, alt and command,
+  they are held on and not released until you send the `:null` key.
+
+  To perform other actions while holding on to modifier keys, use the `with_keys` macro.
+
+  The following are the atoms representing the keys:
 
   * :alt - alt key
   * :shift - shift key
@@ -220,7 +239,14 @@ defmodule Hound.JsonDriver.Page do
   end
 
 
-  @doc "Send character keys to active element."
+  @doc """
+  Send character keys to active element.
+
+      send_text "test"
+      send_text "whatever happens"
+
+  To send key strokes like tab, enter, etc, take a look at `send_keys`.
+  """
   @spec send_text(String.t) :: :ok
   def send_text(keys) do
     session_id = Hound.get_current_session_id
