@@ -63,7 +63,7 @@ defmodule PageTest do
     send_text "test"
     send_keys :left_arrow
     with_keys :control do
-      send_text "E"
+      send_text "e"
     end
     send_text "123"
 

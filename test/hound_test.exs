@@ -8,8 +8,8 @@ defmodule HoundTest do
   end
 
   test "should return driver info" do
-    {:ok, driver, _driver_info} = Hound.get_driver_info
-    assert is_atom(driver)
+    {:ok, driver_info} = Hound.get_driver_info
+    assert is_atom(driver_info[:type])
   end
 
 
