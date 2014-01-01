@@ -41,29 +41,6 @@ defmodule HoundTest do
 end
 ```
 
-##### Simple browser automation
-
-```elixir
-defmodule FormFillRobot do
-  use Hound.Helpers
-
-  def init do
-    Hound.start
-    Hound.start_session
-
-    navigate_to "http://example.com"
-
-    find_element :name, :username
-    |> fill_in("johndoe")
-
-    find_element :partial_link_text, "Done"
-    |> click()
-
-    Hound.end_session
-  end
-end
-```
-
 ## Setup
 
 * Add dependency to your mix project
