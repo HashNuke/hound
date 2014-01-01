@@ -1,6 +1,6 @@
 # Hound
 
-Elixir library to write integration tests using webdriver.
+For browser automation and writing integration tests in Elixir.
 
 <a href="http://github.com/HashNuke/Hound" target="_parent">Source</a> | <a href="http://akash.im/docs/hound" target="_parent">Documentation</a>
 
@@ -15,9 +15,11 @@ Elixir library to write integration tests using webdriver.
 * Implements the WebDriver Wire Protocol.
 
 
-**IE may work, but hasn't been tested.
+**Internet Explorer may work under Selenium, but hasn't been tested.
 
 #### Example
+
+##### ExUnit example
 
 ```elixir
 defmodule HoundTest do
@@ -36,6 +38,29 @@ defmodule HoundTest do
     assert page_title() == "Thank you"
   end
 
+end
+```
+
+##### Simple browser automation
+
+```elixir
+defmodule FormFillRobot do
+  use Hound.Helpers
+
+  def init do
+    Hound.start
+    Hound.start_session
+
+    navigate_to "http://example.com"
+
+    find_element :name, :username
+    |> fill_in("johndoe")
+
+    find_element :partial_link_text, "Done"
+    |> click()
+
+    Hound.end_session
+  end
 end
 ```
 
