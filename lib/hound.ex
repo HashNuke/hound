@@ -73,34 +73,6 @@ defmodule Hound do
   end
 
 
-  @doc """
-  When you need more than one browser session, use this function switch to another session.
-  If the session doesn't exist it a new one will be created for you.
-  All further commands will then run in the session you switched to.
-
-      # Pass any name to the session to refer to it later.
-      Hound.change_session_to("random-session")
-
-  The name can be an atom or a string. The default session created is called `:default`.
-  """
-  def change_session_to(session_name) do
-    :gen_server.call(:hound_sessions, {:change_current_session_for_pid, session_name}, 30000)
-  end
-
-
-  @doc """
-  When running multiple browser sessions, calling this function will switch to the default browser session.
-
-      Hound.change_to_default_session
-
-      # is the same as calling
-      Hound.change_session_to(:default)
-  """
-  def change_to_default_session do
-    change_session_to(:default)
-  end
-
-
   @doc false
   def get_current_session_id do
     :gen_server.call(:hound_sessions, :get_session_for_pid, 30000)

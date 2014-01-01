@@ -6,6 +6,7 @@ defmodule Hound.Helpers do
     quote do
       use unquote(driver[:type])
       import unquote(__MODULE__)
+      import Hound
     end
   end
 

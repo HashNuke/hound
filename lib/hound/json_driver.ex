@@ -10,6 +10,7 @@ defmodule Hound.JsonDriver do
       import Hound.JsonDriver.Screenshot
       import Hound.JsonDriver.Dialog
       import Hound.JsonDriver.Cookie
+      import Hound.JsonDriver.Session
     end
   end
 
