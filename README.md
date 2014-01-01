@@ -41,6 +41,28 @@ defmodule HoundTest do
 end
 ```
 
+##### Simple browser automation
+
+```elixir
+# This needs to be started before before using the helpers
+{:ok, _hound_pid} = Hound.start()
+
+defmodule Example do
+  use Hound.Helpers
+
+  def run do
+    Hound.start_session
+
+    navigate_to "http://akash.im"
+    IO.inspect page_title()
+
+    Hound.end_session
+  end
+end
+
+Example.run
+```
+
 ## Setup
 
 * Add dependency to your mix project
