@@ -90,7 +90,7 @@ Example.run
         Hound.start [driver: "phantomjs", host: "http://example.com", port: 5555]
 
 
-__You'll need a webdriver server__ running, like Selenium Server or Chrome Driver. If you aren't sure what it is, then [read this](https://github.com/HashNuke/hound/wiki/Starting-a-webdriver-server)
+__You'll need a webdriver server__ running, like Selenium Server or Chrome Driver. If you aren't sure what it is, then [read this](https://github.com/HashNuke/hound/wiki/Starting-a-webdriver-server).
 
 ## Usage
 
@@ -118,6 +118,7 @@ The documentation pages include examples under each function.
 * [Javascript execution](http://akash.im/docs/hound/Hound.JsonDriver.ScriptExecution.html)
 * [Javascript dialogs](http://akash.im/docs/hound/Hound.JsonDriver.Dialog.html)
 * [Screenshot](http://akash.im/docs/hound/Hound.JsonDriver.Screenshot.html)
+* [Session](http://akash.im/docs/hound/Hound.JsonDriver.Session.html)
 
 The docs are at <http://akash.im/docs/hound>.
 
