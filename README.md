@@ -124,11 +124,23 @@ The docs are at <http://akash.im/docs/hound>.
 
 ### More examples? [Checkout Hound's own test cases](https://github.com/HashNuke/hound/tree/master/test/json_driver)
 
-## Run multiple browser sessions simultaneously
+## FAQ
+
+#### Can I run multiple browser sessions simultaneously
 
 Oh yeah ~! [Here is an example](https://github.com/HashNuke/hound/blob/master/test/multiple_browser_session_test.exs).
 
 If you are running PhantomJs, take a look at the *Caveats* section below.
+
+#### Can I run tests async?
+
+Yes.
+
+The number of tests you can run async at any point in time, depends on the number of sessions that your webdriver can maintain at a time. For Selenium Standalone, there seems to be a default limit of 15 sessions. You can set ExUnit's async option to limit the number of tests to run parallelly.
+
+#### Will Hound gurantee an isolated session per test?
+
+Yes. A seperate session is started for each session. 
 
 ## PhantomJs caveats
 
