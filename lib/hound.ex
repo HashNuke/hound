@@ -8,6 +8,7 @@ defmodule Hound do
     start(options)
   end
 
+
   @doc """
   Starts the Hound server.
 
@@ -18,6 +19,7 @@ defmodule Hound do
       Hound.start [host: "http://example.com", port: 5555]
   """
   def start(options // []) do
+    :application.ensure_all_started(:ibrowse)
     Hound.Supervisor.start_link(options)
   end
 
