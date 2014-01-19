@@ -1,3 +1,5 @@
+:application.start :inets
+
 test_server_config = [
   port: 9090,
   server_name: 'hound_test_server',

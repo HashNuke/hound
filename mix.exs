@@ -13,15 +13,8 @@ defmodule Hound.Mixfile do
 
   # Configuration for the OTP application
   def application do
-    [
-      applications: apps(Mix.env)
-    ]
+    [ applications: [:ibrowse] ]
   end
-
-
-  def apps(:prod), do: [:ibrowse]
-  def apps(:test), do: apps(:prod) ++ [:inets]
-  def apps(_),     do: apps(:prod)
 
 
   # Returns the list of dependencies in the format:
