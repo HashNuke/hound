@@ -1,6 +1,6 @@
 language: erlang
 otp_release:
-   - R16B
+   - R16B02
 
 before_install:
   - "export DISPLAY=:99.0"
