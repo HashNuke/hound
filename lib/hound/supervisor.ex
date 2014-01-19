@@ -11,7 +11,7 @@ defmodule Hound.Supervisor do
     children = [
       worker(Hound.SessionServer, []),
       worker(Hound.ConnectionServer, [options]),
-      worker(:hound, [])
+      worker(:ibrowse, [])
     ]
 
     # See http://elixir-lang.org/docs/stable/Supervisor.Behaviour.html
