@@ -17,6 +17,7 @@ For browser automation and writing integration tests in Elixir.
 
 **Internet Explorer may work under Selenium, but hasn't been tested.
 
+
 #### Example
 
 ##### ExUnit example
@@ -64,6 +65,8 @@ Example.run
 ```
 
 ## Setup
+
+Hound requires Erlang R16B02 or higher.
 
 * Add dependency to your mix project
 
