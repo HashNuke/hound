@@ -10,7 +10,8 @@ defmodule Hound.Supervisor do
   def init([options]) do
     children = [
       worker(Hound.SessionServer, []),
-      worker(Hound.ConnectionServer, [options])
+      worker(Hound.ConnectionServer, [options]),
+      worker(:hound, [])
     ]
 
     # See http://elixir-lang.org/docs/stable/Supervisor.Behaviour.html
