@@ -16,6 +16,18 @@ defmodule PageTest do
   end
 
 
+  test "should get page source encoded with utf8" do
+    navigate_to("http://localhost:9090/page_utf.html")
+    assert(Regex.match?(%r["example">This is UTF: zażółć gęślą jaźń<],
+      page_source))
+  end
+
+  test "should get page title encoded with utf8" do
+    navigate_to("http://localhost:9090/page_utf.html")
+    assert("This is UTF: zażółć gęślą jaźń" == page_title)
+  end
+
+
   test "should find elements within page" do
     navigate_to("http://localhost:9090/page1.html")
     assert is_binary(find_element(:css, ".example"))

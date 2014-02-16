@@ -5,7 +5,7 @@ test_server_config = [
   server_name: 'hound_test_server',
   server_root: Path.absname('test/sample_pages'),
   document_root: Path.absname('test/sample_pages'),
-  bind_address: 'localhost'
+  bind_address: {127,0,0,1}
 ]
 {:ok, pid} = :inets.start(:httpd, test_server_config)
 
