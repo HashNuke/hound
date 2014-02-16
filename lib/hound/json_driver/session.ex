@@ -39,13 +39,10 @@ defmodule Hound.JsonDriver.Session do
         click({:id, "announcement"})
       end
   """
-  defmacro in_browser_session(session_name, blocks) do
-    do_block = Keyword.get(blocks, :do, nil)
-    quote do
-      change_session_to(unquote(session_name))
-      unquote(do_block)
-      change_to_default_session()
-    end
+  def in_browser_session(session_name, func) do
+    change_session_to(session_name)
+    apply(func, [])
+    change_to_default_session()
   end
 
 end

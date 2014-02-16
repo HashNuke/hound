@@ -25,7 +25,7 @@ defmodule MultipleBrowserSessionTest do
   end
 
 
-  test "should be able to run multiple sessions using macros" do
+  test "should be able to run multiple sessions using in_browser_session" do
     url1 = "http://localhost:9090/page1.html"
     url2 = "http://localhost:9090/page2.html"
 
@@ -33,7 +33,7 @@ defmodule MultipleBrowserSessionTest do
     navigate_to(url1)
 
     # In another session...
-    in_browser_session :another_session do
+    in_browser_session :another_session, fn->
       navigate_to(url2)
       assert url2 == current_url
     end
