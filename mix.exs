@@ -3,7 +3,7 @@ defmodule Hound.Mixfile do
 
   def project do
     [ app: :hound,
-      version: "0.5.2",
+      version: "0.5.3",
       elixir: ">= 0.12.0",
       deps: deps,
       source_url: "http://github.com/HashNuke/hound",
@@ -13,7 +13,7 @@ defmodule Hound.Mixfile do
 
   # Configuration for the OTP application
   def application do
-    [ applications: [] ]
+    [ applications: [:jsex, :ibrowse] ]
   end
 
 
