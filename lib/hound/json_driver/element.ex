@@ -186,7 +186,7 @@ defmodule Hound.JsonDriver.Element do
 
 
   @doc """
-  Gets an element's location on page. It returns the size as a tuple of the form {width, height}.
+  Gets an element's location on page. It returns the location as a tuple of the form {x, y}.
 
       element_id = find_element(:name, "example")
       element_location(element_id)
@@ -205,7 +205,7 @@ defmodule Hound.JsonDriver.Element do
 
 
   @doc """
-  Gets an element's size in pixels. It returns the location as a tuple of the form {x, y}.
+  Gets an element's size in pixels. It returns the size as a tuple of the form {width, height}.
 
       element_id = find_element(:name, "example")
       element_location(element_id)
