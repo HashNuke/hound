@@ -13,7 +13,7 @@ defmodule Hound.JsonDriver.ScriptExecution do
           execute_script("doSomething(); return(arguments[0] + arguments[1]);")
   """
   @spec execute_script(String.t, List.t) :: any
-  def execute_script(script_function, function_args // []) do
+  def execute_script(script_function, function_args \\ []) do
     session_id = Hound.get_current_session_id
     make_req(:post,
       "session/#{session_id}/execute",
@@ -44,7 +44,7 @@ defmodule Hound.JsonDriver.ScriptExecution do
   It will error out.
   """
   @spec execute_script_async(String.t, List.t) :: any
-  def execute_script_async(script_function, function_args // []) do
+  def execute_script_async(script_function, function_args \\ []) do
     session_id = Hound.get_current_session_id
     make_req(:post,
       "session/#{session_id}/execute_async",

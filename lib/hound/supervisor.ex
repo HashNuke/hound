@@ -3,7 +3,7 @@ defmodule Hound.Supervisor do
 
   use Supervisor.Behaviour
 
-  def start_link(options // []) do
+  def start_link(options \\ []) do
     :supervisor.start_link(__MODULE__, [options])
   end
 

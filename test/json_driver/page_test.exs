@@ -6,7 +6,7 @@ defmodule PageTest do
 
   test "should get page source" do
     navigate_to("http://localhost:9090/page1.html")
-    assert(Regex.match?(%r/DOCTYPE/, page_source))
+    assert(Regex.match?(~r/DOCTYPE/, page_source))
   end
 
 
@@ -18,7 +18,7 @@ defmodule PageTest do
 
   test "should get page source encoded with utf8" do
     navigate_to("http://localhost:9090/page_utf.html")
-    assert(Regex.match?(%r["example">This is UTF: zażółć gęślą jaźń<],
+    assert(Regex.match?(~r["example">This is UTF: zażółć gęślą jaźń<],
       page_source))
   end
 

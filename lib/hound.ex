@@ -18,7 +18,7 @@ defmodule Hound do
       # Start Hound for remote webdriver server at port 5555
       Hound.start [host: "http://example.com", port: 5555]
   """
-  def start(options // []) do
+  def start(options \\ []) do
     :application.ensure_all_started(:ibrowse)
     Hound.Supervisor.start_link(options)
   end
