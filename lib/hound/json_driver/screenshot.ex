@@ -18,7 +18,7 @@ defmodule Hound.JsonDriver.Screenshot do
       take_screenshot("screenshot-test.png")
   """
   @spec take_screenshot(String.t) :: String.t
-  def take_screenshot(path // nil) do
+  def take_screenshot(path \\ nil) do
     session_id = Hound.get_current_session_id
     base64_png_data = make_req(:get, "session/#{session_id}/screenshot")
 
