@@ -1,7 +1,7 @@
 defmodule Hound.JsonDriver.Utils do
   @moduledoc false
 
-  def make_req(type, path, params // [], options // []) do
+  def make_req(type, path, params \\ [], options \\ []) do
     url = get_url(path)
 
     if params != [] && type == :post do
