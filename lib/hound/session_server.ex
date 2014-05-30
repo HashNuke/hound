@@ -4,7 +4,7 @@ defmodule Hound.SessionServer do
   use GenServer.Behaviour
 
   def start_link do
-    state = []
+    state = HashDict.new
     :gen_server.start_link({ :local, :hound_sessions }, __MODULE__, state, [])
   end
 
@@ -14,13 +14,13 @@ defmodule Hound.SessionServer do
 
   def handle_call(:get_session_for_pid, {pid, _tag}, state) do
     {:ok, driver_info} = Hound.get_driver_info
-    pid_sessions = state[pid]
+    pid_sessions = HashDict.get(state, pid)
     if pid_sessions do
       session_id = pid_sessions[:current]
     else
       {:ok, session_id} = driver_info[:type].create_session(driver_info[:browser])
       session_info = [current: session_id, all_sessions: [default: session_id]]
-      state = ListDict.merge(state, [{pid, session_info}])
+      state = HashDict.put(state, pid, session_info)
     end
     {:reply, session_id, state}
   end
@@ -31,13 +31,14 @@ defmodule Hound.SessionServer do
     session_info = state[pid]
     session_id = session_info[:all_sessions][session_name]
     if session_id do
-      session_info = ListDict.merge session_info, [current: session_id]
-      state = ListDict.merge(state, [{pid, session_info}])
+      session_info = HashDict.put session_info, :current, session_id
+      state = HashDict.merge(state, pid, session_info)
     else
       {:ok, session_id} = driver_info[:type].create_session(driver_info[:browser])
-      all_sessions = ListDict.merge session_info[:all_sessions], [{session_name, session_id}]
-      session_info = ListDict.merge session_info, [current: session_id, all_sessions: all_sessions]
-      state = ListDict.merge(state, [{pid, session_info}])
+      all_sessions = HashDict.merge session_info[:all_sessions], session_name, session_id
+      session_info = HashDict.merge session_info, :current, session_id
+      session_info = HashDict.merge session_info, :all_sessions, all_sessions
+      state = HashDict.merge(state, pid, session_info)
     end
     {:reply, session_id, state}
   end
@@ -56,10 +57,10 @@ defmodule Hound.SessionServer do
     {:ok, driver} = Hound.get_driver_info
     pid_sessions = state[pid]
     if pid_sessions do
-      lc {_session_name, session_id} inlist pid_sessions[:all_sessions] do
+      for {_session_name, session_id} <- pid_sessions[:all_sessions] do
         driver[:type].destroy_session(session_id)
       end
-      new_state = ListDict.delete(state, pid)
+      new_state = HashDict.delete(state, pid)
       {:reply, :ok, new_state}
     else
       {:reply, :ok, state}

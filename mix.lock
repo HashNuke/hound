@@ -1,4 +1,4 @@
-[ "ex_doc": {:git, "git://github.com/elixir-lang/ex_doc.git", "c14203bfca186f68ff178e5ada9af4f5fb37e205", []},
+%{"ex_doc": {:git, "git://github.com/elixir-lang/ex_doc.git", "6463eb481a84ce2c9d6182402e39c02cc2f96384", []},
   "ibrowse": {:git, "git://github.com/cmullaparthi/ibrowse.git", "e8ae353c16d4f0897abb9f80025b52925b974dd1", [tag: "v4.0.2"]},
-  "jsex": {:git, "git://github.com/talentdeficit/jsex.git", "65aa6ae7c1543a0c4e83032c04626af7be7a7f3e", []},
-  "jsx": {:git, "git://github.com/talentdeficit/jsx.git", "e50af6e109cb03bd26acf715cbc77de746507d1d", [tag: "v1.4.3"]} ]
+  "jsex": {:git, "git://github.com/talentdeficit/jsex.git", "9755fc4d9c33b66945000d9bbdbb32a72f418ac8", []},
+  "jsx": {:package, "2.0.3"}}
