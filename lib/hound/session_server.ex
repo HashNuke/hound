@@ -32,13 +32,13 @@ defmodule Hound.SessionServer do
     session_id = session_info[:all_sessions][session_name]
     if session_id do
       session_info = HashDict.put session_info, :current, session_id
-      state = HashDict.merge(state, pid, session_info)
+      state = HashDict.put(state, pid, session_info)
     else
       {:ok, session_id} = driver_info[:type].create_session(driver_info[:browser])
-      all_sessions = HashDict.merge session_info[:all_sessions], session_name, session_id
-      session_info = HashDict.merge session_info, :current, session_id
-      session_info = HashDict.merge session_info, :all_sessions, all_sessions
-      state = HashDict.merge(state, pid, session_info)
+      all_sessions = HashDict.put session_info[:all_sessions], session_name, session_id
+      session_info = HashDict.put session_info, :current, session_id
+      session_info = HashDict.put session_info, :all_sessions, all_sessions
+      state = HashDict.put(state, pid, session_info)
     end
     {:reply, session_id, state}
   end
