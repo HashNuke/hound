@@ -68,9 +68,9 @@ defmodule Hound.JsonDriver.Page do
       {:error, value} ->
         {:error, value}
       elements ->
-        for [{"ELEMENT", element_id}] <- elements do
+        Enum.map(elements, fn({"ELEMENT", element_id})->
           element_id
-        end
+        end)
     end
   end
 
@@ -134,9 +134,9 @@ defmodule Hound.JsonDriver.Page do
       {:error, value} ->
         {:error, value}
       elements ->
-        for [{"ELEMENT", element_id}] <- elements do
+        Enum.map(elements, fn({"ELEMENT", element_id})->
           element_id
-        end
+        end)
     end
   end
 
