@@ -1,6 +1,6 @@
 if [[ $WEBDRIVER == "phantomjs" ]]
 then
-    nohup phantomjs -w &
+    nohup phantomjs --webdriver=9090 &
     echo "Running with PhantomJs..."
 elif [[ $WEBDRIVER == "selenium" ]]
 then
