@@ -68,7 +68,7 @@ defmodule Hound.JsonDriver.Page do
       {:error, value} ->
         {:error, value}
       elements ->
-        lc [{"ELEMENT", element_id}] inlist elements do
+        for [{"ELEMENT", element_id}] <- elements do
           element_id
         end
     end
@@ -134,7 +134,7 @@ defmodule Hound.JsonDriver.Page do
       {:error, value} ->
         {:error, value}
       elements ->
-        lc [{"ELEMENT", element_id}] inlist elements do
+        for [{"ELEMENT", element_id}] <- elements do
           element_id
         end
     end
