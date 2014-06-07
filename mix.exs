@@ -3,8 +3,8 @@ defmodule Hound.Mixfile do
 
   def project do
     [ app: :hound,
-      version: "0.5.3",
-      elixir: ">= 0.12.0",
+      version: "0.5.4",
+      elixir: "~> 0.13.2",
       deps: deps,
       source_url: "http://github.com/HashNuke/hound",
       docs: [readme: true, main: "README"]
