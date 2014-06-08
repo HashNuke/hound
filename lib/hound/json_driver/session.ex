@@ -14,7 +14,7 @@ defmodule Hound.JsonDriver.Session do
   The name can be an atom or a string. The default session created is called `:default`.
   """
   def change_session_to(session_name) do
-    :gen_server.call(:hound_sessions, {:change_current_session_for_pid, session_name}, 30000)
+    Hound.SessionServer.change_current_session_for_pid(self, session_name)
   end
 
 

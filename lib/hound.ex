@@ -61,7 +61,7 @@ defmodule Hound do
       end
   """
   def start_session do
-    :gen_server.call(:hound_sessions, :get_session_for_pid, 60000)
+    Hound.SessionServer.session_for_pid(self)
   end
 
 
@@ -70,13 +70,13 @@ defmodule Hound do
 
   For an example, take a look at the documentation for `start_session`.
   """
-  def end_session() do
-    :gen_server.call(:hound_sessions, :destroy_sessions_for_pid, 30000)
+  def end_session do
+    Hound.SessionServer.destroy_sessions_for_pid(self)
   end
 
 
   @doc false
-  def get_current_session_id do
-    :gen_server.call(:hound_sessions, :get_session_for_pid, 30000)
+  def current_session_id do
+    Hound.SessionServer.current_session_id(self)
   end
 end
