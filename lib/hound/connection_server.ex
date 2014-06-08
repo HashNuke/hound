@@ -1,10 +1,10 @@
 defmodule Hound.ConnectionServer do
   @moduledoc false
 
-  use GenServer.Behaviour
-
   def start_link(options \\ []) do
-    driver = options[:driver] || "selenium"
+    #TODO should get options from env config for app
+
+    driver = options[:driver] || Application.get_env(:hound, :driver, "selenium")
 
     {default_port, default_path_prefix, default_browser} = case driver do
       "chrome_driver" ->
@@ -15,25 +15,32 @@ defmodule Hound.ConnectionServer do
         {4444, "wd/hub/", "firefox"}
     end
 
-    driver_info = [
-      driver: driver,
-      browser: options[:browser]  || default_browser,
-      type: options[:driver_type] || Hound.JsonDriver,
-      host: options[:host] || "http://localhost",
-      port: options[:port] || default_port,
-      path_prefix: options[:path_prefix] || default_path_prefix
-    ]
+    browser = options[:browser]  || default_browser
+    driver_type = options[:driver_type] || Application.get_env(:hound, :driver_type, Hound.JsonDriver)
+    host = options[:host] || Application.get_env(:hound, :host, "http://localhost")
+    port = options[:port] || Application.get_env(:hound, :host, default_port)
+    path_prefix = options[:path_prefix] || Application.get_env(:hound, :path_prefix, default_path_prefix)
 
-    state = [sessions: [], driver_info: driver_info]
-    :gen_server.start_link({ :local, :hound_connection }, __MODULE__, state, [])
+
+    driver_info = %{
+      :driver => driver,
+      :browser => browser,
+      :driver_type => driver_type,
+      :host => host,
+      :port => port,
+      :path_prefix => path_prefix
+    }
+
+    Agent.start_link(fn->
+      %{sessions: [], driver_info: driver_info}
+    end, name: __MODULE__)
   end
 
 
-  def init(state), do: {:ok, state}
-
-
-  def handle_call(:driver_info, _from, state) do
-    {:reply, {:ok, state[:driver_info]}, state}
+  def driver_info do
+    Agent.get __MODULE__, fn(state)->
+      {:ok, state[:driver_info]}
+    end
   end
 
 end

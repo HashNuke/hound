@@ -144,7 +144,7 @@ defmodule Hound.JsonDriver.Page do
   @doc "Gets element on page that is currently in focus."
   @spec element_in_focus() :: Dict.t
   def element_in_focus do
-    session_id = Hound.get_current_session_id
+    session_id = Hound.current_session_id
     case make_req(:post, "session/#{session_id}/element/active") do
       %{"ELEMENT" => element_id} ->
         element_id

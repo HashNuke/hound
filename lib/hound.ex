@@ -25,8 +25,8 @@ defmodule Hound do
 
 
   @doc false
-  def get_driver_info do
-    :gen_server.call(:hound_connection, :driver_info)
+  def driver_info do
+    Hound.ConnectionServer.driver_info
   end
 
 
