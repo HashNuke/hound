@@ -37,7 +37,7 @@ defmodule Hound.JsonDriver.Page do
     session_id = Hound.get_current_session_id
     params = [using: Hound.InternalHelpers.selector_strategy(strategy), value: selector]
     case make_req(:post, "session/#{session_id}/element", params) do
-      [{"ELEMENT", element_id}] ->
+      %{"ELEMENT" => element_id} ->
         element_id
       value ->
         value
@@ -68,7 +68,7 @@ defmodule Hound.JsonDriver.Page do
       {:error, value} ->
         {:error, value}
       elements ->
-        Enum.map(elements, fn({"ELEMENT", element_id})->
+        Enum.map(elements, fn(%{"ELEMENT" => element_id})->
           element_id
         end)
     end
@@ -146,7 +146,7 @@ defmodule Hound.JsonDriver.Page do
   def element_in_focus do
     session_id = Hound.get_current_session_id
     case make_req(:post, "session/#{session_id}/element/active") do
-      [{"ELEMENT", element_id}] ->
+      %{"ELEMENT" => element_id} ->
         element_id
       value ->
         value
