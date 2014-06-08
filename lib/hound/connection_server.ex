@@ -2,8 +2,6 @@ defmodule Hound.ConnectionServer do
   @moduledoc false
 
   def start_link(options \\ []) do
-    #TODO should get options from env config for app
-
     driver = options[:driver] || Application.get_env(:hound, :driver, "selenium")
 
     {default_port, default_path_prefix, default_browser} = case driver do
