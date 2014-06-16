@@ -12,7 +12,12 @@ defmodule Hound.SessionServer do
       {:ok, driver_info} = Hound.driver_info
       pid_sessions = HashDict.get(state, pid)
 
-      session_id = get_in state[pid][:current]
+      session_id = if HashDict.has_key?(state, pid) do
+          state[pid][:current]
+        else
+          nil
+        end
+
 
       if session_id do
         {session_id, state}
@@ -22,7 +27,6 @@ defmodule Hound.SessionServer do
         all_sessions = HashDict.new
         |> HashDict.put :default, session_id
 
-        #TODO following is supposed to be a hashdict
         session_info = HashDict.new
           |> HashDict.put(:current, session_id)
           |> HashDict.put(:all_sessions, all_sessions)
@@ -37,7 +41,11 @@ defmodule Hound.SessionServer do
 
   def current_session_id(pid) do
     Agent.get __MODULE__, fn(state)->
-      get_in state[pid][:current]
+      if HashDict.has_key?(state, pid) do
+        state[pid][:current]
+      else
+        []
+      end
     end, 30000
   end
 
@@ -68,7 +76,11 @@ defmodule Hound.SessionServer do
 
   def all_sessions_for_pid(pid) do
     Agent.get __MODULE__, fn(state)->
-      get_in(state[pid][:all_sessions]) || []
+      if HashDict.has_key?(state, pid) do
+        state[pid][:all_sessions]
+      else
+        []
+      end
     end
   end
 
@@ -76,7 +88,14 @@ defmodule Hound.SessionServer do
   def destroy_sessions_for_pid(pid) do
     Agent.get_and_update __MODULE__, fn(state)->
       {:ok, driver} = Hound.driver_info
-      sessions = get_in(state[pid][:all_sessions]) || []
+
+      sessions = if HashDict.has_key?(state, pid) do
+          state[pid][:all_sessions]
+        else
+          []
+        end
+
+
       Enum.each sessions, fn({_session_name, session_id})->
         driver[:driver_type].destroy_session(session_id)
       end
