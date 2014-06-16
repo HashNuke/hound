@@ -4,7 +4,7 @@ defmodule Hound.Mixfile do
   def project do
     [ app: :hound,
       version: "0.5.4",
-      elixir: ">= 0.13.3",
+      elixir: ">= 0.13.0",
       deps: deps,
       source_url: "http://github.com/HashNuke/hound",
       docs: [readme: true, main: "README"]
