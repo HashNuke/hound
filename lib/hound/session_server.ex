@@ -23,7 +23,10 @@ defmodule Hound.SessionServer do
         |> HashDict.put :default, session_id
 
         #TODO following is supposed to be a hashdict
-        session_info = %{:current => session_id, :all_sessions => all_sessions}
+        session_info = HashDict.new
+          |> HashDict.put(:current, session_id)
+          |> HashDict.put(:all_sessions, all_sessions)
+
         state_upgrade = HashDict.new |> HashDict.put(pid, session_info)
         new_state = HashDict.merge(state, state_upgrade)
         {session_id, new_state}
@@ -43,20 +46,24 @@ defmodule Hound.SessionServer do
     Agent.get_and_update __MODULE__, fn(state)->
       {:ok, driver_info} = Hound.driver_info
 
-      session_info = state[pid]
-      session_id = get_in session_info[:all_sessions][session_name]
+      pid_info = state[pid]
+      session_id = pid_info[:all_sessions][session_name]
 
       if session_id do
-        state = put_in state[pid][:current], session_id
+        pid_info_update = HashDict.put(pid_info, :current, session_id)
+        new_state = HashDict.put(state, pid, pid_info_update)
       else
         {:ok, session_id} = driver_info[:driver_type].create_session(driver_info[:browser])
-        state = put_in state[pid][:all_sessions][session_name], session_id
-        state = put_in state[pid][:current], session_id
+
+        all_sessions_update = HashDict.put(pid_info[:all_sessions], session_name, session_id)
+        pid_info_update = pid_info
+          |> HashDict.put(:current, session_id)
+          |> HashDict.put(:all_sessions, all_sessions_update)
+        new_state = HashDict.put(state, pid, pid_info_update)
       end
-      {session_id, state}
+      {session_id, new_state}
     end, 30000
   end
-
 
 
   def all_sessions_for_pid(pid) do
