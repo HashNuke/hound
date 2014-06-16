@@ -22,6 +22,6 @@ defmodule Hound.Helpers.Orientation do
   @spec set_orientation(:landscape | :portrait) :: :ok
   def set_orientation(orientation) do
     {:ok, driver_info} = Hound.driver_info
-    driver_info[:driver_type].Orientation.set_orientation
+    driver_info[:driver_type].Orientation.set_orientation(orientation)
   end
 end

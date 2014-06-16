@@ -1,31 +1,28 @@
 defmodule Hound.SessionServer do
   @moduledoc false
 
+  use GenServer.Behaviour
+
   def start_link do
     state = HashDict.new
-    Agent.start_link(fn -> HashDict.new() end, name: __MODULE__)
+    :gen_server.start_link({:local, __MODULE__}, __MODULE__, state, [])
   end
 
 
-  def session_for_pid(pid) do
-    Agent.get_and_update __MODULE__, fn(state)->
-      {:ok, driver_info} = Hound.driver_info
-      pid_sessions = HashDict.get(state, pid)
-
-      session_id = if HashDict.has_key?(state, pid) do
-          state[pid][:current]
-        else
-          nil
-        end
+  def init(state) do
+    {:ok, state}
+  end
 
 
-      if session_id do
-        {session_id, state}
-      else
+  def handle_call({:session, pid}, _from, state) do
+    {:ok, driver_info} = Hound.driver_info
+    pid_sessions = HashDict.get(state, pid)
+
+    case state[pid][:current] do
+      nil ->
         {:ok, session_id} = driver_info[:driver_type].create_session(driver_info[:browser])
-
         all_sessions = HashDict.new
-        |> HashDict.put :default, session_id
+          |> HashDict.put :default, session_id
 
         session_info = HashDict.new
           |> HashDict.put(:current, session_id)
@@ -33,75 +30,90 @@ defmodule Hound.SessionServer do
 
         state_upgrade = HashDict.new |> HashDict.put(pid, session_info)
         new_state = HashDict.merge(state, state_upgrade)
-        {session_id, new_state}
-      end
-    end, 60000
-  end
-
-
-  def current_session_id(pid) do
-    Agent.get __MODULE__, fn(state)->
-      if HashDict.has_key?(state, pid) do
-        state[pid][:current]
-      else
-        []
-      end
-    end, 30000
-  end
-
-
-  def change_current_session_for_pid(pid, session_name) do
-    Agent.get_and_update __MODULE__, fn(state)->
-      {:ok, driver_info} = Hound.driver_info
-
-      pid_info = state[pid]
-      session_id = pid_info[:all_sessions][session_name]
-
-      if session_id do
-        pid_info_update = HashDict.put(pid_info, :current, session_id)
-        new_state = HashDict.put(state, pid, pid_info_update)
-      else
-        {:ok, session_id} = driver_info[:driver_type].create_session(driver_info[:browser])
-
-        all_sessions_update = HashDict.put(pid_info[:all_sessions], session_name, session_id)
-        pid_info_update = pid_info
-          |> HashDict.put(:current, session_id)
-          |> HashDict.put(:all_sessions, all_sessions_update)
-        new_state = HashDict.put(state, pid, pid_info_update)
-      end
-      {session_id, new_state}
-    end, 30000
-  end
-
-
-  def all_sessions_for_pid(pid) do
-    Agent.get __MODULE__, fn(state)->
-      if HashDict.has_key?(state, pid) do
-        state[pid][:all_sessions]
-      else
-        []
-      end
+        {:reply, session_id, new_state}
+      session_id ->
+        {:reply, session_id, state}
     end
   end
 
 
-  def destroy_sessions_for_pid(pid) do
-    Agent.get_and_update __MODULE__, fn(state)->
-      {:ok, driver} = Hound.driver_info
-
-      sessions = if HashDict.has_key?(state, pid) do
-          state[pid][:all_sessions]
-        else
-          []
-        end
+  def handle_call({:current_session, pid}, _from, state) do
+    if HashDict.has_key?(state, pid) do
+      {:reply, state[pid][:current], state}
+    else
+      {:reply, nil, state}
+    end
+  end
 
 
+  def handle_call({:change_session, pid, session_name}, _from, state) do
+    {:ok, driver_info} = Hound.driver_info
+
+    pid_info = state[pid]
+    session_id = pid_info[:all_sessions][session_name]
+
+    if session_id do
+      pid_info_update = HashDict.put(pid_info, :current, session_id)
+    else
+      {:ok, session_id} = driver_info[:driver_type].create_session(driver_info[:browser])
+
+      all_sessions_update = HashDict.put(pid_info[:all_sessions], session_name, session_id)
+      pid_info_update = pid_info
+        |> HashDict.put(:current, session_id)
+        |> HashDict.put(:all_sessions, all_sessions_update)
+    end
+
+    new_state = HashDict.put(state, pid, pid_info_update)
+    {:reply, session_id, new_state}
+  end
+
+
+  def handle_call({:all_sessions, pid}, _from, state) do
+    if HashDict.has_key?(state, pid) do
+      {:reply, state[pid][:all_sessions], state}
+    else
+      {:reply, [], state}
+    end
+  end
+
+
+  def handle_call({:destroy_sessions, pid}, _from, state) do
+    {:ok, driver} = Hound.driver_info
+
+    if HashDict.has_key?(state, pid) do
+      sessions = state[pid][:all_sessions]
       Enum.each sessions, fn({_session_name, session_id})->
         driver[:driver_type].destroy_session(session_id)
       end
-      new_state = HashDict.delete(state, pid)
-      {:ok, new_state}
-    end, 30000
+      state = HashDict.delete(state, pid)
+    end
+    {:reply, :ok, state}
+  end
+
+
+
+  def session_for_pid(pid) do
+    :gen_server.call __MODULE__, {:session, pid}, 60000
+  end
+
+
+  def current_session_id(pid) do
+    :gen_server.call __MODULE__, {:current_session, pid}, 30000
+  end
+
+
+  def change_current_session_for_pid(pid, session_name) do
+    :gen_server.call __MODULE__, {:change_session, pid, session_name}, 30000
+  end
+
+
+  def all_sessions_for_pid(pid) do
+    :gen_server.call __MODULE__, {:all_sessions, pid}, 30000
+  end
+
+
+  def destroy_sessions_for_pid(pid) do
+    :gen_server.call __MODULE__, {:destroy_sessions, pid}, 30000
   end
 
 end
