@@ -8,19 +8,19 @@ defmodule HoundTest do
   end
 
   test "should return driver info" do
-    {:ok, driver_info} = Hound.get_driver_info
-    assert is_atom(driver_info[:type])
+    {:ok, driver_info} = Hound.driver_info
+    assert is_atom(driver_info[:driver_type])
   end
 
 
   test "should return the current session ID" do
-    assert is_binary(Hound.get_current_session_id)
+    assert is_binary(Hound.current_session_id)
   end
 
 
   test "Should destroy all sessions for current process" do
     Hound.end_session
-    assert :gen_server.call(:hound_sessions, :all_sessions_for_pid) == []
+    assert Hound.SessionServer.all_sessions_for_pid(self) == []
   end
 
 

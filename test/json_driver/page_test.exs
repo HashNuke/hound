@@ -42,8 +42,8 @@ defmodule PageTest do
     navigate_to("http://localhost:9090/page1.html")
     IO.inspect page_source()
     container_id = find_element(:class, "container")
-    element_id = find_within_element(container_id, :class, "example")
-    assert is_binary(element_id)
+    element = find_within_element(container_id, :class, "example")
+    assert is_map(element)
   end
 
 

@@ -66,7 +66,7 @@ defmodule Hound.InternalHelpers do
 
 
   def driver_supports?(feature) do
-    {:ok, driver_info} = Hound.get_driver_info
+    {:ok, driver_info} = Hound.driver_info
     unsupported_features = [
       phantomjs: [
         "dialog_text", "input_into_prompt", "accept_dialog", "dismiss_dialog"

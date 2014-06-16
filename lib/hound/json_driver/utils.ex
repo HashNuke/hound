@@ -51,7 +51,7 @@ defmodule Hound.JsonDriver.Utils do
   end
 
   defp get_url(path) do
-    {:ok, driver_info} = Hound.get_driver_info
+    {:ok, driver_info} = Hound.driver_info
 
     host = driver_info[:host]
     port = driver_info[:port]
