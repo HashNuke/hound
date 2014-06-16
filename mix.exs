@@ -5,7 +5,7 @@ defmodule Hound.Mixfile do
     [ app: :hound,
       version: "0.5.4",
       elixir: ">= 0.13.0",
-      deps: deps,
+      deps: deps(Mix.env),
       source_url: "http://github.com/HashNuke/hound",
       docs: [readme: true, main: "README"]
     ]
@@ -25,8 +25,19 @@ defmodule Hound.Mixfile do
   defp deps do
     [
       { :ibrowse, github: "cmullaparthi/ibrowse", tag: "v4.0.2" },
-      { :jsex,    github: "talentdeficit/jsex" },
+      { :jsex,    github: "talentdeficit/jsex" }
+    ]
+  end
+
+
+  defp deps(:docs) do
+    deps ++ [
       { :ex_doc,  github: "elixir-lang/ex_doc" }
     ]
+  end
+
+
+  defp deps(_) do
+    deps
   end
 end
