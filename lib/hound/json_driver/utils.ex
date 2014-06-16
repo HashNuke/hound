@@ -43,12 +43,15 @@ defmodule Hound.JsonDriver.Utils do
 
   defp decode_content(content) do
     if content != [] do
-      {:ok, resp} = JSEX.decode(iodata_to_binary content)
+      # Need to support both Elixir 0.13.x and 0.14.x
+      json_string = :erlang.iolist_to_binary(content)
+      {:ok, resp} = JSEX.decode(json_string)
       resp
     else
       []
     end
   end
+
 
   defp get_url(path) do
     {:ok, driver_info} = Hound.driver_info

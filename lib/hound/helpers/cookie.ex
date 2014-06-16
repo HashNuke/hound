@@ -1,8 +1,6 @@
 defmodule Hound.Helpers.Cookie do
   @moduledoc "Provides cookie-related functions."
 
-  import Hound.JsonDriver.Utils
-
 
   @doc """
   Gets cookies. Returns a list of ListDicts, each containing properties of the cookie.
