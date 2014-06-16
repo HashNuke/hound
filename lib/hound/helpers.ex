@@ -2,11 +2,19 @@ defmodule Hound.Helpers do
   @moduledoc false
 
   defmacro __using__([]) do
-    {:ok, driver} = Hound.driver_info
     quote do
-      use unquote(driver[:driver_type])
-      import unquote(__MODULE__)
       import Hound
+      import Hound.Helpers.Cookie
+      import Hound.Helpers.Dialog
+      import Hound.Helpers.Element
+      import Hound.Helpers.Navigation
+      import Hound.Helpers.Orientation
+      import Hound.Helpers.Page
+      import Hound.Helpers.Screenshot
+      import Hound.Helpers.ScriptExecution
+      import Hound.Helpers.Session
+      import Hound.Helpers.Window
+      import unquote(__MODULE__)
     end
   end
 

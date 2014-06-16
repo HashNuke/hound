@@ -1,7 +1,5 @@
-defmodule Hound.JsonDriver.Session do
+defmodule Hound.Helpers.Session do
   @moduledoc "Functions to switch sessions."
-
-  import Hound.JsonDriver.Utils
 
   @doc """
   When you need more than one browser session, use this function switch to another session.

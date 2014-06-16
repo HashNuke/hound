@@ -1,19 +1,18 @@
-defmodule Hound.JsonDriver.Page do
-  import Hound.JsonDriver.Utils
+defmodule Hound.Helpers.Page do
 
   @doc "Gets the HTML source of current page."
   @spec page_source() :: String.t
-  def page_source() do
-    session_id = Hound.current_session_id
-    make_req(:get, "session/#{session_id}/source")
+  def page_source do
+    {:ok, driver_info} = Hound.driver_info
+    driver_info[:driver_type].Page.page_source
   end
 
 
   @doc "Gets the title of the current page."
   @spec page_title() :: String.t
-  def page_title() do
-    session_id = Hound.current_session_id
-    make_req(:get, "session/#{session_id}/title")
+  def page_title do
+    {:ok, driver_info} = Hound.driver_info
+    driver_info[:driver_type].Page.page_title
   end
 
 
@@ -34,14 +33,8 @@ defmodule Hound.JsonDriver.Page do
   """
   @spec find_element(String.t, String.t) :: Dict.t
   def find_element(strategy, selector) do
-    session_id = Hound.current_session_id
-    params = [using: Hound.InternalHelpers.selector_strategy(strategy), value: selector]
-    case make_req(:post, "session/#{session_id}/element", params) do
-      %{"ELEMENT" => element_id} ->
-        element_id
-      value ->
-        value
-    end
+    {:ok, driver_info} = Hound.driver_info
+    driver_info[:driver_type].Page.find_element(strategy, selector)
   end
 
 
@@ -62,16 +55,8 @@ defmodule Hound.JsonDriver.Page do
   """
   @spec find_all_elements(atom, String.t) :: List.t
   def find_all_elements(strategy, selector) do
-    session_id = Hound.current_session_id
-    params = [using: Hound.InternalHelpers.selector_strategy(strategy), value: selector]
-    case make_req(:post, "session/#{session_id}/elements", params) do
-      {:error, value} ->
-        {:error, value}
-      elements ->
-        Enum.map(elements, fn(%{"ELEMENT" => element_id})->
-          element_id
-        end)
-    end
+    {:ok, driver_info} = Hound.driver_info
+    driver_info[:driver_type].Page.find_all_elements(strategy, selector)
   end
 
 
@@ -96,14 +81,8 @@ defmodule Hound.JsonDriver.Page do
   """
   @spec find_within_element(String.t, atom,String.t) :: Dict.t
   def find_within_element(element_id, strategy, selector) do
-    session_id = Hound.current_session_id
-    params = [using: Hound.InternalHelpers.selector_strategy(strategy), value: selector]
-    case make_req(:post, "session/#{session_id}/element/#{element_id}/element", params) do
-      [{"ELEMENT", element_id}] ->
-        element_id
-      value ->
-        value
-    end
+    {:ok, driver_info} = Hound.driver_info
+    driver_info[:driver_type].Page.find_within_element(element_id, strategy, selector)
   end
 
 
@@ -128,28 +107,46 @@ defmodule Hound.JsonDriver.Page do
   """
   @spec find_all_within_element(String.t, atom, String.t) :: List.t
   def find_all_within_element(element_id, strategy, selector) do
-    session_id = Hound.current_session_id
-    params = [using: Hound.InternalHelpers.selector_strategy(strategy), value: selector]
-    case make_req(:post, "session/#{session_id}/element/#{element_id}/elements", params) do
-      {:error, value} ->
-        {:error, value}
-      elements ->
-        Enum.map(elements, fn(%{"ELEMENT" => element_id})->
-          element_id
-        end)
-    end
+    {:ok, driver_info} = Hound.driver_info
+    driver_info[:driver_type].Page.find_all_within_element(element_id, strategy, selector)
   end
 
 
   @doc "Gets element on page that is currently in focus."
   @spec element_in_focus() :: Dict.t
   def element_in_focus do
-    session_id = Hound.current_session_id
-    case make_req(:post, "session/#{session_id}/element/active") do
-      %{"ELEMENT" => element_id} ->
-        element_id
-      value ->
-        value
+    {:ok, driver_info} = Hound.driver_info
+    driver_info[:driver_type].Page.element_in_focus
+  end
+
+
+  @doc """
+  Holds on to the spcified modifier keys when the block is executing.
+
+      # Simulates Ctrl + e
+      with_keys :control do
+        send_text "e"
+      end
+
+      # Simulates Ctrl + Shift + e
+      with_keys [:control, :shift] do
+        send_text "e"
+      end
+
+  The following are the modifier keys:
+
+  * :alt - alt key
+  * :shift - shift key
+  * :command - command key (or meta key)
+  * :control - control key
+  * :escape - escape key
+  """
+  defmacro with_keys(keys, blocks) do
+    do_block = Keyword.get(blocks, :do, nil)
+    quote do
+      send_keys(unquote(keys))
+      unquote(do_block)
+      send_keys(:null)
     end
   end
 
@@ -199,12 +196,8 @@ defmodule Hound.JsonDriver.Page do
   """
   @spec send_keys(List.t | atom) :: :ok
   def send_keys(keys) do
-    if is_atom(keys), do: keys = [keys]
-    session_id = Hound.current_session_id
-    make_req(:post,
-      "session/#{session_id}/keys",
-      Hound.InternalHelpers.key_codes_json(keys),
-      [json_encode: false])
+    {:ok, driver_info} = Hound.driver_info
+    driver_info[:driver_type].Page.send_keys(keys)
   end
 
 
@@ -218,7 +211,7 @@ defmodule Hound.JsonDriver.Page do
   """
   @spec send_text(String.t) :: :ok
   def send_text(keys) do
-    session_id = Hound.current_session_id
-    make_req(:post, "session/#{session_id}/keys", [value: [keys]])
+    {:ok, driver_info} = Hound.driver_info
+    driver_info[:driver_type].Page.send_text(keys)
   end
 end

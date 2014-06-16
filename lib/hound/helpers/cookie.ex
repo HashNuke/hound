@@ -1,4 +1,4 @@
-defmodule Hound.JsonDriver.Cookie do
+defmodule Hound.Helpers.Cookie do
   @moduledoc "Provides cookie-related functions."
 
   import Hound.JsonDriver.Utils
@@ -11,8 +11,8 @@ defmodule Hound.JsonDriver.Cookie do
   """
   @spec cookies() :: List.t
   def cookies() do
-    session_id = Hound.current_session_id
-    make_req(:get, "session/#{session_id}/cookie")
+    {:ok, driver_info} = Hound.driver_info
+    driver_info[:driver_type].Cookie.cookies
   end
 
 
@@ -33,21 +33,24 @@ defmodule Hound.JsonDriver.Cookie do
   """
   @spec set_cookie(Dict.t) :: :ok
   def set_cookie(cookie) do
-    session_id = Hound.current_session_id
-    make_req(:post, "session/#{session_id}/cookie", [cookie: cookie])
+    {:ok, driver_info} = Hound.driver_info
+    driver_info[:driver_type].Cookie.set_cookie(cookie)
   end
+
 
   @doc "Delete all cookies"
   @spec delete_cookies() :: :ok
   def delete_cookies() do
-    session_id = Hound.current_session_id
-    make_req(:delete, "session/#{session_id}/cookie")
+    {:ok, driver_info} = Hound.driver_info
+    driver_info[:driver_type].Cookie.delete_cookies()
   end
+
 
   @doc "Delete a cookie with the given name"
   @spec delete_cookie(String.t) :: :ok
   def delete_cookie(name) do
-    session_id = Hound.current_session_id
-    make_req(:delete, "session/#{session_id}/cookie/#{name}")
+    {:ok, driver_info} = Hound.driver_info
+    driver_info[:driver_type].Cookie.delete_cookie(name)
   end
+
 end
