@@ -14,7 +14,7 @@ defmodule Hound.SessionServer do
   end
 
 
-  def handle_call({:session, pid}, _from, state) do
+  def handle_call({:find_or_create_session, pid}, _from, state) do
     {:ok, driver_info} = Hound.driver_info
     pid_sessions = HashDict.get(state, pid)
 
@@ -93,7 +93,7 @@ defmodule Hound.SessionServer do
 
 
   def session_for_pid(pid) do
-    :gen_server.call __MODULE__, {:session, pid}, 60000
+    :gen_server.call __MODULE__, {:find_or_create_session, pid}, 60000
   end
 
 
