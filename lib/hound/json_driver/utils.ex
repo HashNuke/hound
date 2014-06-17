@@ -1,7 +1,27 @@
 defmodule Hound.JsonDriver.Utils do
   @moduledoc false
 
-  def make_req(type, path, params \\ [], options \\ []) do
+
+  def make_req(type, path, params \\ [], options \\ [], retries \\ 5) do
+    if retries > 0 do
+      try do
+        send_req(type, path, params, options)
+      catch
+        _ ->
+          :timer.sleep(1000)
+          make_req(type, path, params, options, retries - 1)
+      rescue
+        _ ->
+          :timer.sleep(1000)
+          make_req(type, path, params, options, retries - 1)
+      end
+    else
+      send_req(type, path, params, options)
+    end
+  end
+
+
+  defp send_req(type, path, params \\ [], options \\ []) do
     url = get_url(path)
 
     if params != [] && type == :post do
