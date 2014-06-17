@@ -10,6 +10,8 @@ before_install:
   - git clone https://github.com/elixir-lang/elixir.git $HOME/src/elixir
   - export PATH=$PATH:$HOME/src/elixir/bin/
   - cd $HOME/src/elixir && git checkout $ELIXIR_VERSION && make clean compile && cd -
+  - mix local.hex --force
+
 env:
   - WEBDRIVER=selenium   ELIXIR_VERSION="v0.14.0"
   - WEBDRIVER=phantomjs  ELIXIR_VERSION="v0.14.0"
