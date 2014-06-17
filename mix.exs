@@ -28,8 +28,8 @@ defmodule Hound.Mixfile do
   # { :barbat, "~> 0.1", github: "elixir-lang/barbat.git" }
   defp deps do
     [
-      { :ibrowse, github: "cmullaparthi/ibrowse", tag: "v4.0.2" },
-      { :jsex,    github: "talentdeficit/jsex" }
+      { :ibrowse, github: "cmullaparthi/ibrowse", tag: "v4.0.2", optional: true },
+      { :jsex,    "~> 2.0.0" }
     ]
   end
 

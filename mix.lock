@@ -1,4 +1,4 @@
 %{"ex_doc": {:git, "git://github.com/elixir-lang/ex_doc.git", "ddf1cae6bf331d8cfd5ded61b3b120293b80642d", []},
   "ibrowse": {:git, "git://github.com/cmullaparthi/ibrowse.git", "e8ae353c16d4f0897abb9f80025b52925b974dd1", [tag: "v4.0.2"]},
-  "jsex": {:git, "git://github.com/talentdeficit/jsex.git", "1773c541f63d45f251ec111600079e796450fa04", []},
+  "jsex": {:package, "2.0.0"},
   "jsx": {:package, "2.0.4"}}
