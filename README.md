@@ -114,14 +114,14 @@ If you prefer to manually start and end sessions, use `Hound.start_session` and 
 
 The documentation pages include examples under each function.
 
-* [Navigation](http://akash.im/docs/hound/Hound.JsonDriver.Navigation.html)
-* [Page](http://akash.im/docs/hound/Hound.JsonDriver.Page.html)
-* [Element](http://akash.im/docs/hound/Hound.JsonDriver.Element.html)
-* [Cookies](http://akash.im/docs/hound/Hound.JsonDriver.Cookie.html)
-* [Javascript execution](http://akash.im/docs/hound/Hound.JsonDriver.ScriptExecution.html)
-* [Javascript dialogs](http://akash.im/docs/hound/Hound.JsonDriver.Dialog.html)
-* [Screenshot](http://akash.im/docs/hound/Hound.JsonDriver.Screenshot.html)
-* [Session](http://akash.im/docs/hound/Hound.JsonDriver.Session.html)
+* [Navigation](http://akash.im/docs/hound/Hound.Helpers.Navigation.html)
+* [Page](http://akash.im/docs/hound/Hound.Helpers.Page.html)
+* [Element](http://akash.im/docs/hound/Hound.Helpers.Element.html)
+* [Cookies](http://akash.im/docs/hound/Hound.Helpers.Cookie.html)
+* [Javascript execution](http://akash.im/docs/hound/Hound.Helpers.ScriptExecution.html)
+* [Javascript dialogs](http://akash.im/docs/hound/Hound.Helpers.Dialog.html)
+* [Screenshot](http://akash.im/docs/hound/Hound.Helpers.Screenshot.html)
+* [Session](http://akash.im/docs/hound/Hound.Helpers.Session.html)
 
 The docs are at <http://akash.im/docs/hound>.
 
@@ -143,7 +143,7 @@ The number of tests you can run async at any point in time, depends on the numbe
 
 #### Will Hound gurantee an isolated session per test?
 
-Yes. A seperate session is started for each session. 
+Yes. A seperate session is started for each session.
 
 ## PhantomJs caveats
 
