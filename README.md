@@ -12,6 +12,8 @@ For browser automation and writing integration tests in Elixir.
 
 * Supports Selenium (Firefox, Chrome), ChromeDriver and PhantomJs.
 
+* Supports Javascript-heavy apps. Retries a few times before reporting error.
+
 * Implements the WebDriver Wire Protocol.
 
 
@@ -42,27 +44,7 @@ defmodule HoundTest do
 end
 ```
 
-##### Simple browser automation
-
-```elixir
-# This needs to be started before before using the helpers
-{:ok, _hound_pid} = Hound.start()
-
-defmodule Example do
-  use Hound.Helpers
-
-  def run do
-    Hound.start_session
-
-    navigate_to "http://akash.im"
-    IO.inspect page_title()
-
-    Hound.end_session
-  end
-end
-
-Example.run
-```
+Here's another [simple browser-automation example](https://github.com/HashNuke/hound/blob/master/docs/simple-browser-automation.md).
 
 ## Setup
 
@@ -70,34 +52,32 @@ Hound requires Erlang R16B02 or higher.
 
 * Add dependency to your mix project
 
-        { :hound, github: "HashNuke/hound", tag: "v0.5.2" }
+  ```elixir
+  { :hound, github: "HashNuke/hound", tag: "v0.5.4" }
+  ```
 
-* Start Hound in `test_helper.exs`. Here are some examples:
+* Add Hound to the list of applications to start in your `mix.exs`. Recommended to start Hound in test environment only.
 
-        # Start Hound for Selenium server (default port 4444 assumed)
-        Hound.start
+  ```elixir
+  def application do
+    [ applications: app_list(Mix.env) ]
+  end
 
-        # Or, you can also use
-        Hound.start([driver: "selenium"])
+  defp app_list(:test) do: [:hound | app_list] end
+  defp app_list(_)     do: app_list            end
+  defp app_list        do: [:jsex, :ibrowse]   end
+  ```
 
-        # Start Hound for Selenium at port 1234 and use firefox browser
-        Hound.start [port: 1234, browser: "firefox"]
+When you run `mix tests`, Hound is automatically started. __You'll need a webdriver server__ running, like Selenium Server or Chrome Driver. If you aren't sure what it is, then [read this](https://github.com/HashNuke/hound/wiki/Starting-a-webdriver-server).
 
-        # Start Hound for ChromeDriver (default port 9515 assumed)
-        Hound.start [driver: "chrome_driver"]
+## Configure
 
-        # Start Hound for PhantomJs (default port 8910 assumed)
-        Hound.start [driver: "phantomjs"]
+To configure Hound, use your `config/config.exs` file or equivalent (v0.14.0 and above). [Examples are here](https://github.com/HashNuke/hound/blob/master/docs/configuring-hound.md).
 
-        # Start Hound for remote phantomjs server at port 5555
-        Hound.start [driver: "phantomjs", host: "http://example.com", port: 5555]
-
-
-__You'll need a webdriver server__ running, like Selenium Server or Chrome Driver. If you aren't sure what it is, then [read this](https://github.com/HashNuke/hound/wiki/Starting-a-webdriver-server).
 
 ## Usage
 
-Add the following lines to your test files
+Add the following lines to your ExUnit test files.
 
 ```elixir
 # Import helpers

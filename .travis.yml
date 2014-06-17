@@ -11,9 +11,7 @@ before_install:
   - export PATH=$PATH:$HOME/src/elixir/bin/
   - cd $HOME/src/elixir && git checkout $ELIXIR_VERSION && make clean compile && cd -
 env:
-  - WEBDRIVER=selenium   ELIXIR_VERSION="v0.13.0"
   - WEBDRIVER=selenium   ELIXIR_VERSION="v0.14.0"
-  - WEBDRIVER=phantomjs  ELIXIR_VERSION="v0.13.0"
   - WEBDRIVER=phantomjs  ELIXIR_VERSION="v0.14.0"
 
 install: mix deps.get

@@ -11,9 +11,13 @@ defmodule Hound.Mixfile do
     ]
   end
 
+
   # Configuration for the OTP application
   def application do
-    [ applications: [:jsex, :ibrowse] ]
+    [
+      applications: [:jsex, :ibrowse],
+      mod: { Hound, [] }
+    ]
   end
 
 

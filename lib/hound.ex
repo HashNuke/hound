@@ -4,23 +4,8 @@ defmodule Hound do
   # See http://elixir-lang.org/docs/stable/Application.Behaviour.html
   # for more information on OTP Applications
   @doc false
-  def start(_type, options) do
-    start(options)
-  end
-
-
-  @doc """
-  Starts the Hound server.
-
-      # Start Hound for localhost webdriver server (Selenium assumed at port 4444)
-      Hound.start
-
-      # Start Hound for remote webdriver server at port 5555
-      Hound.start [host: "http://example.com", port: 5555]
-  """
-  def start(options \\ []) do
-    :application.ensure_all_started(:ibrowse)
-    Hound.Supervisor.start_link(options)
+  def start(_type, _args) do
+    Hound.Supervisor.start_link
   end
 
 

@@ -16,7 +16,6 @@ defmodule Hound.SessionServer do
 
   def handle_call({:find_or_create_session, pid}, _from, state) do
     {:ok, driver_info} = Hound.driver_info
-    pid_sessions = HashDict.get(state, pid)
 
     case state[pid][:current] do
       nil ->

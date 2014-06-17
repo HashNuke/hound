@@ -21,7 +21,7 @@ defmodule Hound.JsonDriver.Utils do
   end
 
 
-  defp send_req(type, path, params \\ [], options \\ []) do
+  defp send_req(type, path, params, options) do
     url = get_url(path)
 
     if params != [] && type == :post do
