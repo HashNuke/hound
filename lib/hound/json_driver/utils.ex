@@ -43,14 +43,14 @@ defmodule Hound.JsonDriver.Utils do
 
     cond do
       status < 300 && path == "session" ->
-        {:ok, resp[:sessionId]}
-      resp[:status] == 0 ->
-        resp[:value]
+        {:ok, resp["sessionId"]}
+      resp["status"] == 0 ->
+        resp["value"]
       status < 400 ->
         :ok
       true ->
-        if resp[:value] do
-          raise resp[:value][:message]
+        if resp["value"] do
+          raise resp["value"]["emessage"]
         else
           raise """
           Webdriver call status code #{status} for #{type} request #{url}.
@@ -63,12 +63,11 @@ defmodule Hound.JsonDriver.Utils do
 
   defp decode_content(content) do
     if content != [] do
-      # Need to support both Elixir 0.13.x and 0.14.x
-      json_string = :erlang.iolist_to_binary(content)
+      json_string = iodata_to_binary(content)
       {:ok, resp} = JSEX.decode(json_string)
       resp
     else
-      []
+      Map.new
     end
   end
 
