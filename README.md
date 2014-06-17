@@ -44,7 +44,7 @@ defmodule HoundTest do
 end
 ```
 
-Here's another [simple browser-automation example](https://github.com/HashNuke/hound/blob/master/docs/simple-browser-automation.md).
+Here's another [simple browser-automation example](https://github.com/HashNuke/hound/blob/master/notes/simple-browser-automation.md).
 
 ## Setup
 
@@ -72,7 +72,7 @@ When you run `mix tests`, Hound is automatically started. __You'll need a webdri
 
 ## Configure
 
-To configure Hound, use your `config/config.exs` file or equivalent (v0.14.0 and above). [Examples are here](https://github.com/HashNuke/hound/blob/master/docs/configuring-hound.md).
+To configure Hound, use your `config/config.exs` file or equivalent (v0.14.0 and above). [Examples are here](https://github.com/HashNuke/hound/blob/master/notes/configuring-hound.md).
 
 
 ## Usage
