@@ -31,10 +31,10 @@ defmodule Hound.Helpers.Page do
       find_element(:tag, "footer")
       find_element(:link_text, "Home")
   """
-  @spec find_element(String.t, String.t) :: Dict.t
-  def find_element(strategy, selector) do
+  @spec find_element(String.t, String.t, Integer.t) :: Dict.t
+  def find_element(strategy, selector, retries \\ 5) do
     {:ok, driver_info} = Hound.driver_info
-    driver_info[:driver_type].Page.find_element(strategy, selector)
+    driver_info[:driver_type].Page.find_element(strategy, selector, retries)
   end
 
 
@@ -53,10 +53,10 @@ defmodule Hound.Helpers.Page do
       find_elements(:tag, "footer")
       find_elements(:link_text, "Home")
   """
-  @spec find_all_elements(atom, String.t) :: List.t
-  def find_all_elements(strategy, selector) do
+  @spec find_all_elements(atom, String.t, Integer.t) :: List.t
+  def find_all_elements(strategy, selector, retries \\ 5) do
     {:ok, driver_info} = Hound.driver_info
-    driver_info[:driver_type].Page.find_all_elements(strategy, selector)
+    driver_info[:driver_type].Page.find_all_elements(strategy, selector, retries)
   end
 
 
@@ -79,10 +79,10 @@ defmodule Hound.Helpers.Page do
       find_within_element(parent_element_id, :tag, "footer")
       find_within_element(parent_element_id, :link_text, "Home")
   """
-  @spec find_within_element(String.t, atom,String.t) :: Dict.t
-  def find_within_element(element_id, strategy, selector) do
+  @spec find_within_element(String.t, atom, String.t, Integer.t) :: Dict.t
+  def find_within_element(element_id, strategy, selector, retries \\ 5) do
     {:ok, driver_info} = Hound.driver_info
-    driver_info[:driver_type].Page.find_within_element(element_id, strategy, selector)
+    driver_info[:driver_type].Page.find_within_element(element_id, strategy, selector, retries)
   end
 
 
@@ -105,10 +105,10 @@ defmodule Hound.Helpers.Page do
       find_all_within_element(parent_element_id, :tag, "footer")
       find_all_within_element(parent_element_id, :link_text, "Home")
   """
-  @spec find_all_within_element(String.t, atom, String.t) :: List.t
-  def find_all_within_element(element_id, strategy, selector) do
+  @spec find_all_within_element(String.t, atom, String.t, Integer.t) :: List.t
+  def find_all_within_element(element_id, strategy, selector, retries \\ 5) do
     {:ok, driver_info} = Hound.driver_info
-    driver_info[:driver_type].Page.find_all_within_element(element_id, strategy, selector)
+    driver_info[:driver_type].Page.find_all_within_element(element_id, strategy, selector, retries)
   end
 
 

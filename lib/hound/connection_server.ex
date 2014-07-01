@@ -1,7 +1,7 @@
 defmodule Hound.ConnectionServer do
   @moduledoc false
 
-  use GenServer.Behaviour
+  use GenServer
 
   def start_link(options \\ []) do
     driver = options[:driver] || :application.get_env(:hound, :driver, "selenium")

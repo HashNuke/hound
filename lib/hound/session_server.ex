@@ -1,7 +1,7 @@
 defmodule Hound.SessionServer do
   @moduledoc false
 
-  use GenServer.Behaviour
+  use GenServer
 
   def start_link do
     state = HashDict.new
@@ -20,6 +20,7 @@ defmodule Hound.SessionServer do
     case state[pid][:current] do
       nil ->
         {:ok, session_id} = driver_info[:driver_type].create_session(driver_info[:browser])
+
         all_sessions = HashDict.new
           |> HashDict.put :default, session_id
 
@@ -88,7 +89,6 @@ defmodule Hound.SessionServer do
     end
     {:reply, :ok, state}
   end
-
 
 
   def session_for_pid(pid) do

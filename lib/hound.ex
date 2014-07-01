@@ -1,5 +1,5 @@
 defmodule Hound do
-  use Application.Behaviour
+  use Application
 
   # See http://elixir-lang.org/docs/stable/Application.Behaviour.html
   # for more information on OTP Applications
@@ -55,10 +55,14 @@ defmodule Hound do
 
   For an example, take a look at the documentation for `start_session`.
   """
+  def end_session(pid) do
+    Hound.SessionServer.destroy_sessions_for_pid(pid)
+  end
+
+
   def end_session do
     Hound.SessionServer.destroy_sessions_for_pid(self)
   end
-
 
   @doc false
   def current_session_id do

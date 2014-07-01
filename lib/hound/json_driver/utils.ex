@@ -63,7 +63,7 @@ defmodule Hound.JsonDriver.Utils do
 
   defp decode_content(content) do
     if content != [] do
-      json_string = iodata_to_binary(content)
+      json_string = IO.iodata_to_binary(content)
       {:ok, resp} = JSEX.decode(json_string)
       resp
     else

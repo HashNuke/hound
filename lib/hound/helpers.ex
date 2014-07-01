@@ -23,11 +23,8 @@ defmodule Hound.Helpers do
     quote do
       setup do
         Hound.start_session
-        :ok
-      end
-
-      teardown do
-        Hound.end_session
+        parent = self
+        on_exit fn-> Hound.end_session(self) end
         :ok
       end
     end

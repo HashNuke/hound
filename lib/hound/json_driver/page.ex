@@ -16,11 +16,11 @@ defmodule Hound.JsonDriver.Page do
   end
 
 
-  @spec find_element(String.t, String.t) :: Dict.t
-  def find_element(strategy, selector) do
+  @spec find_element(String.t, String.t, Integer.t) :: Dict.t
+  def find_element(strategy, selector, retries) do
     session_id = Hound.current_session_id
     params = [using: Hound.InternalHelpers.selector_strategy(strategy), value: selector]
-    case make_req(:post, "session/#{session_id}/element", params) do
+    case make_req(:post, "session/#{session_id}/element", params, [], retries) do
       %{"ELEMENT" => element_id} ->
         element_id
       value ->
@@ -29,11 +29,11 @@ defmodule Hound.JsonDriver.Page do
   end
 
 
-  @spec find_all_elements(atom, String.t) :: List.t
-  def find_all_elements(strategy, selector) do
+  @spec find_all_elements(atom, String.t, Integer.t) :: List.t
+  def find_all_elements(strategy, selector, retries) do
     session_id = Hound.current_session_id
     params = [using: Hound.InternalHelpers.selector_strategy(strategy), value: selector]
-    case make_req(:post, "session/#{session_id}/elements", params) do
+    case make_req(:post, "session/#{session_id}/elements", params, [], retries) do
       {:error, value} ->
         {:error, value}
       elements ->
@@ -44,11 +44,11 @@ defmodule Hound.JsonDriver.Page do
   end
 
 
-  @spec find_within_element(String.t, atom,String.t) :: Dict.t
-  def find_within_element(element_id, strategy, selector) do
+  @spec find_within_element(String.t, atom, String.t, Integer.t) :: Dict.t
+  def find_within_element(element_id, strategy, selector, retries) do
     session_id = Hound.current_session_id
     params = [using: Hound.InternalHelpers.selector_strategy(strategy), value: selector]
-    case make_req(:post, "session/#{session_id}/element/#{element_id}/element", params) do
+    case make_req(:post, "session/#{session_id}/element/#{element_id}/element", params, [], retries) do
       [{"ELEMENT", element_id}] ->
         element_id
       value ->
@@ -57,11 +57,11 @@ defmodule Hound.JsonDriver.Page do
   end
 
 
-  @spec find_all_within_element(String.t, atom, String.t) :: List.t
-  def find_all_within_element(element_id, strategy, selector) do
+  @spec find_all_within_element(String.t, atom, String.t, Integer.t) :: List.t
+  def find_all_within_element(element_id, strategy, selector, retries) do
     session_id = Hound.current_session_id
     params = [using: Hound.InternalHelpers.selector_strategy(strategy), value: selector]
-    case make_req(:post, "session/#{session_id}/element/#{element_id}/elements", params) do
+    case make_req(:post, "session/#{session_id}/element/#{element_id}/elements", params, [], retries) do
       {:error, value} ->
         {:error, value}
       elements ->
