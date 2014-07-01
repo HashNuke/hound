@@ -13,8 +13,8 @@ before_install:
   - mix local.hex --force
 
 env:
-  - WEBDRIVER=selenium   ELIXIR_VERSION="v0.14.0"
-  - WEBDRIVER=phantomjs  ELIXIR_VERSION="v0.14.0"
+  - WEBDRIVER=selenium   ELIXIR_VERSION="v0.14.2"
+  - WEBDRIVER=phantomjs  ELIXIR_VERSION="v0.14.2"
 
 install: mix deps.get
 script:  mix test
