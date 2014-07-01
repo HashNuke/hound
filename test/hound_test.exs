@@ -4,6 +4,8 @@ defmodule HoundTest do
 
   setup do
     Hound.start_session
+    parent = self
+    on_exit fn-> Hound.end_session(parent) end
     :ok
   end
 
@@ -23,8 +25,4 @@ defmodule HoundTest do
     assert Hound.SessionServer.all_sessions_for_pid(self) == []
   end
 
-
-  teardown do
-    :ok = Hound.end_session
-  end
 end
