@@ -20,6 +20,7 @@ defmodule Hound.JsonDriver.Page do
   def find_element(strategy, selector, retries) do
     session_id = Hound.current_session_id
     params = [using: Hound.InternalHelpers.selector_strategy(strategy), value: selector]
+
     case make_req(:post, "session/#{session_id}/element", params, [], retries) do
       %{"ELEMENT" => element_id} ->
         element_id
