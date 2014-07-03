@@ -47,7 +47,7 @@ defmodule Hound.JsonDriver.Utils do
       resp["status"] == 0 ->
         resp["value"]
       is_map(resp["value"]) ->
-        raise resp["value"]["message"]
+        resp["value"]["message"]
       status < 400 ->
         :ok
       true ->
