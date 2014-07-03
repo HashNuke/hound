@@ -22,7 +22,7 @@ defmodule PageTest do
   end
 
 
-  test "should find elements within page" do
+  test "should find element within page" do
     navigate_to("http://localhost:9090/page1.html")
     assert is_binary(find_element(:css, ".example"))
   end
@@ -42,7 +42,7 @@ defmodule PageTest do
     navigate_to("http://localhost:9090/page1.html")
     container_id = find_element(:class, "container")
     element = find_within_element(container_id, :class, "example")
-    assert is_map(element)
+    assert is_binary(element)
   end
 
 
