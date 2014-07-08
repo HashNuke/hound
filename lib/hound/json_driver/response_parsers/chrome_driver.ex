@@ -5,7 +5,6 @@ defmodule Hound.JsonDriver.ResponseParsers.ChromeDriver do
     resp = Hound.JsonDriver.Utils.decode_content(content)
 
     value = resp["value"]
-    IO.inspect resp
     cond do
       status < 300 && path == "session" ->
         {:ok, resp["sessionId"]}
