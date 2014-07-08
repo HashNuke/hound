@@ -6,7 +6,8 @@ before_install:
   - "export DISPLAY=:99.0"
   - "/sbin/start-stop-daemon --start --quiet --pidfile /tmp/custom_xvfb_99.pid --make-pidfile --background --exec /usr/bin/Xvfb -- :99 -ac -screen 0 1280x1024x16"
   - mkdir $HOME/src
-  - npm install phantomjs -g
+  - npm install -g phantomjs
+  - "/sbin/start-stop-daemon --start --quiet --pidfile /tmp/phantomjs.pid --make-pidfile --background --exec phantomjs -w"
   - bash $TRAVIS_BUILD_DIR/test/tools/start_webdriver.sh
   - git clone https://github.com/elixir-lang/elixir.git $HOME/src/elixir
   - export PATH=$PATH:$HOME/src/elixir/bin/
