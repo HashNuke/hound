@@ -1,5 +1,6 @@
 if [[ $WEBDRIVER == "phantomjs" ]]
 then
+    npm install -g phantomjs
     nohup `which phantomjs` --webdriver &
     echo "Running with PhantomJs..."
 elif [[ $WEBDRIVER == "selenium" ]]
