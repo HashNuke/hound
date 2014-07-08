@@ -1,18 +1,18 @@
 defmodule Hound.JsonDriver.Utils do
   @moduledoc false
 
-
   def make_req(type, path, params \\ [], options \\ [], retries \\ 5) do
+
     if retries > 0 do
       try do
         send_req(type, path, params, options)
       catch
         _ ->
-          :timer.sleep(1000)
+          :timer.sleep(500)
           make_req(type, path, params, options, retries - 1)
       rescue
         _ ->
-          :timer.sleep(1000)
+          :timer.sleep(500)
           make_req(type, path, params, options, retries - 1)
       end
     else
@@ -38,32 +38,34 @@ defmodule Hound.JsonDriver.Utils do
 
     {:ok, status, _headers, content} = :ibrowse.send_req(url, headers, type, body)
 
-    resp = decode_content(content)
     {status, _} = :string.to_integer(status)
-
-    cond do
-      status < 300 && path == "session" ->
-        {:ok, resp["sessionId"]}
-      resp["status"] == 0 ->
-        resp["value"]
-      is_map(resp["value"]) ->
-        resp["value"]["message"]
-      status < 400 ->
-        :ok
-      true ->
-        if resp["value"] do
-          raise resp["value"]["emessage"]
-        else
-          raise """
-          Webdriver call status code #{status} for #{type} request #{url}.
-          Check if webdriver server is running. Make sure it supports the feature being requested.
-          """
-        end
+    case response_parser.parse(path, status, content) do
+      :error ->
+        raise """
+        Webdriver call status code #{status} for #{type} request #{url}.
+        Check if webdriver server is running. Make sure it supports the feature being requested.
+        """
+      response -> response
     end
   end
 
 
-  defp decode_content(content) do
+  defp response_parser do
+    {:ok, driver_info} = Hound.driver_info
+    case driver_info.driver do
+      "selenium" ->
+        Hound.JsonDriver.ResponseParsers.Selenium
+      "chrome_driver" ->
+        Hound.JsonDriver.ResponseParsers.ChromeDriver
+      "phantomjs" ->
+        Hound.JsonDriver.ResponseParsers.PhantomJs
+      other_driver ->
+        raise "No response parser found for #{other_driver}"
+    end
+  end
+
+
+  def decode_content(content) do
     if content != [] do
       json_string = IO.iodata_to_binary(content)
       {:ok, resp} = JSEX.decode(json_string)
