@@ -12,9 +12,6 @@ defmodule CookieTest do
     on_exit fn->
       # NOTE PhantomJs uses the same cookie jar for all sessions.
       # We'll delete cookies after each session, because we only want to test our APIs
-      if Hound.InternalHelpers.driver_supports?("delete_cookies") do
-        delete_cookies()
-      end
       Hound.end_session(parent)
     end
     :ok
