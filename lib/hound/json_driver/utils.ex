@@ -1,7 +1,7 @@
 defmodule Hound.JsonDriver.Utils do
   @moduledoc false
 
-  def make_req(type, path, params \\ [], options \\ [], retries \\ 5) do
+  def make_req(type, path, params \\ [], options \\ [], retries \\ 0) do
 
     if retries > 0 do
       try do
