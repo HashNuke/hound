@@ -4,7 +4,7 @@ To configure Hound, use the project's `config/config.exs` file or equivalent (v0
 
 ```elixir
 # Start with selenium driver (default)
-config :hound, driver: "phantomjs"
+config :hound, driver: "selenium"
 ```
 
 ```elixir
