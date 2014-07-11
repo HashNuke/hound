@@ -5,6 +5,7 @@ defmodule Hound.Mixfile do
     [ app: :hound,
       version: "0.5.7",
       elixir: ">= 0.13.0",
+      description: description,
       deps: deps(Mix.env),
       package: package,
       docs: [readme: true, main: "README"]
@@ -52,5 +53,25 @@ defmodule Hound.Mixfile do
       licenses: ["MIT"],
       links: %{ "GitHub" => "https://github.com/HashNuke/hound" }
     ]
+  end
+
+
+  defp description do
+    """
+    Elixir library for browser automation and writing integration tests in Elixir.
+
+    ## Features
+
+    * Can run __multiple browser sessions__ simultaneously. [See example](https://github.com/HashNuke/hound/blob/master/test/multiple_browser_session_test.exs).
+
+    * Supports Selenium (Firefox, Chrome), ChromeDriver and PhantomJs.
+
+    * Supports Javascript-heavy apps. Retries a few times before reporting error.
+
+    * Implements the WebDriver Wire Protocol.
+
+
+    **Internet Explorer may work under Selenium, but hasn't been tested.
+    """
   end
 end
