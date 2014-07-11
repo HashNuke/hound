@@ -6,7 +6,7 @@ defmodule Hound.Mixfile do
       version: "0.5.7",
       elixir: ">= 0.13.0",
       deps: deps(Mix.env),
-      source_url: "http://github.com/HashNuke/hound",
+      package: package,
       docs: [readme: true, main: "README"]
     ]
   end
@@ -43,5 +43,14 @@ defmodule Hound.Mixfile do
 
   defp deps(_) do
     deps
+  end
+
+
+  defp package do
+    [
+      contributors: ["Akash Manohar J"],
+      licenses: ["MIT"],
+      links: %{ "GitHub" => "https://github.com/HashNuke/hound" }
+    ]
   end
 end
