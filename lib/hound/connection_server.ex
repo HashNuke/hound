@@ -15,7 +15,8 @@ defmodule Hound.ConnectionServer do
         {4444, "wd/hub/", "firefox"}
     end
 
-    browser = options[:browser]  || default_browser
+
+    browser = options[:browser] || :application.get_env(:hound, :browser, default_browser)
     driver_type = options[:driver_type] || :application.get_env(:hound, :driver_type, Hound.JsonDriver)
     host = options[:host] || :application.get_env(:hound, :host, "http://localhost")
     port = options[:port] || :application.get_env(:hound, :host, default_port)
