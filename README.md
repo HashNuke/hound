@@ -53,7 +53,7 @@ Hound requires Erlang R16B02 or higher.
 * Add dependency to your mix project
 
   ```elixir
-  { :hound, github: "HashNuke/hound", tag: "v0.5.7" }
+  { :hound, github: "HashNuke/hound", tag: "v0.5.8" }
   ```
 
 * Add Hound to the list of applications to start in your `mix.exs`. Recommended to start Hound in test environment only.
