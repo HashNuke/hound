@@ -8,8 +8,12 @@ config :hound, driver: "selenium"
 ```
 
 ```elixir
-# Start with default driver at port 1234 and use firefox
+# Use Chrome with the default driver (selenium)
+config :hound, browser: "chrome"
+```
 
+```elixir
+# Start with default driver at port 1234 and use firefox
 config :hound, port: 1234, browser: "firefox"
 ```
 
