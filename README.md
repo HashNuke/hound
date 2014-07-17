@@ -53,6 +53,10 @@ Hound requires Erlang R16B02 or higher.
 * Add dependency to your mix project
 
   ```elixir
+  # If you are using hex
+  { :hound, "0.5.8" }
+
+  # If you are not using hex
   { :hound, github: "HashNuke/hound", tag: "v0.5.8" }
   ```
 
