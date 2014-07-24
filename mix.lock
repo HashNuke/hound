@@ -1,4 +1,5 @@
-%{"ex_doc": {:git, "git://github.com/elixir-lang/ex_doc.git", "b59a08729ad0ee805aabc4f2b4f2d97261a57825", []},
+%{"earmark": {:git, "git://github.com/pragdave/earmark.git", "d8f7cffa1a0036068dd129c9f0de77a37adc19f4", []},
+  "ex_doc": {:git, "git://github.com/elixir-lang/ex_doc.git", "b59a08729ad0ee805aabc4f2b4f2d97261a57825", []},
   "ibrowse": {:git, "git://github.com/cmullaparthi/ibrowse.git", "e8ae353c16d4f0897abb9f80025b52925b974dd1", [tag: "v4.0.2"]},
   "jsex": {:package, "2.0.0"},
   "jsx": {:package, "2.0.4"}}

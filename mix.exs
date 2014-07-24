@@ -37,7 +37,8 @@ defmodule Hound.Mixfile do
 
   defp deps(:docs) do
     deps ++ [
-      { :ex_doc,  github: "elixir-lang/ex_doc" }
+      { :ex_doc,  github: "elixir-lang/ex_doc" },
+      { :earmark, github: "pragdave/earmark" }
     ]
   end
 
