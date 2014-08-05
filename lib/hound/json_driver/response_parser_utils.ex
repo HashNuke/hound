@@ -1,4 +1,6 @@
 defmodule Hound.JsonDriver.ResponseParserUtils do
+  import Logger
+
   def is_error?(value) do
     is_map(value) && Map.has_key?(value, "message")
   end
@@ -14,6 +16,6 @@ defmodule Hound.JsonDriver.ResponseParserUtils do
 
 
   def warn(message) do
-    IO.puts "WARNING: #{message}"
+    Logger.warn message
   end
 end
