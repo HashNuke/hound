@@ -17,7 +17,8 @@ defmodule Hound.Mixfile do
   def application do
     [
       applications: [:jsex, :ibrowse],
-      mod: { Hound, [] }
+      mod: { Hound, [] },
+      description: 'Browser automation library',
     ]
   end
 
