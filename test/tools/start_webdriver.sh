@@ -6,7 +6,7 @@ then
 elif [[ $WEBDRIVER == "selenium" ]]
 then
   cd ~/src
-  wget https://selenium.googlecode.com/files/selenium-server-standalone-2.39.0.jar
-  nohup java -jar selenium-server-standalone-2.39.0.jar &
+  wget http://selenium-release.storage.googleapis.com/2.43/selenium-server-standalone-2.43.1.jar
+  nohup java -jar selenium-server-standalone-2.43.1.jar &
   echo "Running with Selenium..."
 fi
