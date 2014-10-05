@@ -30,13 +30,17 @@ defmodule Hound.JsonDriver.Window do
 #   def close_current_window() do
 #   end
 
-#   @doc "Change size of window"
-#   def set_window_size(window_handle, size) do
-#   end
+    @doc "Change size of window"
+    def set_window_size(window_handle, size) do
+     session_id = Hound.current_session_id
+     make_req(:post, "/session/#{session_id}/window/#{window_handle}/size", size)
+    end
 
-#   @doc "Get window size"
-#   def window_size(window_handle) do
-#   end
+    @doc "Get window size"
+    def window_size(window_handle) do
+     session_id = Hound.current_session_id
+     make_req(:get, "/session/#{session_id}/window/#{window_handle}/size")
+    end
 
 #   @doc "Get window position"
 #   def window_position(window_handle) do
@@ -46,7 +50,9 @@ defmodule Hound.JsonDriver.Window do
 #   def set_window_position(window_handle, position) do
 #   end
 
-#   @doc "Maximize window"
-#   def maximize_window(window_handle) do
-#   end
+    @doc "Maximize window"
+    def maximize_window(window_handle) do
+      session_id = Hound.current_session_id
+      make_req(:post, "/session/#{session_id}/window/#{window_handle}/maximize")
+    end
 end
