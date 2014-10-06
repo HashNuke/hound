@@ -1,6 +1,6 @@
 language: erlang
 otp_release:
-   - 17.0
+   - 17.1
 
 before_install:
   - "export DISPLAY=:99.0"
@@ -13,8 +13,8 @@ before_install:
   - mix local.hex --force
 
 env:
-  - WEBDRIVER=selenium   ELIXIR_VERSION="v0.15.0"
-  - WEBDRIVER=phantomjs  ELIXIR_VERSION="v0.15.0"
+  - WEBDRIVER=selenium   ELIXIR_VERSION="v1.0.0"
+  - WEBDRIVER=phantomjs  ELIXIR_VERSION="v1.0.0"
 
 install: mix deps.get
 script:  mix test

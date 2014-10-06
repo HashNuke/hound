@@ -3,8 +3,8 @@ defmodule Hound.Mixfile do
 
   def project do
     [ app: :hound,
-      version: "0.5.9",
-      elixir: ">= 0.15.0",
+      version: "0.5.10",
+      elixir: ">= 1.0.0",
       description: description,
       deps: deps(Mix.env),
       package: package,
