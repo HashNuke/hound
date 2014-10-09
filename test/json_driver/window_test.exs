@@ -36,7 +36,7 @@ defmodule WindowTest do
     focus_frame(0)
     assert length(find_all_elements :class, "child-para") > 0
 
-    focus_parent_frame()
+    focus_parent_frame
     assert length(find_all_elements :class, "child-para") == 0
   end
 end
