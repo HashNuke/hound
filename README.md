@@ -34,9 +34,9 @@ defmodule HoundTest do
   test "the truth", meta do
     navigate_to("http://example.com/guestbook.html")
 
-    find_element(:name, "message")
-    |> fill_field("Happy Birthday ~!")
-    |> submit_element()
+    element_id = find_element(:name, "message")
+    fill_field(element_id, "Happy Birthday ~!")
+    submit_element(element_id)
 
     assert page_title() == "Thank you"
   end
