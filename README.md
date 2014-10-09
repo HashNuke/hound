@@ -2,7 +2,7 @@
 
 For browser automation and writing integration tests in Elixir.
 
-<a href="http://github.com/HashNuke/Hound" target="_parent">Source</a> | <a href="http://akash.im/docs/hound" target="_parent">Documentation</a>
+<a href="http://github.com/HashNuke/Hound" target="_parent">Source</a> | <a href="http://HashNuke.com/docs/hound" target="_parent">Documentation</a>
 
 [![Build Status](https://travis-ci.org/HashNuke/hound.png?branch=master)](https://travis-ci.org/HashNuke/hound)
 
@@ -98,16 +98,16 @@ If you prefer to manually start and end sessions, use `Hound.start_session` and 
 
 The documentation pages include examples under each function.
 
-* [Navigation](http://akash.im/docs/hound/Hound.Helpers.Navigation.html)
-* [Page](http://akash.im/docs/hound/Hound.Helpers.Page.html)
-* [Element](http://akash.im/docs/hound/Hound.Helpers.Element.html)
-* [Cookies](http://akash.im/docs/hound/Hound.Helpers.Cookie.html)
-* [Javascript execution](http://akash.im/docs/hound/Hound.Helpers.ScriptExecution.html)
-* [Javascript dialogs](http://akash.im/docs/hound/Hound.Helpers.Dialog.html)
-* [Screenshot](http://akash.im/docs/hound/Hound.Helpers.Screenshot.html)
-* [Session](http://akash.im/docs/hound/Hound.Helpers.Session.html)
+* [Navigation](http://HashNuke.com/docs/hound/Hound.Helpers.Navigation.html)
+* [Page](http://HashNuke.com/docs/hound/Hound.Helpers.Page.html)
+* [Element](http://HashNuke.com/docs/hound/Hound.Helpers.Element.html)
+* [Cookies](http://HashNuke.com/docs/hound/Hound.Helpers.Cookie.html)
+* [Javascript execution](http://HashNuke.com/docs/hound/Hound.Helpers.ScriptExecution.html)
+* [Javascript dialogs](http://HashNuke.com/docs/hound/Hound.Helpers.Dialog.html)
+* [Screenshot](http://HashNuke.com/docs/hound/Hound.Helpers.Screenshot.html)
+* [Session](http://HashNuke.com/docs/hound/Hound.Helpers.Session.html)
 
-The docs are at <http://akash.im/docs/hound>.
+The docs are at <http://HashNuke.com/docs/hound>.
 
 ### More examples? [Checkout Hound's own test cases](https://github.com/HashNuke/hound/tree/master/test/json_driver)
 
