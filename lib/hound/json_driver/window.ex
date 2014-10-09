@@ -15,13 +15,43 @@ defmodule Hound.JsonDriver.Window do
     make_req(:get, "session/#{session_id}/window_handles")
   end
 
+  @doc "Change size of window"
+  def set_window_size(window_handle, width, height) do
+   session_id = Hound.current_session_id
+   make_req(:post, "session/#{session_id}/window/#{window_handle}/size", [width: width, height: height])
+  end
+
+  @doc "Get window size"
+  def window_size(window_handle) do
+   session_id = Hound.current_session_id
+   size = make_req(:get, "session/#{session_id}/window/#{window_handle}/size")
+   {Map.get(size, "width"), Map.get(size, "height")}
+  end
+
+  @doc "Maximize window"
+  def maximize_window(window_handle) do
+    session_id = Hound.current_session_id
+    make_req(:post, "session/#{session_id}/window/#{window_handle}/maximize")
+  end
+
+
+  @doc "Change focus to frame"
+  @spec focus_frame(any) :: :ok
+  def focus_frame(frame_id) do
+    session_id = Hound.current_session_id
+    make_req(:post, "session/#{session_id}/frame", [id: frame_id])
+  end
+
+
+  @doc "Change focus to parent frame"
+  @spec focus_parent_frame() :: :ok
+  def focus_parent_frame() do
+    session_id = Hound.current_session_id
+    make_req(:post, "session/#{session_id}/frame/parent")
+  end
+
 
 # TODO
-#   @doc "Change focus to frame"
-#   @spec focus_frame(String.t) :: :ok
-#   def focus_frame(frame_id) do
-#   end
-
 #   @doc "Change focus to another window"
 #   def focus_window(window_id) do
 #   end
@@ -30,23 +60,11 @@ defmodule Hound.JsonDriver.Window do
 #   def close_current_window() do
 #   end
 
-#   @doc "Change size of window"
-#   def set_window_size(window_handle, size) do
-#   end
-
-#   @doc "Get window size"
-#   def window_size(window_handle) do
-#   end
-
 #   @doc "Get window position"
 #   def window_position(window_handle) do
 #   end
 
 #   @doc "Set window position"
 #   def set_window_position(window_handle, position) do
-#   end
-
-#   @doc "Maximize window"
-#   def maximize_window(window_handle) do
 #   end
 end
