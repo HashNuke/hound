@@ -106,6 +106,7 @@ The documentation pages include examples under each function.
 * [Javascript dialogs](http://HashNuke.com/docs/hound/Hound.Helpers.Dialog.html)
 * [Screenshot](http://HashNuke.com/docs/hound/Hound.Helpers.Screenshot.html)
 * [Session](http://HashNuke.com/docs/hound/Hound.Helpers.Session.html)
+* [Window](http://HashNuke.com/docs/hound/Hound.Helpers.Window.html)
 
 The docs are at <http://HashNuke.com/docs/hound>.
 
