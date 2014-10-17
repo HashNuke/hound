@@ -10,9 +10,10 @@ defmodule Hound.Helpers.Navigation do
 
 
   @doc """
-  Navigates to a url.
+  Navigates to a url or relative path.
 
-      navigate_to("http://example.com")
+      navigate_to("http://example.com/page1")
+      navigate_to("/page1")
   """
   @spec navigate_to(String.t) :: :ok
   def navigate_to(url) do

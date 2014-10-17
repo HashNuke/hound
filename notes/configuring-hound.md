@@ -31,3 +31,8 @@ config :hound, driver: "chrome_driver"
 # Start Hound for remote PhantomJs server at port 5555
 config :hound, driver: "phantomjs", host: "http://example.com", port: 5555
 ```
+
+```elixir
+# Define your application's host and port (defaults to "http://localhost:4000")
+config :hound, app_host: "http://localhost", app_port: 4000
+```
