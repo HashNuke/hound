@@ -14,6 +14,11 @@ defmodule Hound do
     Hound.ConnectionServer.driver_info
   end
 
+  @doc false
+  def configs do
+    Hound.ConnectionServer.configs
+  end
+
 
   @doc """
   Starts a Hound session.

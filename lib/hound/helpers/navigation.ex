@@ -16,14 +16,9 @@ defmodule Hound.Helpers.Navigation do
   """
   @spec navigate_to(String.t) :: :ok
   def navigate_to(url) do
-    {:ok, configs} = Hound.configs
     {:ok, driver_info} = Hound.driver_info
 
-    final_url = if String.starts_with?(url, "/")
-      configs[:host] + ":" + configs[:port] + url
-    else
-      url
-    end
+    final_url = generate_final_url(url)
     driver_info[:driver_type].Navigation.navigate_to(final_url)
   end
 
@@ -49,6 +44,20 @@ defmodule Hound.Helpers.Navigation do
   def refresh_page do
     {:ok, driver_info} = Hound.driver_info
     driver_info[:driver_type].Navigation.refresh_page
+  end
+
+  defp generate_final_url(url) do
+    {:ok, configs} = Hound.configs
+
+    if relative_path?(url) do
+      "#{configs[:host]}:#{configs[:port]}#{url}"
+    else
+      url
+    end
+  end
+
+  defp relative_path?(url) do
+    String.starts_with?(url, "/")
   end
 
 end

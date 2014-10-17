@@ -33,8 +33,8 @@ defmodule Hound.ConnectionServer do
     }
 
     configs = %{
-      :host => :application.get_env(:hound, :app_host, "http://localhost"),
-      :port => :application.get_env(:hound, :app_port, 4000)
+      :host => options[:app_host] || :application.get_env(:hound, :app_host, "http://localhost"),
+      :port => options[:app_port] || :application.get_env(:hound, :app_port, 4000)
     }
 
     state = %{sessions: [], driver_info: driver_info, configs: configs}
@@ -47,10 +47,9 @@ defmodule Hound.ConnectionServer do
   end
 
 
-  def handle_call(:driver_info, _from, state) do
-    {:reply, state[:driver_info], state}
+  def handle_call(state_key, _from, state) do
+    {:reply, state[state_key], state}
   end
-
 
   def driver_info do
     driver_info = :gen_server.call __MODULE__, :driver_info, 60000

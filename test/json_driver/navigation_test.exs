@@ -19,6 +19,13 @@ defmodule NavigationTest do
   end
 
 
+  test "should navigate to a relative url" do
+    url = "http://localhost:9090/page1.html"
+
+    navigate_to("/page1.html")
+    assert url == current_url
+  end
+
   test "should navigate backward, forward and refresh" do
     url1 = "http://localhost:9090/page1.html"
     url2 = "http://localhost:9090/page2.html"

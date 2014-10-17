@@ -13,7 +13,10 @@ test_server_config = [
 
 IO.inspect "Stopping Hound and restarting with options for test suite..."
 :ok = :application.stop(:hound)
-Hound.Supervisor.start_link([driver: System.get_env("WEBDRIVER")])
+Hound.Supervisor.start_link([
+  driver: System.get_env("WEBDRIVER"),
+  app_port: 9090
+])
 
 
 System.at_exit fn(_exit_status) ->
