@@ -32,7 +32,12 @@ defmodule Hound.ConnectionServer do
       :path_prefix => path_prefix
     }
 
-    state = %{sessions: [], driver_info: driver_info}
+    configs = %{
+      :host => :application.get_env(:hound, :app_host, "http://localhost"),
+      :port => :application.get_env(:hound, :app_port, 4000)
+    }
+
+    state = %{sessions: [], driver_info: driver_info, configs: configs}
     :gen_server.start_link({:local, __MODULE__}, __MODULE__, state, [])
   end
 
@@ -50,6 +55,11 @@ defmodule Hound.ConnectionServer do
   def driver_info do
     driver_info = :gen_server.call __MODULE__, :driver_info, 60000
     {:ok, driver_info}
+  end
+
+  def configs do
+    configs = :gen_server.call __MODULE__, :configs, 60000
+    {:ok, configs}
   end
 
 end

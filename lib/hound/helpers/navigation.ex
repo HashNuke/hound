@@ -16,8 +16,15 @@ defmodule Hound.Helpers.Navigation do
   """
   @spec navigate_to(String.t) :: :ok
   def navigate_to(url) do
+    {:ok, configs} = Hound.configs
     {:ok, driver_info} = Hound.driver_info
-    driver_info[:driver_type].Navigation.navigate_to(url)
+
+    final_url = if String.starts_with?(url, "/")
+      configs[:host] + ":" + configs[:port] + url
+    else
+      url
+    end
+    driver_info[:driver_type].Navigation.navigate_to(final_url)
   end
 
 
