@@ -3,7 +3,7 @@ defmodule Hound.Mixfile do
 
   def project do
     [ app: :hound,
-      version: "0.5.10",
+      version: "0.6.0",
       elixir: ">= 1.0.0",
       description: description,
       deps: deps(Mix.env),
@@ -16,7 +16,7 @@ defmodule Hound.Mixfile do
   # Configuration for the OTP application
   def application do
     [
-      applications: [:jsex, :ibrowse],
+      applications: [:httpoison],
       mod: { Hound, [] },
       description: 'Browser automation library',
     ]
@@ -30,8 +30,8 @@ defmodule Hound.Mixfile do
   # { :barbat, "~> 0.1", github: "elixir-lang/barbat.git" }
   defp deps do
     [
-      { :ibrowse, github: "cmullaparthi/ibrowse", tag: "v4.1.1"},
-      { :jsex,    "~> 2.0.0" }
+      {:httpoison, "~> 0.5.0"},
+      {:poison,    "~> 1.3.0"}
     ]
   end
 

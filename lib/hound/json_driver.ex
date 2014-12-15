@@ -33,8 +33,8 @@ defmodule Hound.JsonDriver do
   @doc "Creates a session associated with the current pid"
   @spec create_session(String.t) :: String.t
   def create_session(browser_name) do
-    params = [
-      desiredCapabilities: [
+    params = %{
+      desiredCapabilities: %{
         javascriptEnabled: false,
         version: "",
         rotatable: false,
@@ -43,8 +43,8 @@ defmodule Hound.JsonDriver do
         browserName: browser_name,
         nativeEvents: false,
         platform: "ANY"
-      ]
-    ]
+      }
+    }
 
     # No retries for this request
     make_req(:post, "session", params)
@@ -68,7 +68,7 @@ defmodule Hound.JsonDriver do
   @doc "Set the timeout for a particular type of operation"
   @spec set_timeout(String.t, String.t, Integer.t) :: :ok
   def set_timeout(session_id, operation, time) do
-    make_req(:post, "session/#{session_id}/timeouts", [type: operation, ms: time])
+    make_req(:post, "session/#{session_id}/timeouts", %{type: operation, ms: time})
   end
 
 end

@@ -19,7 +19,7 @@ defmodule Hound.JsonDriver.Element do
   def input_into_field(element, input) do
     element_id = get_element_id(element)
     session_id = Hound.current_session_id
-    make_req(:post, "session/#{session_id}/element/#{element_id}/value", [value: ["#{input}"]])
+    make_req(:post, "session/#{session_id}/element/#{element_id}/value", %{value: ["#{input}"]})
   end
 
 
@@ -28,7 +28,7 @@ defmodule Hound.JsonDriver.Element do
     element_id = get_element_id(element)
     session_id = Hound.current_session_id
     clear_field(element_id)
-    make_req(:post, "session/#{session_id}/element/#{element_id}/value", [value: ["#{input}"]])
+    make_req(:post, "session/#{session_id}/element/#{element_id}/value", %{value: ["#{input}"]})
   end
 
 

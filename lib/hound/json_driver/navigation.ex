@@ -13,7 +13,7 @@ defmodule Hound.JsonDriver.Navigation do
   @spec navigate_to(String.t) :: :ok
   def navigate_to(url) do
     session_id = Hound.current_session_id
-    make_req(:post, "session/#{session_id}/url", [url: url])
+    make_req(:post, "session/#{session_id}/url", %{url: url})
   end
 
 

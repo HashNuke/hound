@@ -1,7 +1,7 @@
 defmodule Hound.JsonDriver.Utils do
   @moduledoc false
 
-  def make_req(type, path, params \\ [], options \\ [], retries \\ 0) do
+  def make_req(type, path, params \\ %{}, options \\ %{}, retries \\ 0) do
 
     if retries > 0 do
       try do
@@ -24,10 +24,10 @@ defmodule Hound.JsonDriver.Utils do
   defp send_req(type, path, params, options) do
     url = get_url(path)
 
-    if params != [] && type == :post do
-      headers = [{'Content-Type', 'text/json'}]
+    if params != %{} && type == :post do
+      headers = [{"Content-Type", "text/json"}]
       if options[:json_encode] != false do
-        {:ok, body} = JSEX.encode params
+        body = Poison.encode! params
       else
         body = params
       end
@@ -36,13 +36,19 @@ defmodule Hound.JsonDriver.Utils do
       body = ""
     end
 
-    {:ok, status, _headers, content} = :ibrowse.send_req(url, headers, type, body)
+    case type do
+      :get ->
+        {:ok, resp} = HTTPoison.get(url, headers)
+      :post ->
+        {:ok, resp} = HTTPoison.post(url, body, headers)
+      :delete ->
+        {:ok, resp} = HTTPoison.delete(url)
+    end
 
-    {status, _} = :string.to_integer(status)
-    case response_parser.parse(path, status, content) do
+    case response_parser.parse(path, resp.status_code, resp.body) do
       :error ->
         raise """
-        Webdriver call status code #{status} for #{type} request #{url}.
+        Webdriver call status code #{resp.status_code} for #{type} request #{url}.
         Check if webdriver server is running. Make sure it supports the feature being requested.
         """
       response -> response
@@ -67,9 +73,7 @@ defmodule Hound.JsonDriver.Utils do
 
   def decode_content(content) do
     if content != [] do
-      json_string = IO.iodata_to_binary(content)
-      {:ok, resp} = JSEX.decode(json_string)
-      resp
+      Poison.decode!(content)
     else
       Map.new
     end
@@ -83,7 +87,7 @@ defmodule Hound.JsonDriver.Utils do
     port = driver_info[:port]
     path_prefix = driver_info[:path_prefix]
 
-    '#{host}:#{port}/#{path_prefix}#{path}'
+    "#{host}:#{port}/#{path_prefix}#{path}"
   end
 
 end

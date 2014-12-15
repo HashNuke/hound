@@ -21,7 +21,7 @@ defmodule CookieTest do
   test "should set a cookie" do
     navigate_to "http://localhost:9090/page1.html"
     cart_id = "12v3q4rsdv"
-    set_cookie([name: "cart_id", value: cart_id])
+    set_cookie(%{name: "cart_id", value: cart_id})
     valid_cookie = Enum.find(cookies(), fn(cookie)-> cookie["name"]=="cart_id" end)
 
     assert valid_cookie["value"] == cart_id
@@ -30,7 +30,7 @@ defmodule CookieTest do
 
   test "should get cookies on page" do
     navigate_to "http://localhost:9090/page1.html"
-    set_cookie([name: "example", value: "12v3q4rsdv"])
+    set_cookie(%{name: "example", value: "12v3q4rsdv"})
 
     assert length(cookies()) >= 1
   end
@@ -39,8 +39,8 @@ defmodule CookieTest do
   test "should delete a cookie" do
     navigate_to "http://localhost:9090/page1.html"
     cart_id = "12v3q4rsdv"
-    set_cookie([name: "cart_id", value: cart_id])
-    set_cookie([name: "cart_status", value: "active"])
+    set_cookie(%{name: "cart_id", value: cart_id})
+    set_cookie(%{name: "cart_status", value: "active"})
 
 
     assert length(cookies()) >= 2
@@ -52,8 +52,8 @@ defmodule CookieTest do
   test "should delete all cookies" do
     navigate_to "http://localhost:9090/page1.html"
     cart_id = "12v3q4rsdv"
-    set_cookie([name: "cart_id", value: cart_id])
-    set_cookie([name: "cart_status", value: "active"])
+    set_cookie(%{name: "cart_id", value: cart_id})
+    set_cookie(%{name: "cart_status", value: "active"})
 
     assert length(cookies()) >= 2
     delete_cookies()

@@ -18,7 +18,7 @@ defmodule Hound.JsonDriver.Window do
   @doc "Change size of window"
   def set_window_size(window_handle, width, height) do
    session_id = Hound.current_session_id
-   make_req(:post, "session/#{session_id}/window/#{window_handle}/size", [width: width, height: height])
+   make_req(:post, "session/#{session_id}/window/#{window_handle}/size", %{width: width, height: height})
   end
 
   @doc "Get window size"
@@ -39,7 +39,7 @@ defmodule Hound.JsonDriver.Window do
   @spec focus_frame(any) :: :ok
   def focus_frame(frame_id) do
     session_id = Hound.current_session_id
-    make_req(:post, "session/#{session_id}/frame", [id: frame_id])
+    make_req(:post, "session/#{session_id}/frame", %{id: frame_id})
   end
 
 

@@ -6,7 +6,7 @@ defmodule Hound.JsonDriver.ScriptExecution do
     session_id = Hound.current_session_id
     make_req(:post,
       "session/#{session_id}/execute",
-      [script: script_function, args: function_args]
+      %{script: script_function, args: function_args}
     )
   end
 
@@ -16,7 +16,7 @@ defmodule Hound.JsonDriver.ScriptExecution do
     session_id = Hound.current_session_id
     make_req(:post,
       "session/#{session_id}/execute_async",
-      [script: script_function, args: function_args]
+      %{script: script_function, args: function_args}
     )
   end
 end
