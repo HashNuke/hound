@@ -48,7 +48,7 @@ Here's another [simple browser-automation example](https://github.com/HashNuke/h
 
 ## Setup
 
-Hound requires Erlang 17.x or higher.
+Hound requires Elixir 1.0.2 or higher.
 
 * Add dependency to your mix project
 
