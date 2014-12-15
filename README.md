@@ -69,7 +69,6 @@ Hound requires Erlang R16B02 or higher.
 
   defp app_list(:test), do: [:hound | app_list]
   defp app_list(_),     do: app_list
-  defp app_list,        do: [:jsex, :ibrowse]
   ```
 
 When you run `mix tests`, Hound is automatically started. __You'll need a webdriver server__ running, like Selenium Server or Chrome Driver. If you aren't sure what it is, then [read this](https://github.com/HashNuke/hound/wiki/Starting-a-webdriver-server).
@@ -106,6 +105,7 @@ The documentation pages include examples under each function.
 * [Javascript dialogs](http://HashNuke.com/docs/hound/Hound.Helpers.Dialog.html)
 * [Screenshot](http://HashNuke.com/docs/hound/Hound.Helpers.Screenshot.html)
 * [Session](http://HashNuke.com/docs/hound/Hound.Helpers.Session.html)
+* [Window](http://HashNuke.com/docs/hound/Hound.Helpers.Window.html)
 
 The docs are at <http://HashNuke.com/docs/hound>.
 

@@ -13,7 +13,7 @@ defmodule Hound.JsonDriver.Dialog do
   @spec input_into_prompt(String.t) :: :ok
   def input_into_prompt(input) do
     session_id = Hound.current_session_id
-    make_req(:post, "session/#{session_id}/alert_text", [text: input])
+    make_req(:post, "session/#{session_id}/alert_text", %{text: input})
   end
 
 
@@ -27,7 +27,7 @@ defmodule Hound.JsonDriver.Dialog do
   @spec dismiss_dialog() :: :ok
   def dismiss_dialog() do
     session_id = Hound.current_session_id
-    make_req(:post, "session/#{session_id}/dismiss_alert", [])
+    make_req(:post, "session/#{session_id}/dismiss_alert", %{})
   end
 
 end

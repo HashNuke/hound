@@ -14,7 +14,7 @@ defmodule Hound.JsonDriver.Cookie do
   @spec set_cookie(Dict.t) :: :ok
   def set_cookie(cookie) do
     session_id = Hound.current_session_id
-    make_req(:post, "session/#{session_id}/cookie", [cookie: cookie])
+    make_req(:post, "session/#{session_id}/cookie", %{cookie: cookie})
   end
 
 

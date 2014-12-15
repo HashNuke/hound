@@ -13,6 +13,6 @@ defmodule Hound.JsonDriver.Orientation do
   @spec set_orientation(:landscape | :portrait) :: :ok
   def set_orientation(orientation) do
     session_id = Hound.current_session_id
-    make_req(:get, "session/#{session_id}/orientation", [orientation: orientation])
+    make_req(:get, "session/#{session_id}/orientation", %{orientation: orientation})
   end
 end
