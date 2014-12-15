@@ -29,14 +29,16 @@ defmodule WindowTest do
   end
 
 
-  test "switch to a frame and switch back to parent frame" do
-    navigate_to "http://localhost:9090/page1.html"
-    assert length(find_all_elements :class, "child-para") == 0
+  if Hound.InternalHelpers.driver_supports?("focus_parent_frame") do
+    test "switch to a frame and switch back to parent frame" do
+      navigate_to "http://localhost:9090/page1.html"
+      assert length(find_all_elements :class, "child-para") == 0
 
-    focus_frame(0)
-    assert length(find_all_elements :class, "child-para") > 0
+      focus_frame(0)
+      assert length(find_all_elements :class, "child-para") > 0
 
-    focus_parent_frame
-    assert length(find_all_elements :class, "child-para") == 0
+      focus_parent_frame
+      assert length(find_all_elements :class, "child-para") == 0
+    end
   end
 end

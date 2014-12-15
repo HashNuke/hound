@@ -12,7 +12,7 @@ defmodule Hound.JsonDriver.ResponseParsers.PhantomJs do
       resp["status"] == 0 -> value
 
       is_map(resp["value"]) && Map.has_key?(value, "message") ->
-        case JSEX.decode(value["message"]) do
+        case Poison.decode(value["message"]) do
           {:ok, decoded_error} ->
             raise decoded_error["errorMessage"]
           _ ->

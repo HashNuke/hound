@@ -36,6 +36,7 @@ defmodule Hound.JsonDriver.Utils do
       body = ""
     end
 
+
     case type do
       :get ->
         {:ok, resp} = HTTPoison.get(url, headers)
@@ -44,6 +45,7 @@ defmodule Hound.JsonDriver.Utils do
       :delete ->
         {:ok, resp} = HTTPoison.delete(url)
     end
+
 
     case response_parser.parse(path, resp.status_code, resp.body) do
       :error ->

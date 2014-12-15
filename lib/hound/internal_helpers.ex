@@ -69,7 +69,12 @@ defmodule Hound.InternalHelpers do
     {:ok, driver_info} = Hound.driver_info
     unsupported_features = [
       phantomjs: [
-        "dialog_text", "input_into_prompt", "accept_dialog", "dismiss_dialog", "delete_cookies"
+        "dialog_text",
+        "input_into_prompt",
+        "accept_dialog",
+        "dismiss_dialog",
+        "delete_cookies",
+        "focus_parent_frame"
       ]
     ]
 
