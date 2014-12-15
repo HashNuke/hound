@@ -48,16 +48,16 @@ Here's another [simple browser-automation example](https://github.com/HashNuke/h
 
 ## Setup
 
-Hound requires Erlang R16B02 or higher.
+Hound requires Erlang 17.x or higher.
 
 * Add dependency to your mix project
 
   ```elixir
   # If you are using hex
-  { :hound, "0.5.8" }
+  { :hound, "~> 0.6.0" }
 
   # If you are not using hex
-  { :hound, github: "HashNuke/hound", tag: "v0.5.8" }
+  { :hound, github: "HashNuke/hound", tag: "v0.6.0" }
   ```
 
 * Add Hound to the list of applications to start in your `mix.exs`. Recommended to start Hound in test environment only.
@@ -141,4 +141,4 @@ PhantomJs is extremely fast, but there are certain caveats. It uses Ghostdriver 
 
 ## License
 
-Copyright &copy; 2013, Akash Manohar J, under the MIT License
+Copyright &copy; 2013-2015, Akash Manohar J, under the MIT License
