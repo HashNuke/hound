@@ -31,7 +31,7 @@ defmodule Hound.Mixfile do
   defp deps do
     [
       {:httpoison, "~> 0.5.0"},
-      {:poison,    "~> 1.3.0"}
+      {:poison,    "~> 1.4.0"}
     ]
   end
 
