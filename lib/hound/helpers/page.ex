@@ -1,6 +1,7 @@
 defmodule Hound.Helpers.Page do
 
   import Hound.InternalHelpers
+  import Hound.RequestUtils
 
   @doc "Gets the HTML source of current page."
   @spec page_source() :: String.t

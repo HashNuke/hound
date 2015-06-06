@@ -2,6 +2,7 @@ defmodule Hound.Helpers.Element do
   @moduledoc "Provides functions related to elements."
 
   import Hound.InternalHelpers
+  import Hound.RequestUtils
 
   @type element_selector :: {atom, String.t}
   @type element :: element_selector | String.t

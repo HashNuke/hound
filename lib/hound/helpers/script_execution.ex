@@ -1,6 +1,7 @@
 defmodule Hound.Helpers.ScriptExecution do
 
   import Hound.InternalHelpers
+  import Hound.RequestUtils
 
   @doc """
   Execute javascript synchoronously.

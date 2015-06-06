@@ -1,6 +1,7 @@
 defmodule Hound.Helpers.Window do
 
   import Hound.InternalHelpers
+  import Hound.RequestUtils
 
   @doc "Get all window handles available to the session"
   @spec current_window_handle() :: String.t

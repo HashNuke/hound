@@ -2,6 +2,7 @@ defmodule Hound.Helpers.Dialog do
   @moduledoc "Provides functions to handle Javascript dialogs alert(), prompt() and confirm()."
 
   import Hound.InternalHelpers
+  import Hound.RequestUtils
 
   @doc """
   Gets text of a javascript alert(), confirm() or prompt().

@@ -2,6 +2,7 @@ defmodule Hound.Helpers.Navigation do
   @moduledoc "Provides navigation functions."
 
   import Hound.InternalHelpers
+  import Hound.RequestUtils
 
   @doc "Gets url of the current page."
   @spec current_url :: String.t

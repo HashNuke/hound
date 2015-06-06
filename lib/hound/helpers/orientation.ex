@@ -2,6 +2,7 @@ defmodule Hound.Helpers.Orientation do
   @moduledoc "Provides function related to orientation."
 
   import Hound.InternalHelpers
+  import Hound.RequestUtils
 
   @doc """
   Gets browser's orientation. Will return either `:landscape` or `:portrait`.

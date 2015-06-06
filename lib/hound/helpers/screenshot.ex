@@ -1,6 +1,7 @@
 defmodule Hound.Helpers.Screenshot do
 
   import Hound.InternalHelpers
+  import Hound.RequestUtils
 
   @doc """
   Takes screenshot of the current page. The screenshot is saved in the current working directory.
