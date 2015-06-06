@@ -33,8 +33,8 @@ defmodule Hound.ConnectionServer do
     }
 
     configs = %{
-      :host => options[:app_host] || :application.get_env(:hound, :app_host, "http://localhost"),
-      :port => options[:app_port] || :application.get_env(:hound, :app_port, 4000)
+      :host => options[:app_host] || Application.get_env(:hound, :app_host, "http://localhost"),
+      :port => options[:app_port] || Application.get_env(:hound, :app_port, 4000)
     }
 
     state = %{sessions: [], driver_info: driver_info, configs: configs}
