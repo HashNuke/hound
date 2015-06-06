@@ -11,7 +11,7 @@ defmodule HoundTest do
 
   test "should return driver info" do
     {:ok, driver_info} = Hound.driver_info
-    assert is_atom(driver_info[:driver_type])
+    assert driver_info[:driver_type] == nil
   end
 
 
