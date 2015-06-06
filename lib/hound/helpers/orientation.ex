@@ -1,7 +1,6 @@
 defmodule Hound.Helpers.Orientation do
   @moduledoc "Provides functions related to orientation."
 
-  import Hound.InternalHelpers
   import Hound.RequestUtils
 
   @doc """

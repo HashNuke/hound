@@ -1,6 +1,5 @@
 defmodule Hound.Helpers.Screenshot do
 
-  import Hound.InternalHelpers
   import Hound.RequestUtils
 
   @doc """
@@ -21,8 +20,19 @@ defmodule Hound.Helpers.Screenshot do
   """
   @spec take_screenshot(String.t) :: String.t
   def take_screenshot(path \\ nil) do
-    {:ok, driver_info} = Hound.driver_info
-    delegate_to_module driver_info[:driver_type], "Screenshot", :take_screenshot, [path]
+    session_id = Hound.current_session_id
+    base64_png_data = make_req(:get, "session/#{session_id}/screenshot")
+
+    binary_image_data = :base64.decode(base64_png_data)
+    {hour, minutes, seconds} = :erlang.time()
+    {year, month, day} = :erlang.date()
+
+    if !path do
+      cwd = File.cwd!()
+      path = "#{cwd}/screenshot-#{year}-#{month}-#{day}-#{hour}-#{minutes}-#{seconds}.png"
+    end
+    :ok = File.write path, binary_image_data
+    path
   end
 
 end

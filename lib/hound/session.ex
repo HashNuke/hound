@@ -1,6 +1,7 @@
 defmodule Hound.Session do
   @moduledoc "Low-level session functions for Hound to work with drivers"
 
+  import Hound.RequestUtils
 
   @doc "Get server's current status"
   @spec server_status() :: Dict.t

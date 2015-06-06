@@ -1,21 +1,20 @@
 defmodule Hound.Helpers.Page do
 
-  import Hound.InternalHelpers
   import Hound.RequestUtils
 
   @doc "Gets the HTML source of current page."
   @spec page_source() :: String.t
   def page_source do
-    {:ok, driver_info} = Hound.driver_info
-    delegate_to_module driver_info[:driver_type], "Page", :page_source
+    session_id = Hound.current_session_id
+    make_req(:get, "session/#{session_id}/source")
   end
 
 
   @doc "Gets the title of the current page."
   @spec page_title() :: String.t
   def page_title do
-    {:ok, driver_info} = Hound.driver_info
-    delegate_to_module driver_info[:driver_type], "Page", :page_title
+    session_id = Hound.current_session_id
+    make_req(:get, "session/#{session_id}/title")
   end
 
 
@@ -35,9 +34,16 @@ defmodule Hound.Helpers.Page do
       find_element(:link_text, "Home")
   """
   @spec find_element(String.t, String.t, Integer.t) :: Dict.t
-  def find_element(strategy, selector, retries \\ 5) do
-    {:ok, driver_info} = Hound.driver_info
-    delegate_to_module driver_info[:driver_type], "Page", :find_element, [strategy, selector, retries]
+  def find_element(strategy, selector, timeout_in_seconds \\ 5) do
+    session_id = Hound.current_session_id
+    params = %{using: Hound.InternalHelpers.selector_strategy(strategy), value: selector}
+
+    case make_req(:post, "session/#{session_id}/element", params, %{}, timeout_in_seconds*2) do
+      %{"ELEMENT" => element_id} ->
+        element_id
+      value ->
+        value
+    end
   end
 
 
@@ -57,9 +63,18 @@ defmodule Hound.Helpers.Page do
       find_elements(:link_text, "Home")
   """
   @spec find_all_elements(atom, String.t, Integer.t) :: List.t
-  def find_all_elements(strategy, selector, retries \\ 5) do
-    {:ok, driver_info} = Hound.driver_info
-    delegate_to_module driver_info[:driver_type], "Page", :find_all_elements, [strategy, selector, retries]
+  def find_all_elements(strategy, selector, timeout_in_seconds \\ 5) do
+    session_id = Hound.current_session_id
+    params = %{using: Hound.InternalHelpers.selector_strategy(strategy), value: selector}
+
+    case make_req(:post, "session/#{session_id}/elements", params, %{}, timeout_in_seconds*2) do
+      {:error, value} ->
+        {:error, value}
+      elements ->
+        Enum.map(elements, fn(%{"ELEMENT" => element_id})->
+          element_id
+        end)
+    end
   end
 
 
@@ -83,9 +98,16 @@ defmodule Hound.Helpers.Page do
       find_within_element(parent_element_id, :link_text, "Home")
   """
   @spec find_within_element(String.t, atom, String.t, Integer.t) :: Dict.t
-  def find_within_element(element_id, strategy, selector, retries \\ 5) do
-    {:ok, driver_info} = Hound.driver_info
-    delegate_to_module driver_info[:driver_type], "Page", :find_within_element, [element_id, strategy, selector, retries]
+  def find_within_element(element_id, strategy, selector, timeout_in_seconds \\ 5) do
+    session_id = Hound.current_session_id
+    params = %{using: Hound.InternalHelpers.selector_strategy(strategy), value: selector}
+
+    case make_req(:post, "session/#{session_id}/element/#{element_id}/element", params, %{}, timeout_in_seconds*2) do
+      %{"ELEMENT" => element_id} ->
+        element_id
+      value ->
+        value
+    end
   end
 
 
@@ -109,17 +131,31 @@ defmodule Hound.Helpers.Page do
       find_all_within_element(parent_element_id, :link_text, "Home")
   """
   @spec find_all_within_element(String.t, atom, String.t, Integer.t) :: List.t
-  def find_all_within_element(element_id, strategy, selector, retries \\ 5) do
-    {:ok, driver_info} = Hound.driver_info
-    delegate_to_module driver_info[:driver_type], "Page", :find_all_within_element, [element_id, strategy, selector, retries]
+  def find_all_within_element(element_id, strategy, selector, timeout_in_seconds \\ 5) do
+    session_id = Hound.current_session_id
+    params = %{using: Hound.InternalHelpers.selector_strategy(strategy), value: selector}
+
+    case make_req(:post, "session/#{session_id}/element/#{element_id}/elements", params, %{}, timeout_in_seconds*2) do
+      {:error, value} ->
+        {:error, value}
+      elements ->
+        Enum.map(elements, fn(%{"ELEMENT" => element_id})->
+          element_id
+        end)
+    end
   end
 
 
   @doc "Gets element on page that is currently in focus."
   @spec element_in_focus() :: Dict.t
   def element_in_focus do
-    {:ok, driver_info} = Hound.driver_info
-    delegate_to_module driver_info[:driver_type], "Page", :element_in_focus
+    session_id = Hound.current_session_id
+    case make_req(:post, "session/#{session_id}/element/active") do
+      %{"ELEMENT" => element_id} ->
+        element_id
+      value ->
+        value
+    end
   end
 
 
@@ -199,8 +235,12 @@ defmodule Hound.Helpers.Page do
   """
   @spec send_keys(List.t | atom) :: :ok
   def send_keys(keys) do
-    {:ok, driver_info} = Hound.driver_info
-    delegate_to_module driver_info[:driver_type], "Page", :send_keys, [keys]
+    if is_atom(keys), do: keys = [keys]
+    session_id = Hound.current_session_id
+    make_req(:post,
+      "session/#{session_id}/keys",
+      Hound.InternalHelpers.key_codes_json(keys),
+      %{json_encode: false})
   end
 
 
@@ -214,7 +254,7 @@ defmodule Hound.Helpers.Page do
   """
   @spec send_text(String.t) :: :ok
   def send_text(keys) do
-    {:ok, driver_info} = Hound.driver_info
-    delegate_to_module driver_info[:driver_type], "Page", :send_text, [keys]
+    session_id = Hound.current_session_id
+    make_req(:post, "session/#{session_id}/keys", %{value: [keys]})
   end
 end

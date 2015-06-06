@@ -62,11 +62,11 @@ defmodule Hound.RequestUtils do
     {:ok, driver_info} = Hound.driver_info
     case driver_info.driver do
       "selenium" ->
-        Hound.JsonDriver.ResponseParsers.Selenium
+        Hound.ResponseParsers.Selenium
       "chrome_driver" ->
-        Hound.JsonDriver.ResponseParsers.ChromeDriver
+        Hound.ResponseParsers.ChromeDriver
       "phantomjs" ->
-        Hound.JsonDriver.ResponseParsers.PhantomJs
+        Hound.ResponseParsers.PhantomJs
       other_driver ->
         raise "No response parser found for #{other_driver}"
     end

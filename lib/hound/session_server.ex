@@ -78,8 +78,6 @@ defmodule Hound.SessionServer do
 
 
   def handle_call({:destroy_sessions, pid}, _from, state) do
-    {:ok, driver} = Hound.driver_info
-
     if HashDict.has_key?(state, pid) do
       sessions = state[pid][:all_sessions]
       Enum.each sessions, fn({_session_name, session_id})->

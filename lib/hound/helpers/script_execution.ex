@@ -1,6 +1,5 @@
 defmodule Hound.Helpers.ScriptExecution do
 
-  import Hound.InternalHelpers
   import Hound.RequestUtils
 
   @doc """
@@ -16,8 +15,11 @@ defmodule Hound.Helpers.ScriptExecution do
   """
   @spec execute_script(String.t, List.t) :: any
   def execute_script(script_function, function_args \\ []) do
-    {:ok, driver_info} = Hound.driver_info
-    delegate_to_module driver_info[:driver_type], "ScriptExecution", :execute_script, [script_function, function_args]
+    session_id = Hound.current_session_id
+    make_req(:post,
+      "session/#{session_id}/execute",
+      %{script: script_function, args: function_args}
+    )
   end
 
 
@@ -44,7 +46,10 @@ defmodule Hound.Helpers.ScriptExecution do
   """
   @spec execute_script_async(String.t, List.t) :: any
   def execute_script_async(script_function, function_args \\ []) do
-    {:ok, driver_info} = Hound.driver_info
-    delegate_to_module driver_info[:driver_type], "ScriptExecution", :execute_script_async, [script_function, function_args]
+    session_id = Hound.current_session_id
+    make_req(:post,
+      "session/#{session_id}/execute_async",
+      %{script: script_function, args: function_args}
+    )
   end
 end
