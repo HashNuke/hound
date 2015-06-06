@@ -17,7 +17,6 @@ defmodule Hound.ConnectionServer do
 
 
     browser = options[:browser] || Application.get_env(:hound, :browser, default_browser)
-    driver_type = options[:driver_type] || Application.get_env(:hound, :driver_type, Hound.JsonDriver)
     host = options[:host] || Application.get_env(:hound, :host, "http://localhost")
     port = options[:port] || Application.get_env(:hound, :port, default_port)
     path_prefix = options[:path_prefix] || Application.get_env(:hound, :path_prefix, default_path_prefix)
@@ -26,7 +25,6 @@ defmodule Hound.ConnectionServer do
     driver_info = %{
       :driver => driver,
       :browser => browser,
-      :driver_type => driver_type,
       :host => host,
       :port => port,
       :path_prefix => path_prefix

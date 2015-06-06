@@ -1,20 +1,6 @@
-defmodule Hound.JsonDriver do
+defmodule Hound.Session do
+  @moduledoc "Low-level session functions for Hound to work with drivers"
 
-  defmacro __using__([]) do
-    quote do
-      import Hound.JsonDriver.Page
-      import Hound.JsonDriver.Navigation
-      import Hound.JsonDriver.Element
-      import Hound.JsonDriver.ScriptExecution
-      import Hound.JsonDriver.Window
-      import Hound.JsonDriver.Screenshot
-      import Hound.JsonDriver.Dialog
-      import Hound.JsonDriver.Cookie
-      import Hound.JsonDriver.Session
-    end
-  end
-
-  import Hound.JsonDriver.Utils
 
   @doc "Get server's current status"
   @spec server_status() :: Dict.t

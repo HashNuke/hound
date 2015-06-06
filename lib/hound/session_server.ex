@@ -19,7 +19,7 @@ defmodule Hound.SessionServer do
 
     case state[pid][:current] do
       nil ->
-        {:ok, session_id} = driver_info[:driver_type].create_session(driver_info[:browser])
+        {:ok, session_id} = Hound.Session.create_session(driver_info[:browser])
 
         all_sessions = HashDict.new
           |> HashDict.put :default, session_id
@@ -55,7 +55,7 @@ defmodule Hound.SessionServer do
     if session_id do
       pid_info_update = HashDict.put(pid_info, :current, session_id)
     else
-      {:ok, session_id} = driver_info[:driver_type].create_session(driver_info[:browser])
+      {:ok, session_id} = Hound.Session.create_session(driver_info[:browser])
 
       all_sessions_update = HashDict.put(pid_info[:all_sessions], session_name, session_id)
       pid_info_update = pid_info
@@ -83,7 +83,7 @@ defmodule Hound.SessionServer do
     if HashDict.has_key?(state, pid) do
       sessions = state[pid][:all_sessions]
       Enum.each sessions, fn({_session_name, session_id})->
-        driver[:driver_type].destroy_session(session_id)
+        Hound.Session.destroy_session(session_id)
       end
       state = HashDict.delete(state, pid)
     end
