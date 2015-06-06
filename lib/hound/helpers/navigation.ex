@@ -1,11 +1,13 @@
 defmodule Hound.Helpers.Navigation do
   @moduledoc "Provides navigation functions."
 
+  import Hound.InternalHelpers
+
   @doc "Gets url of the current page."
   @spec current_url :: String.t
   def current_url do
     {:ok, driver_info} = Hound.driver_info
-    driver_info[:driver_type].Navigation.current_url
+    delegate_to_module driver_info[:driver_type], Navigation, :current_url
   end
 
 
@@ -20,7 +22,7 @@ defmodule Hound.Helpers.Navigation do
     {:ok, driver_info} = Hound.driver_info
 
     final_url = generate_final_url(url)
-    driver_info[:driver_type].Navigation.navigate_to(final_url)
+    delegate_to_module driver_info[:driver_type], Navigation, :navigate_to, [final_url]
   end
 
 
@@ -28,7 +30,7 @@ defmodule Hound.Helpers.Navigation do
   @spec navigate_forward :: :ok
   def navigate_forward do
     {:ok, driver_info} = Hound.driver_info
-    driver_info[:driver_type].Navigation.navigate_forward
+    delegate_to_module driver_info[:driver_type], Navigation, :navigate_forward
   end
 
 
@@ -36,7 +38,7 @@ defmodule Hound.Helpers.Navigation do
   @spec navigate_back() :: :ok
   def navigate_back do
     {:ok, driver_info} = Hound.driver_info
-    driver_info[:driver_type].Navigation.navigate_back
+    delegate_to_module driver_info[:driver_type], Navigation, :navigate_back
   end
 
 
@@ -44,8 +46,9 @@ defmodule Hound.Helpers.Navigation do
   @spec refresh_page() :: :ok
   def refresh_page do
     {:ok, driver_info} = Hound.driver_info
-    driver_info[:driver_type].Navigation.refresh_page
+    delegate_to_module driver_info[:driver_type], Navigation, :refresh_page
   end
+
 
   defp generate_final_url(url) do
     {:ok, configs} = Hound.configs

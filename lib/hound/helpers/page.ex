@@ -1,10 +1,12 @@
 defmodule Hound.Helpers.Page do
 
+  import Hound.InternalHelpers
+
   @doc "Gets the HTML source of current page."
   @spec page_source() :: String.t
   def page_source do
     {:ok, driver_info} = Hound.driver_info
-    driver_info[:driver_type].Page.page_source
+    delegate_to_module driver_info[:driver_type], Page, :page_source
   end
 
 
@@ -12,7 +14,7 @@ defmodule Hound.Helpers.Page do
   @spec page_title() :: String.t
   def page_title do
     {:ok, driver_info} = Hound.driver_info
-    driver_info[:driver_type].Page.page_title
+    delegate_to_module driver_info[:driver_type], Page, :page_title
   end
 
 
@@ -34,7 +36,7 @@ defmodule Hound.Helpers.Page do
   @spec find_element(String.t, String.t, Integer.t) :: Dict.t
   def find_element(strategy, selector, retries \\ 5) do
     {:ok, driver_info} = Hound.driver_info
-    driver_info[:driver_type].Page.find_element(strategy, selector, retries)
+    delegate_to_module driver_info[:driver_type], Page, :find_element, [strategy, selector, retries]
   end
 
 
@@ -56,7 +58,7 @@ defmodule Hound.Helpers.Page do
   @spec find_all_elements(atom, String.t, Integer.t) :: List.t
   def find_all_elements(strategy, selector, retries \\ 5) do
     {:ok, driver_info} = Hound.driver_info
-    driver_info[:driver_type].Page.find_all_elements(strategy, selector, retries)
+    delegate_to_module driver_info[:driver_type], Page, :find_all_elements, [strategy, selector, retries]
   end
 
 
@@ -82,7 +84,7 @@ defmodule Hound.Helpers.Page do
   @spec find_within_element(String.t, atom, String.t, Integer.t) :: Dict.t
   def find_within_element(element_id, strategy, selector, retries \\ 5) do
     {:ok, driver_info} = Hound.driver_info
-    driver_info[:driver_type].Page.find_within_element(element_id, strategy, selector, retries)
+    delegate_to_module driver_info[:driver_type], Page, :find_within_element, [element_id, strategy, selector, retries]
   end
 
 
@@ -108,7 +110,7 @@ defmodule Hound.Helpers.Page do
   @spec find_all_within_element(String.t, atom, String.t, Integer.t) :: List.t
   def find_all_within_element(element_id, strategy, selector, retries \\ 5) do
     {:ok, driver_info} = Hound.driver_info
-    driver_info[:driver_type].Page.find_all_within_element(element_id, strategy, selector, retries)
+    delegate_to_module driver_info[:driver_type], Page, :find_all_within_element, [element_id, strategy, selector, retries]
   end
 
 
@@ -116,7 +118,7 @@ defmodule Hound.Helpers.Page do
   @spec element_in_focus() :: Dict.t
   def element_in_focus do
     {:ok, driver_info} = Hound.driver_info
-    driver_info[:driver_type].Page.element_in_focus
+    delegate_to_module driver_info[:driver_type], Page, :element_in_focus
   end
 
 
@@ -197,7 +199,7 @@ defmodule Hound.Helpers.Page do
   @spec send_keys(List.t | atom) :: :ok
   def send_keys(keys) do
     {:ok, driver_info} = Hound.driver_info
-    driver_info[:driver_type].Page.send_keys(keys)
+    delegate_to_module driver_info[:driver_type], Page, :send_keys, [keys]
   end
 
 
@@ -212,6 +214,6 @@ defmodule Hound.Helpers.Page do
   @spec send_text(String.t) :: :ok
   def send_text(keys) do
     {:ok, driver_info} = Hound.driver_info
-    driver_info[:driver_type].Page.send_text(keys)
+    delegate_to_module driver_info[:driver_type], Page, :send_text, [keys]
   end
 end

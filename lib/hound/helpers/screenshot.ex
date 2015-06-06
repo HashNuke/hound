@@ -1,5 +1,7 @@
 defmodule Hound.Helpers.Screenshot do
 
+  import Hound.InternalHelpers
+
   @doc """
   Takes screenshot of the current page. The screenshot is saved in the current working directory.
   It returns the path of the png file, to which the screenshot has been saved.
@@ -19,7 +21,7 @@ defmodule Hound.Helpers.Screenshot do
   @spec take_screenshot(String.t) :: String.t
   def take_screenshot(path \\ nil) do
     {:ok, driver_info} = Hound.driver_info
-    driver_info[:driver_type].Screenshot.take_screenshot(path)
+    delegate_to_module driver_info[:driver_type], Screenshot, :take_screenshot, [path]
   end
 
 end

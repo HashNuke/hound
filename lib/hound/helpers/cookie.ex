@@ -1,6 +1,7 @@
 defmodule Hound.Helpers.Cookie do
   @moduledoc "Provides cookie-related functions."
 
+  import Hound.InternalHelpers
 
   @doc """
   Gets cookies. Returns a list of ListDicts, each containing properties of the cookie.
@@ -10,7 +11,7 @@ defmodule Hound.Helpers.Cookie do
   @spec cookies() :: List.t
   def cookies() do
     {:ok, driver_info} = Hound.driver_info
-    driver_info[:driver_type].Cookie.cookies
+    delegate_to_module driver_info[:driver_type], Cookie, :cookies
   end
 
 
@@ -32,7 +33,7 @@ defmodule Hound.Helpers.Cookie do
   @spec set_cookie(Dict.t) :: :ok
   def set_cookie(cookie) do
     {:ok, driver_info} = Hound.driver_info
-    driver_info[:driver_type].Cookie.set_cookie(cookie)
+    delegate_to_module driver_info[:driver_type], Cookie, :set_cookie, [cookie]
   end
 
 
@@ -40,7 +41,8 @@ defmodule Hound.Helpers.Cookie do
   @spec delete_cookies() :: :ok
   def delete_cookies() do
     {:ok, driver_info} = Hound.driver_info
-    driver_info[:driver_type].Cookie.delete_cookies()
+    Hound.JsonDriver.Cookie.delete_cookies()
+    delegate_to_module driver_info[:driver_type], Cookie, [:delete_cookies]
   end
 
 
@@ -48,7 +50,8 @@ defmodule Hound.Helpers.Cookie do
   @spec delete_cookie(String.t) :: :ok
   def delete_cookie(name) do
     {:ok, driver_info} = Hound.driver_info
-    driver_info[:driver_type].Cookie.delete_cookie(name)
+    Hound.JsonDriver.Cookie.delete_cookie(name)
+    delegate_to_module driver_info[:driver_type], Cookie, :delete_cookies, [name]
   end
 
 end

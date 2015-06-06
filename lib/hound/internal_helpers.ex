@@ -1,6 +1,17 @@
 defmodule Hound.InternalHelpers do
   @moduledoc false
 
+  def delegate_to_module(driver, submodule, func_name) do
+    module_name = String.to_atom "#{driver}.#{submodule}"
+    apply module_name, func_name, []
+  end
+
+  def delegate_to_module(driver, submodule, func_name, args) do
+    module_name = String.to_atom "#{driver}.#{submodule}"
+    apply module_name, func_name, args
+  end
+
+
   def selector_strategy(:class), do: "class name"
   def selector_strategy(:css),   do: "css selector"
   def selector_strategy(:id),    do: "id"

@@ -1,6 +1,8 @@
 defmodule Hound.Helpers.Element do
   @moduledoc "Provides functions related to elements."
 
+  import Hound.InternalHelpers
+
   @type element_selector :: {atom, String.t}
   @type element :: element_selector | String.t
 
@@ -17,7 +19,7 @@ defmodule Hound.Helpers.Element do
   @spec visible_text(element) :: String.t
   def visible_text(element) do
     {:ok, driver_info} = Hound.driver_info
-    driver_info[:driver_type].Element.visible_text(element)
+    delegate_to_module driver_info[:driver_type], Element, :visible_text, [element]
   end
 
 
@@ -36,7 +38,7 @@ defmodule Hound.Helpers.Element do
   @spec input_into_field(element, String.t) :: :ok
   def input_into_field(element, input) do
     {:ok, driver_info} = Hound.driver_info
-    driver_info[:driver_type].Element.input_into_field(element, input)
+    delegate_to_module driver_info[:driver_type], Element, :input_into_field, [element, input]
   end
 
 
@@ -53,7 +55,7 @@ defmodule Hound.Helpers.Element do
   @spec fill_field(element, String.t) :: :ok
   def fill_field(element, input) do
     {:ok, driver_info} = Hound.driver_info
-    driver_info[:driver_type].Element.fill_field(element, input)
+    delegate_to_module driver_info[:driver_type], Element, :fill_field, [element, input]
   end
 
 
@@ -70,7 +72,7 @@ defmodule Hound.Helpers.Element do
   @spec tag_name(element) :: String.t
   def tag_name(element) do
     {:ok, driver_info} = Hound.driver_info
-    driver_info[:driver_type].Element.tag_name(element)
+    delegate_to_module driver_info[:driver_type], Element, :tag_name, [element]
   end
 
 
@@ -86,8 +88,8 @@ defmodule Hound.Helpers.Element do
   """
   @spec clear_field(element) :: :ok
   def clear_field(element) do
-      {:ok, driver_info} = Hound.driver_info
-      driver_info[:driver_type].Element.clear_field(element)
+    {:ok, driver_info} = Hound.driver_info
+    delegate_to_module driver_info[:driver_type], Element, :clear_field, [element]
   end
 
 
@@ -104,7 +106,7 @@ defmodule Hound.Helpers.Element do
   @spec selected?(element) :: :true | :false
   def selected?(element) do
     {:ok, driver_info} = Hound.driver_info
-    driver_info[:driver_type].Element.selected?(element)
+    delegate_to_module driver_info[:driver_type], Element, :selected?, [element]
   end
 
 
@@ -121,7 +123,7 @@ defmodule Hound.Helpers.Element do
   @spec element_enabled?(element) :: :true | :false
   def element_enabled?(element) do
     {:ok, driver_info} = Hound.driver_info
-    driver_info[:driver_type].Element.element_enabled?(element)
+    delegate_to_module driver_info[:driver_type], Element, :element_enabled?, [element]
   end
 
 
@@ -138,7 +140,7 @@ defmodule Hound.Helpers.Element do
   @spec attribute_value(element, String.t) :: String.t | :nil
   def attribute_value(element, attribute_name) do
     {:ok, driver_info} = Hound.driver_info
-    driver_info[:driver_type].Element.attribute_value(element, attribute_name)
+    delegate_to_module driver_info[:driver_type], Element, :attribute_value, [element, attribute_name]
   end
 
 
@@ -152,7 +154,7 @@ defmodule Hound.Helpers.Element do
   @spec same_element?(String.t, String.t) :: :true | :false
   def same_element?(element_id1, element_id2) do
     {:ok, driver_info} = Hound.driver_info
-    driver_info[:driver_type].Element.same_element?(element_id1, element_id2)
+    delegate_to_module driver_info[:driver_type], Element, :same_element?, [element_id1, element_id2]
   end
 
 
@@ -169,7 +171,7 @@ defmodule Hound.Helpers.Element do
   @spec element_displayed?(element) :: :true | :false
   def element_displayed?(element) do
     {:ok, driver_info} = Hound.driver_info
-    driver_info[:driver_type].Element.element_displayed?(element)
+    delegate_to_module driver_info[:driver_type], Element, :element_displayed?, [element]
   end
 
 
@@ -186,7 +188,7 @@ defmodule Hound.Helpers.Element do
   @spec element_location(element) :: tuple
   def element_location(element) do
     {:ok, driver_info} = Hound.driver_info
-    driver_info[:driver_type].Element.element_location(element)
+    delegate_to_module driver_info[:driver_type], Element, :element_location, [element]
   end
 
 
@@ -203,7 +205,7 @@ defmodule Hound.Helpers.Element do
   @spec element_size(element) :: tuple
   def element_size(element) do
     {:ok, driver_info} = Hound.driver_info
-    driver_info[:driver_type].Element.element_size(element)
+    delegate_to_module driver_info[:driver_type], Element, :element_size, [element]
   end
 
 
@@ -220,7 +222,7 @@ defmodule Hound.Helpers.Element do
   @spec css_property(element, String.t) :: String.t
   def css_property(element, property_name) do
     {:ok, driver_info} = Hound.driver_info
-    driver_info[:driver_type].Element.css_property(element, property_name)
+    delegate_to_module driver_info[:driver_type], Element, :css_property, [element, property_name]
   end
 
 
@@ -237,7 +239,7 @@ defmodule Hound.Helpers.Element do
   @spec click(element) :: :ok
   def click(element) do
     {:ok, driver_info} = Hound.driver_info
-    driver_info[:driver_type].Element.click(element)
+    delegate_to_module driver_info[:driver_type], Element, :click, [element]
   end
 
 
@@ -254,7 +256,7 @@ defmodule Hound.Helpers.Element do
   @spec submit_element(element) :: :ok
   def submit_element(element) do
     {:ok, driver_info} = Hound.driver_info
-    driver_info[:driver_type].Element.submit_element(element)
+    delegate_to_module driver_info[:driver_type], Element, :submit_element, [element]
   end
 
 end
