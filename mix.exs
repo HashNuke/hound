@@ -3,7 +3,7 @@ defmodule Hound.Mixfile do
 
   def project do
     [ app: :hound,
-      version: "0.6.1",
+      version: "0.7.0",
       elixir: ">= 1.0.2",
       description: description,
       deps: deps(Mix.env),
@@ -17,7 +17,7 @@ defmodule Hound.Mixfile do
     [
       applications: [:hackney, :httpoison],
       mod: { Hound, [] },
-      description: 'Browser automation library',
+      description: 'Integration testing and browser automation library',
     ]
   end
 
