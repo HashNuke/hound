@@ -1,10 +1,10 @@
-defmodule Hound.JsonDriver.ResponseParsers.ChromeDriver do
+defmodule Hound.ResponseParsers.ChromeDriver do
   @moduledoc false
 
-  import Hound.JsonDriver.ResponseParserUtils
+  import Hound.ResponseParserUtils
 
   def parse(path, status, content) do
-    resp = Hound.JsonDriver.Utils.decode_content(content)
+    resp = Hound.RequestUtils.decode_content(content)
 
     value = resp["value"]
     cond do

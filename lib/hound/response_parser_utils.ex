@@ -1,4 +1,4 @@
-defmodule Hound.JsonDriver.ResponseParserUtils do
+defmodule Hound.ResponseParserUtils do
   import Logger
 
   def is_error?(value) do

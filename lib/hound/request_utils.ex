@@ -1,4 +1,4 @@
-defmodule Hound.JsonDriver.Utils do
+defmodule Hound.RequestUtils do
   @moduledoc false
 
   def make_req(type, path, params \\ %{}, options \\ %{}, retries \\ 0) do

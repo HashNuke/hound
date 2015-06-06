@@ -1,8 +1,8 @@
-defmodule Hound.JsonDriver.ResponseParsers.PhantomJs do
+defmodule Hound.ResponseParsers.PhantomJs do
   @moduledoc false
 
   def parse(path, status, content) do
-    resp = Hound.JsonDriver.Utils.decode_content(content)
+    resp = Hound.RequestUtils.decode_content(content)
     value = resp["value"]
 
     cond do
