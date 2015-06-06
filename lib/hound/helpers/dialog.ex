@@ -10,8 +10,8 @@ defmodule Hound.Helpers.Dialog do
   """
   @spec dialog_text() :: String.t
   def dialog_text do
-    {:ok, driver_info} = Hound.driver_info
-    delegate_to_module driver_info[:driver_type], "Dialog", :dialog_text
+    session_id = Hound.current_session_id
+    make_req(:get, "session/#{session_id}/alert_text")
   end
 
 
@@ -22,8 +22,8 @@ defmodule Hound.Helpers.Dialog do
   """
   @spec input_into_prompt(String.t) :: :ok
   def input_into_prompt(input) do
-    {:ok, driver_info} = Hound.driver_info
-    delegate_to_module driver_info[:driver_type], "Dialog", :input_into_prompt, [input]
+    session_id = Hound.current_session_id
+    make_req(:post, "session/#{session_id}/alert_text", %{text: input})
   end
 
 
@@ -34,8 +34,8 @@ defmodule Hound.Helpers.Dialog do
   """
   @spec accept_dialog() :: :ok
   def accept_dialog do
-    {:ok, driver_info} = Hound.driver_info
-    delegate_to_module driver_info[:driver_type], "Dialog", :accept_dialog
+    session_id = Hound.current_session_id
+    make_req(:post, "session/#{session_id}/accept_alert")
   end
 
 
@@ -46,8 +46,8 @@ defmodule Hound.Helpers.Dialog do
   """
   @spec dismiss_dialog() :: :ok
   def dismiss_dialog do
-    {:ok, driver_info} = Hound.driver_info
-    delegate_to_module driver_info[:driver_type], "Dialog", :dismiss_dialog
+    session_id = Hound.current_session_id
+    make_req(:post, "session/#{session_id}/dismiss_alert", %{})
   end
 
 end

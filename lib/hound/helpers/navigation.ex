@@ -6,8 +6,8 @@ defmodule Hound.Helpers.Navigation do
   @doc "Gets url of the current page."
   @spec current_url :: String.t
   def current_url do
-    {:ok, driver_info} = Hound.driver_info
-    delegate_to_module driver_info[:driver_type], "Navigation", :current_url
+    session_id = Hound.current_session_id
+    make_req(:get, "session/#{session_id}/url")
   end
 
 
@@ -19,34 +19,33 @@ defmodule Hound.Helpers.Navigation do
   """
   @spec navigate_to(String.t) :: :ok
   def navigate_to(url) do
-    {:ok, driver_info} = Hound.driver_info
-
     final_url = generate_final_url(url)
-    delegate_to_module driver_info[:driver_type], "Navigation", :navigate_to, [final_url]
+    session_id = Hound.current_session_id
+    make_req(:post, "session/#{session_id}/url", %{url: final_url})
   end
 
 
   @doc "Navigates forward in browser history."
   @spec navigate_forward :: :ok
   def navigate_forward do
-    {:ok, driver_info} = Hound.driver_info
-    delegate_to_module driver_info[:driver_type], "Navigation", :navigate_forward
+    session_id = Hound.current_session_id
+    make_req(:post, "session/#{session_id}/forward")
   end
 
 
   @doc "Navigates back in browser history."
   @spec navigate_back() :: :ok
   def navigate_back do
-    {:ok, driver_info} = Hound.driver_info
-    delegate_to_module driver_info[:driver_type], "Navigation", :navigate_back
+    session_id = Hound.current_session_id
+    make_req(:post, "session/#{session_id}/back")
   end
 
 
   @doc "Refreshes the current page."
   @spec refresh_page() :: :ok
   def refresh_page do
-    {:ok, driver_info} = Hound.driver_info
-    delegate_to_module driver_info[:driver_type], "Navigation", :refresh_page
+    session_id = Hound.current_session_id
+    make_req(:post, "session/#{session_id}/refresh")
   end
 
 
