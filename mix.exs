@@ -3,31 +3,25 @@ defmodule Hound.Mixfile do
 
   def project do
     [ app: :hound,
-      version: "0.6.0",
+      version: "0.6.1",
       elixir: ">= 1.0.2",
       description: description,
       deps: deps(Mix.env),
       package: package,
-      docs: [readme: true, main: "README"]
+      docs: [readme: true, main: "README.md"]
     ]
   end
 
 
-  # Configuration for the OTP application
   def application do
     [
-      applications: [:httpoison],
+      applications: [:hackney, :httpoison],
       mod: { Hound, [] },
       description: 'Browser automation library',
     ]
   end
 
 
-  # Returns the list of dependencies in the format:
-  # { :foobar, git: "https://github.com/elixir-lang/foobar.git", tag: "0.1" }
-  #
-  # To specify particular versions, regardless of the tag, do:
-  # { :barbat, "~> 0.1", github: "elixir-lang/barbat.git" }
   defp deps do
     [
       {:httpoison, "~> 0.5.0"},
