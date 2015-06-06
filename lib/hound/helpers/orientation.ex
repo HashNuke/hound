@@ -1,5 +1,5 @@
 defmodule Hound.Helpers.Orientation do
-  @moduledoc "Provides function related to orientation."
+  @moduledoc "Provides functions related to orientation."
 
   import Hound.InternalHelpers
   import Hound.RequestUtils
@@ -9,8 +9,8 @@ defmodule Hound.Helpers.Orientation do
   """
   @spec orientation() :: :landscape | :portrait
   def orientation do
-    {:ok, driver_info} = Hound.driver_info
-    delegate_to_module driver_info[:driver_type], "Orientation", :orientation
+    session_id = Hound.current_session_id
+    make_req(:get, "session/#{session_id}/orientation")
   end
 
 
@@ -24,7 +24,7 @@ defmodule Hound.Helpers.Orientation do
   """
   @spec set_orientation(:landscape | :portrait) :: :ok
   def set_orientation(orientation) do
-    {:ok, driver_info} = Hound.driver_info
-    delegate_to_module driver_info[:driver_type], "Orientation", :set_orientation, [orientation]
+    session_id = Hound.current_session_id
+    make_req(:get, "session/#{session_id}/orientation", %{orientation: orientation})
   end
 end
