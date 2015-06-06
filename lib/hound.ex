@@ -20,57 +20,9 @@ defmodule Hound do
   end
 
 
-  @doc """
-  Starts a Hound session.
+  defdelegate start_session,      to: Hound.Helpers.Session
+  defdelegate end_session,        to: Hound.Helpers.Session
+  defdelegate end_session(pid),   to: Hound.Helpers.Session
+  defdelegate current_session_id, to: Hound.Helpers.Session
 
-  Use this in your test case's setup block to start a Hound session for each test case.
-
-      defmodule HoundTest do
-        use ExUnit.Case
-        use Hound.Helpers
-
-        setup do
-          Hound.start_session
-          :ok
-        end
-
-        teardown do
-          :ok = Hound.end_session
-        end
-
-        test "the truth", meta do
-          navigate_to("http://example.com/guestbook.html")
-
-          find_element(:name, "message")
-          |> fill_field("Happy Birthday ~!")
-          |> submit_element()
-
-          assert page_title() == "Thank you"
-        end
-
-      end
-  """
-  def start_session do
-    Hound.SessionServer.session_for_pid(self)
-  end
-
-
-  @doc """
-  Ends a Hound session. If you have multiple sessions, all of those sessions are killed.
-
-  For an example, take a look at the documentation for `start_session`.
-  """
-  def end_session(pid) do
-    Hound.SessionServer.destroy_sessions_for_pid(pid)
-  end
-
-
-  def end_session do
-    Hound.SessionServer.destroy_sessions_for_pid(self)
-  end
-
-  @doc false
-  def current_session_id do
-    Hound.SessionServer.current_session_id(self)
-  end
 end
