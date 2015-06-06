@@ -41,7 +41,7 @@ defmodule Hound.Helpers.Cookie do
   @spec delete_cookies() :: :ok
   def delete_cookies() do
     {:ok, driver_info} = Hound.driver_info
-    delegate_to_module driver_info[:driver_type], "Cookie", [:delete_cookies]
+    delegate_to_module driver_info[:driver_type], "Cookie", :delete_cookies
   end
 
 
@@ -49,7 +49,7 @@ defmodule Hound.Helpers.Cookie do
   @spec delete_cookie(String.t) :: :ok
   def delete_cookie(name) do
     {:ok, driver_info} = Hound.driver_info
-    delegate_to_module driver_info[:driver_type], "Cookie", :delete_cookies, [name]
+    delegate_to_module driver_info[:driver_type], "Cookie", :delete_cookie, [name]
   end
 
 end
