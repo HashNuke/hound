@@ -21,7 +21,7 @@ defmodule Hound.Helpers.Screenshot do
   @spec take_screenshot(String.t) :: String.t
   def take_screenshot(path \\ nil) do
     {:ok, driver_info} = Hound.driver_info
-    delegate_to_module driver_info[:driver_type], Screenshot, :take_screenshot, [path]
+    delegate_to_module driver_info[:driver_type], "Screenshot", :take_screenshot, [path]
   end
 
 end

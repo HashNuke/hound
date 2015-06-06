@@ -11,7 +11,7 @@ defmodule Hound.Helpers.Cookie do
   @spec cookies() :: List.t
   def cookies() do
     {:ok, driver_info} = Hound.driver_info
-    delegate_to_module driver_info[:driver_type], Cookie, :cookies
+    delegate_to_module driver_info[:driver_type], "Cookie", :cookies
   end
 
 
@@ -33,7 +33,7 @@ defmodule Hound.Helpers.Cookie do
   @spec set_cookie(Dict.t) :: :ok
   def set_cookie(cookie) do
     {:ok, driver_info} = Hound.driver_info
-    delegate_to_module driver_info[:driver_type], Cookie, :set_cookie, [cookie]
+    delegate_to_module driver_info[:driver_type], "Cookie", :set_cookie, [cookie]
   end
 
 
@@ -42,7 +42,7 @@ defmodule Hound.Helpers.Cookie do
   def delete_cookies() do
     {:ok, driver_info} = Hound.driver_info
     Hound.JsonDriver.Cookie.delete_cookies()
-    delegate_to_module driver_info[:driver_type], Cookie, [:delete_cookies]
+    delegate_to_module driver_info[:driver_type], "Cookie", [:delete_cookies]
   end
 
 
@@ -51,7 +51,7 @@ defmodule Hound.Helpers.Cookie do
   def delete_cookie(name) do
     {:ok, driver_info} = Hound.driver_info
     Hound.JsonDriver.Cookie.delete_cookie(name)
-    delegate_to_module driver_info[:driver_type], Cookie, :delete_cookies, [name]
+    delegate_to_module driver_info[:driver_type], "Cookie", :delete_cookies, [name]
   end
 
 end

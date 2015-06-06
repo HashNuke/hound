@@ -16,7 +16,7 @@ defmodule Hound.Helpers.ScriptExecution do
   @spec execute_script(String.t, List.t) :: any
   def execute_script(script_function, function_args \\ []) do
     {:ok, driver_info} = Hound.driver_info
-    delegate_to_module driver_info[:driver_type], ScriptExecution, :execute_script, [script_function, function_args]
+    delegate_to_module driver_info[:driver_type], "ScriptExecution", :execute_script, [script_function, function_args]
   end
 
 
@@ -44,6 +44,6 @@ defmodule Hound.Helpers.ScriptExecution do
   @spec execute_script_async(String.t, List.t) :: any
   def execute_script_async(script_function, function_args \\ []) do
     {:ok, driver_info} = Hound.driver_info
-    delegate_to_module driver_info[:driver_type], ScriptExecution, :execute_script_async, [script_function, function_args]
+    delegate_to_module driver_info[:driver_type], "ScriptExecution", :execute_script_async, [script_function, function_args]
   end
 end
