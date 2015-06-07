@@ -3,12 +3,11 @@ defmodule Hound.Mixfile do
 
   def project do
     [ app: :hound,
-      version: "0.7.0",
+      version: "0.7.1",
       elixir: ">= 1.0.4",
-      description: description,
-      deps: deps(Mix.env),
-      package: package,
-      docs: [readme: true, main: "README.md"]
+      description: "Webdriver library for integration testing and browser automation",
+      deps: deps,
+      package: package
     ]
   end
 
@@ -25,21 +24,10 @@ defmodule Hound.Mixfile do
   defp deps do
     [
       {:httpoison, "~> 0.7"},
-      {:poison,    "~> 1.4.0"}
+      {:poison,    "~> 1.4"},
+      {:earmark, "~> 0.1", only: :docs},
+      {:ex_doc,  "~> 0.7", only: :docs}
     ]
-  end
-
-
-  defp deps(:docs) do
-    deps ++ [
-      { :ex_doc,  github: "elixir-lang/ex_doc" },
-      { :earmark, github: "pragdave/earmark" }
-    ]
-  end
-
-
-  defp deps(_) do
-    deps
   end
 
 
@@ -47,12 +35,9 @@ defmodule Hound.Mixfile do
     [
       contributors: ["Akash Manohar J"],
       licenses: ["MIT"],
-      links: %{ "GitHub" => "https://github.com/HashNuke/hound" }
+      links: %{"GitHub" => "https://github.com/HashNuke/hound",
+               "Docs" => "http://hexdocs.pm/hound/" }
     ]
   end
 
-
-  defp description do
-    "Webdriver library for integration testing and browser automation."
-  end
 end
