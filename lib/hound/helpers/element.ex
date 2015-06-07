@@ -1,5 +1,5 @@
 defmodule Hound.Helpers.Element do
-  @moduledoc "Provides functions related to elements."
+  @moduledoc "Functions to work with an element"
 
   import Hound.RequestUtils
 

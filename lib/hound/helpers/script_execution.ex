@@ -1,4 +1,5 @@
 defmodule Hound.Helpers.ScriptExecution do
+  @moduledoc "Functions to execute javascript"
 
   import Hound.RequestUtils
 

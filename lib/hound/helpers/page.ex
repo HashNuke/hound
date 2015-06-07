@@ -1,4 +1,5 @@
 defmodule Hound.Helpers.Page do
+  @moduledoc "Provides element finders, form fillers and page-related functions"
 
   import Hound.RequestUtils
 

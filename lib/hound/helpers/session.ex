@@ -80,7 +80,7 @@ defmodule Hound.Helpers.Session do
 
 
   @doc """
-  Ends a Hound session. If you have multiple sessions, all of those sessions are killed.
+  Ends a Hound session that is associated with a pid. If you have multiple sessions, all of those sessions are killed.
 
   For an example, take a look at the documentation for `start_session`.
   """
@@ -89,6 +89,9 @@ defmodule Hound.Helpers.Session do
   end
 
 
+  @doc """
+    Ends the Hound session(s) associated with the current process
+  """
   def end_session do
     Hound.SessionServer.destroy_sessions_for_pid(self)
   end

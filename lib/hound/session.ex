@@ -1,5 +1,5 @@
 defmodule Hound.Session do
-  @moduledoc "Low-level session functions for Hound to work with drivers"
+  @moduledoc "Low-level session functions internally used by Hound, to work with drivers. See Hound.Helpers.Session for session helpers"
 
   import Hound.RequestUtils
 

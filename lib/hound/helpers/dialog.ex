@@ -1,5 +1,5 @@
 defmodule Hound.Helpers.Dialog do
-  @moduledoc "Provides functions to handle Javascript dialogs alert(), prompt() and confirm()."
+  @moduledoc "Functions to handle Javascript dialogs alert(), prompt() and confirm()"
 
   import Hound.RequestUtils
 

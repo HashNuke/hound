@@ -1,4 +1,5 @@
 defmodule Hound.Helpers.Screenshot do
+  @moduledoc "Provides helper function to take screenshots"
 
   import Hound.RequestUtils
 

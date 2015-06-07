@@ -1,5 +1,5 @@
 defmodule Hound.Helpers.Cookie do
-  @moduledoc "Provides cookie-related functions."
+  @moduledoc "Cookie-related functions"
 
   import Hound.RequestUtils
 

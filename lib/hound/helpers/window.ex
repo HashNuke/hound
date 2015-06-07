@@ -1,4 +1,5 @@
 defmodule Hound.Helpers.Window do
+  @moduledoc "Window size and other window-related functions"
 
   import Hound.RequestUtils
 

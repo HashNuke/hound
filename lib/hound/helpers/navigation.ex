@@ -1,5 +1,5 @@
 defmodule Hound.Helpers.Navigation do
-  @moduledoc "Provides navigation functions."
+  @moduledoc "Navigation functions"
 
   import Hound.RequestUtils
 

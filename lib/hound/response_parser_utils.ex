@@ -1,4 +1,6 @@
 defmodule Hound.ResponseParserUtils do
+  @moduledoc false
+
   import Logger
 
   def is_error?(value) do
