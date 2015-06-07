@@ -11,9 +11,6 @@ install:
   - source $HOME/.asdf/asdf.sh
   - asdf plugin-add elixir https://github.com/HashNuke/asdf-elixir.git
   - asdf install elixir $ELIXIR_VERSION
-  - which elixir
-  - echo $PATH
-  - elixir --version
   - mix local.hex --force
   - mix deps.get
 
