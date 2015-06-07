@@ -139,6 +139,6 @@ PhantomJs is extremely fast, but there are certain caveats. It uses Ghostdriver 
 * Javascript alerts aren't yet supported - <https://github.com/detro/ghostdriver/issues/20>.
 
 
-## License
+## Customary proclaimation...
 
-Copyright &copy; 2013-2015, Akash Manohar J, under the MIT License
+Copyright &copy; 2013-2015, Akash Manohar J, under the MIT License (basically, do whatever you want)
