@@ -3,5 +3,5 @@
 erl_crash.dump
 *.ez
 .DS_Store
-docs/
+doc/
 screenshot-*.png
