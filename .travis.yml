@@ -2,14 +2,14 @@ language: erlang
 otp_release:
    - 17.4
 
-before_install:
+before_script:
   - "export DISPLAY=:99.0"
   - "/sbin/start-stop-daemon --start --quiet --pidfile /tmp/custom_xvfb_99.pid --make-pidfile --background --exec /usr/bin/Xvfb -- :99 -ac -screen 0 1280x1024x16"
-  - mkdir $HOME/src
   - bash $TRAVIS_BUILD_DIR/test/tools/start_webdriver.sh
-  - git clone https://github.com/elixir-lang/elixir.git $HOME/src/elixir
-  - export PATH=$PATH:$HOME/src/elixir/bin/
-  - cd $HOME/src/elixir && git checkout $ELIXIR_VERSION && make clean compile && cd -
+  - git clone https://github.com/HashNuke/asdf.git $HOME/.asdf
+  - source $HOME/.asdf/asdf.sh
+  - asdf plugin-add elixir https://github.com/HashNuke/asdf-elixir.git
+  - asdf install elixir $ELIXIR_VERSION
   - mix local.hex --force
 
 env:
