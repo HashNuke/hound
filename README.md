@@ -109,7 +109,7 @@ The documentation pages include examples under each function.
 
 The docs are at <http://HashNuke.com/docs/hound>.
 
-### More examples? [Checkout Hound's own test cases](https://github.com/HashNuke/hound/tree/master/test/json_driver)
+### More examples? [Checkout Hound's own test cases](https://github.com/HashNuke/hound/tree/master/test/helpers)
 
 ## FAQ
 
