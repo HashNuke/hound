@@ -1,13 +1,18 @@
 defmodule Hound.Mixfile do
   use Mix.Project
 
+  @version "0.7.2"
+
   def project do
     [ app: :hound,
-      version: "0.7.1",
+      version: @version,
       elixir: ">= 1.0.4",
       description: "Webdriver library for integration testing and browser automation",
       deps: deps,
-      package: package
+      package: package,
+      docs: [readme: "README.md", main: "README",
+             source_ref: "v#{@version}",
+             source_url: "https://github.com/HashNuke/hound"]
     ]
   end
 
