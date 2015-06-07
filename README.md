@@ -2,7 +2,7 @@
 
 For browser automation and writing integration tests in Elixir.
 
-<a href="http://github.com/HashNuke/Hound" target="_parent">Source</a> | <a href="http://HashNuke.com/docs/hound" target="_parent">Documentation</a>
+<a href="http://github.com/HashNuke/Hound" target="_parent">Source</a> | <a href="http://hexdocs.pm/hound" target="_parent">Documentation</a>
 
 [![Build Status](https://travis-ci.org/HashNuke/hound.png?branch=master)](https://travis-ci.org/HashNuke/hound)
 
@@ -97,17 +97,17 @@ If you prefer to manually start and end sessions, use `Hound.start_session` and 
 
 The documentation pages include examples under each function.
 
-* [Navigation](http://HashNuke.com/docs/hound/Hound.Helpers.Navigation.html)
-* [Page](http://HashNuke.com/docs/hound/Hound.Helpers.Page.html)
-* [Element](http://HashNuke.com/docs/hound/Hound.Helpers.Element.html)
-* [Cookies](http://HashNuke.com/docs/hound/Hound.Helpers.Cookie.html)
-* [Javascript execution](http://HashNuke.com/docs/hound/Hound.Helpers.ScriptExecution.html)
-* [Javascript dialogs](http://HashNuke.com/docs/hound/Hound.Helpers.Dialog.html)
-* [Screenshot](http://HashNuke.com/docs/hound/Hound.Helpers.Screenshot.html)
-* [Session](http://HashNuke.com/docs/hound/Hound.Helpers.Session.html)
-* [Window](http://HashNuke.com/docs/hound/Hound.Helpers.Window.html)
+* [Navigation](http://hexdocs.pm/hound/Hound.Helpers.Navigation.html)
+* [Page](http://hexdocs.pm/hound/Hound.Helpers.Page.html)
+* [Element](http://hexdocs.pm/hound/Hound.Helpers.Element.html)
+* [Cookies](http://hexdocs.pm/hound/Hound.Helpers.Cookie.html)
+* [Javascript execution](http://hexdocs.pm/hound/Hound.Helpers.ScriptExecution.html)
+* [Javascript dialogs](http://hexdocs.pm/hound/Hound.Helpers.Dialog.html)
+* [Screenshot](http://hexdocs.pm/hound/Hound.Helpers.Screenshot.html)
+* [Session](http://hexdocs.pm/hound/Hound.Helpers.Session.html)
+* [Window](http://hexdocs.pm/hound/Hound.Helpers.Window.html)
 
-The docs are at <http://HashNuke.com/docs/hound>.
+The docs are at <http://hexdocs.pm/hound>.
 
 ### More examples? [Checkout Hound's own test cases](https://github.com/HashNuke/hound/tree/master/test/helpers)
 
