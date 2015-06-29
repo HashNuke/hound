@@ -1,16 +1,14 @@
-language: erlang
+language: elixir
+elixir:
+  1.0.4
 otp_release:
-   - 17.4
+   - 17.5
 
 env:
-  - WEBDRIVER=selenium   ELIXIR_VERSION="v1.0.4"
-  - WEBDRIVER=phantomjs  ELIXIR_VERSION="v1.0.4"
+  - WEBDRIVER=selenium
+  - WEBDRIVER=phantomjs
 
 install:
-  - git clone https://github.com/HashNuke/asdf.git $HOME/.asdf
-  - source $HOME/.asdf/asdf.sh
-  - asdf plugin-add elixir https://github.com/HashNuke/asdf-elixir.git
-  - asdf install elixir $ELIXIR_VERSION
   - mix local.hex --force
   - mix deps.get
 
