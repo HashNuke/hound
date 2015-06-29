@@ -10,6 +10,13 @@ defmodule Hound.Helpers.Page do
     make_req(:get, "session/#{session_id}/source")
   end
 
+  @doc "Gets the visible text of current page."
+  @spec visible_page_text() :: String.t
+  def visible_page_text do
+    element_id = find_element(:css, "body")
+    session_id = Hound.current_session_id
+    make_req(:get, "session/#{session_id}/element/#{element_id}/text")
+  end
 
   @doc "Gets the title of the current page."
   @spec page_title() :: String.t

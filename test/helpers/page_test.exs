@@ -9,6 +9,12 @@ defmodule PageTest do
     assert(Regex.match?(~r/DOCTYPE/, page_source))
   end
 
+  test "should get visible page text" do
+    navigate_to("http://localhost:9090/page1.html")
+    assert(String.contains? visible_page_text, "Flying")
+    assert(not String.contains? visible_page_text, "This is hidden")
+  end
+
 
   test "should get page title" do
     navigate_to("http://localhost:9090/page1.html")
