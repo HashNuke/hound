@@ -12,7 +12,7 @@ defmodule Hound.Matchers.Text do
 
   visible_on_page?("Paragraph")
 
-  The text is matched case-insensitive.
+  The text is matched case-sensitive.
   """
   @spec visible_on_page?(text, retries) :: Boolean.t
   def visible_on_page?(text, retries \\ 5) do
