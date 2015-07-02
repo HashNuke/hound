@@ -19,7 +19,7 @@ defmodule Hound.Mixfile do
 
   def application do
     [
-      applications: [:hackney, :httpoison],
+      applications: [:hackney, :httpoison, :logger],
       mod: { Hound, [] },
       description: 'Integration testing and browser automation library',
     ]
