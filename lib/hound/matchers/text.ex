@@ -8,6 +8,8 @@ defmodule Hound.Matchers.Text do
   @type retries :: Integer.t
   @type selector  :: String.t
 
+  @retry_time Application.get_env(:hound, :retry_time, 250)
+
   @doc """
   Returns true if text is found on the page.
 
@@ -23,7 +25,7 @@ defmodule Hound.Matchers.Text do
       case is_on_page_within?(text, selector, retries) do
         true -> true
         false ->
-          :timer.sleep(500)
+          :timer.sleep(@retry_time)
           visible_on_page?(text, retries - 1)
       end
     else
@@ -46,7 +48,7 @@ defmodule Hound.Matchers.Text do
       case is_on_page_within?(text, selector, retries) do
         true -> true
         false ->
-          :timer.sleep(250)
+          :timer.sleep(@retry_time)
           visible_on_page_within?(text, selector, retries - 1)
       end
     else

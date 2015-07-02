@@ -1,6 +1,8 @@
 defmodule Hound.RequestUtils do
   @moduledoc false
 
+  @retry_time Application.get_env(:hound, :retry_time, 250)
+
   def make_req(type, path, params \\ %{}, options \\ %{}, retries \\ 0) do
 
     if retries > 0 do
@@ -8,11 +10,11 @@ defmodule Hound.RequestUtils do
         send_req(type, path, params, options)
       catch
         _ ->
-          :timer.sleep(500)
+          :timer.sleep(@retry_time)
           make_req(type, path, params, options, retries - 1)
       rescue
         _ ->
-          :timer.sleep(500)
+          :timer.sleep(@retry_time)
           make_req(type, path, params, options, retries - 1)
       end
     else
