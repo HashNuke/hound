@@ -36,3 +36,8 @@ config :hound, driver: "phantomjs", host: "http://example.com", port: 5555
 # Define your application's host and port (defaults to "http://localhost:4001")
 config :hound, app_host: "http://localhost", app_port: 4001
 ```
+
+```elixir
+# Define how long the application will wait between failed attempts (in miliseconds)
+config :hound, retry_time: 500
+```
