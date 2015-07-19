@@ -24,16 +24,16 @@ defmodule TextMatcherTests do
   # visible_on_page_within?
   test "should return true when text is visible inside block" do
     navigate_to "http://localhost:9090/page1.html"
-    assert visible_on_page_within?("Another Paragraph", {:class, "container"})
+    assert visible_on_page_within?({:class, "container"}, "Another Paragraph")
   end
 
   test "should return true when text is loaded by javascript inside block" do
     navigate_to "http://localhost:9090/page1.html"
-    assert visible_on_page_within?("Javascript!", {:id, "javascript"})
+    assert visible_on_page_within?({:id, "javascript"}, "Javascript!")
   end
 
   test "should return false when text is not visible inside block" do
     navigate_to "http://localhost:9090/page1.html"
-    assert !visible_on_page_within?("hidden", {:class, "container"}, 1)
+    assert !visible_on_page_within?({:class, "container"}, "hidden", 1)
   end
 end

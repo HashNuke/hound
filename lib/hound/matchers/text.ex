@@ -36,13 +36,13 @@ defmodule Hound.Matchers.Text do
   @doc """
   Returns true if text is found on the page inside an element.
 
-  visible_on_page_within?("Paragraph", {:class, "block"})
-  visible_on_page_within?("Paragraph", {:id, "id"})
-  visible_on_page_within?("Paragraph", {:id, "id"}, 5)
+  visible_on_page_within?({:class, "block"}, "Paragraph")
+  visible_on_page_within?({:id, "id"}, "Paragraph")
+  visible_on_page_within?({:id, "id"}, "Paragraph", 5)
 
   The text is matched case-sensitive.
   """
-  @spec visible_on_page_within?(text, selector, retries) :: Boolean.t
+  @spec visible_on_page_within?(selector, text, retries) :: Boolean.t
   def visible_on_page_within?(text, selector, retries \\ 5) do
     if retries > 0 do
       case is_on_page_within?(text, selector, retries) do
@@ -56,7 +56,8 @@ defmodule Hound.Matchers.Text do
     end
   end
 
-  defp is_on_page_within?(text, selector, retries) do
+
+  defp is_on_page_within?(selector, text, retries) do
     try do
       xpath_string = query(text, selector)
       element_id = find_element(:xpath, xpath_string, retries)
