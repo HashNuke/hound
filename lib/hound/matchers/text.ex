@@ -72,7 +72,7 @@ defmodule Hound.Matchers.Text do
   end
 
   defp query(text, {:general, _}) do
-    "//*[contains(text(), '#{text}')]"
+    "//*[contains(text(), '#{text}') or @value = '#{text}']"
   end
 
   defp query(text, {:class, selector}) do
