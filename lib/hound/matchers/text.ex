@@ -22,14 +22,14 @@ defmodule Hound.Matchers.Text do
   def visible_on_page?(text, retries \\ 5) do
     selector = {:general, nil}
     if retries > 0 do
-      case is_on_page_within?(text, selector, retries) do
+      case is_on_page_within?(selector, text, retries) do
         true -> true
         false ->
           :timer.sleep(@retry_time)
           visible_on_page?(text, retries - 1)
       end
     else
-      is_on_page_within?(text, selector, retries)
+      is_on_page_within?(selector, text, retries)
     end
   end
 
@@ -45,14 +45,14 @@ defmodule Hound.Matchers.Text do
   @spec visible_on_page_within?(selector, text, retries) :: Boolean.t
   def visible_on_page_within?(text, selector, retries \\ 5) do
     if retries > 0 do
-      case is_on_page_within?(text, selector, retries) do
+      case is_on_page_within?(selector, text, retries) do
         true -> true
         false ->
           :timer.sleep(@retry_time)
           visible_on_page_within?(text, selector, retries - 1)
       end
     else
-      is_on_page_within?(text, selector, retries)
+      is_on_page_within?(selector, text, retries)
     end
   end
 
