@@ -3,8 +3,10 @@ defmodule Hound.RequestUtils do
 
   @retry_time Application.get_env(:hound, :retry_time, 250)
 
-  def make_req(type, path, params \\ %{}, options \\ %{}, retries \\ 0) do
+  @http_options Application.get_env(:hound, :http, [])
 
+
+  def make_req(type, path, params \\ %{}, options \\ %{}, retries \\ 0) do
     if retries > 0 do
       try do
         send_req(type, path, params, options)
@@ -38,16 +40,14 @@ defmodule Hound.RequestUtils do
       body = ""
     end
 
-
     case type do
       :get ->
-        {:ok, resp} = HTTPoison.get(url, headers)
+        {:ok, resp} = HTTPoison.get(url, headers, @http_options)
       :post ->
-        {:ok, resp} = HTTPoison.post(url, body, headers)
+        {:ok, resp} = HTTPoison.post(url, body, headers, @http_options)
       :delete ->
-        {:ok, resp} = HTTPoison.delete(url)
+        {:ok, resp} = HTTPoison.delete(url, headers, @http_options)
     end
-
 
     case response_parser.parse(path, resp.status_code, resp.body) do
       :error ->
