@@ -41,3 +41,8 @@ config :hound, app_host: "http://localhost", app_port: 4001
 # Define how long the application will wait between failed attempts (in miliseconds)
 config :hound, retry_time: 500
 ```
+
+```elixir
+# Define http client settings
+config :hound, http: [recv_timeout: :infinity, proxy: ["socks5", "127.0.0.1", "9050"]]
+```
