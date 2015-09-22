@@ -125,9 +125,9 @@ Yes.
 
 The number of tests you can run async at any point in time, depends on the number of sessions that your webdriver can maintain at a time. For Selenium Standalone, there seems to be a default limit of 15 sessions. You can set ExUnit's async option to limit the number of tests to run parallelly.
 
-#### Will Hound gurantee an isolated session per test?
+#### Will Hound guarantee an isolated session per test?
 
-Yes. A seperate session is started for each session.
+Yes. A separate session is started for each session.
 
 ## PhantomJs caveats
 
@@ -139,6 +139,6 @@ PhantomJs is extremely fast, but there are certain caveats. It uses Ghostdriver 
 * Javascript alerts aren't yet supported - <https://github.com/detro/ghostdriver/issues/20>.
 
 
-## Customary proclaimation...
+## Customary proclamation...
 
 Copyright &copy; 2013-2015, Akash Manohar J, under the MIT License (basically, do whatever you want)
