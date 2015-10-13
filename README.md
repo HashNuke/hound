@@ -2,7 +2,7 @@
 
 For browser automation and writing integration tests in Elixir.
 
-<a href="http://github.com/HashNuke/Hound" target="_parent">Source</a> | <a href="http://hexdocs.pm/hound" target="_parent">Documentation</a>
+<a href="http://github.com/HashNuke/Hound" target="_parent">Source</a> | <a href="http://hashnuke.com/docs/hound/" target="_parent">Documentation</a>
 
 [![Build Status](https://travis-ci.org/HashNuke/hound.png?branch=master)](https://travis-ci.org/HashNuke/hound)
 
