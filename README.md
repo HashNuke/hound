@@ -54,10 +54,10 @@ Hound requires Elixir 1.0.2 or higher.
 
   ```elixir
   # If you are using hex
-  { :hound, "~> 0.6.0" }
+  { :hound, "~> 0.7.4" }
 
   # If you are not using hex
-  { :hound, github: "HashNuke/hound", tag: "v0.6.0" }
+  { :hound, github: "HashNuke/hound", tag: "v0.7.4" }
   ```
 
 * Add Hound to the list of applications to start in your `mix.exs`. Recommended to start Hound in test environment only.
@@ -75,7 +75,7 @@ When you run `mix tests`, Hound is automatically started. __You'll need a webdri
 
 ## Configure
 
-To configure Hound, use your `config/config.exs` file or equivalent (v0.14.0 and above). [Examples are here](https://github.com/HashNuke/hound/blob/master/notes/configuring-hound.md).
+To configure Hound, use your `config/config.exs` file or equivalent. [Examples are here](https://github.com/HashNuke/hound/blob/master/notes/configuring-hound.md).
 
 
 ## Usage
