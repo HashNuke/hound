@@ -30,8 +30,8 @@ defmodule Hound.Mixfile do
     [
       {:httpoison, "~> 0.7"},
       {:poison,    "~> 1.4"},
-      {:earmark, "~> 0.1", only: :docs},
-      {:ex_doc,  "~> 0.7", only: :docs}
+      {:earmark, "~> 0.1.17 or ~> 0.2", only: :docs},
+      {:ex_doc,  "~> 0.10.0", only: :docs}
     ]
   end
 

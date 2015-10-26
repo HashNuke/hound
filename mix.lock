@@ -1,5 +1,5 @@
-%{"earmark": {:hex, :earmark, "0.1.17"},
-  "ex_doc": {:hex, :ex_doc, "0.7.3"},
+%{"earmark": {:hex, :earmark, "0.1.18"},
+  "ex_doc": {:hex, :ex_doc, "0.10.0"},
   "hackney": {:hex, :hackney, "1.1.0"},
   "httpoison": {:hex, :httpoison, "0.7.0"},
   "idna": {:hex, :idna, "1.0.2"},
