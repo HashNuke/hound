@@ -38,7 +38,7 @@ defmodule Hound.Mixfile do
 
   defp package do
     [
-      contributors: ["Akash Manohar J"],
+      maintainers: ["Akash Manohar J"],
       licenses: ["MIT"],
       links: %{"GitHub" => "https://github.com/HashNuke/hound",
                "Docs" => "http://hexdocs.pm/hound/" }
