@@ -8,11 +8,10 @@ defmodule Hound.Mixfile do
       version: @version,
       elixir: ">= 1.0.4",
       description: "Webdriver library for integration testing and browser automation",
+      source_url: "https://github.com/HashNuke/hound",
       deps: deps,
       package: package,
-      docs: [readme: "README.md", main: "README",
-             source_ref: "v#{@version}",
-             source_url: "https://github.com/HashNuke/hound"]
+      docs: [source_ref: "v#{@version}", extras: ["README.md"], main: "extra-readme"]
     ]
   end
 
@@ -40,8 +39,10 @@ defmodule Hound.Mixfile do
     [
       maintainers: ["Akash Manohar J"],
       licenses: ["MIT"],
-      links: %{"GitHub" => "https://github.com/HashNuke/hound",
-               "Docs" => "http://hexdocs.pm/hound/" }
+      links: %{
+        "GitHub" => "https://github.com/HashNuke/hound",
+        "Docs" => "http://hexdocs.pm/hound/"
+      }
     ]
   end
 
