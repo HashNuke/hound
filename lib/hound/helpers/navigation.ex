@@ -10,6 +10,10 @@ defmodule Hound.Helpers.Navigation do
     make_req(:get, "session/#{session_id}/url")
   end
 
+  @doc "Gets the path of the current page."
+  def current_path do
+    URI.parse(current_url).path
+  end
 
   @doc """
   Navigates to a url or relative path.
