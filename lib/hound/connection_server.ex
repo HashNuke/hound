@@ -39,11 +39,23 @@ defmodule Hound.ConnectionServer do
     :gen_server.start_link({:local, __MODULE__}, __MODULE__, state, [])
   end
 
+  defp wait_for_phantomjs_start() do
+    started = receive do
+      {port, {:data, data}} ->
+        (data |> to_string) =~ ~r/8910/
+    end
+    unless started do
+      wait_for_phantomjs_start()
+    end
+  end
+
   defp start_browser("phantomjs") do
     case System.cmd("pgrep", ["phantomjs"]) do
       {"", _} ->
         port = Port.open({:spawn, "phantomjs --webdriver=8910"}, [])
         {:os_pid, os_pid} = Port.info(port, :os_pid)
+
+        wait_for_phantomjs_start()
 
         System.at_exit(fn _exit_status ->
           System.cmd("kill", [to_string(os_pid)])
