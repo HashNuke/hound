@@ -60,11 +60,11 @@ Hound requires Elixir 1.0.2 or higher.
 { :hound, github: "HashNuke/hound", tag: "v0.7.4" }
 ```
 
-* Start Hound in your `test/test_helper.exs` file to make it available in tests:
+* Start Hound in your `test/test_helper.exs` file **before** the `ExUnit.start()` line:
 
 ```elixir
-ExUnit.start()
 Application.ensure_all_started(:hound)
+ExUnit.start()
 ```
 
 When you run `mix tests`, Hound is automatically started. __You'll need a webdriver server__ running, like Selenium Server or Chrome Driver. If you aren't sure what it is, then [read this](https://github.com/HashNuke/hound/wiki/Starting-a-webdriver-server).
