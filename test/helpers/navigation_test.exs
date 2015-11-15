@@ -10,6 +10,11 @@ defmodule NavigationTest do
     assert url == current_url
   end
 
+  test "should get current path" do
+    url = "http://localhost:9090/page1.html"
+    navigate_to(url)
+    assert current_path == "/page1.html"
+  end
 
   test "should navigate to a url" do
     url = "http://localhost:9090/page1.html"
