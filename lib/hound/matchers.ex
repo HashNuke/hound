@@ -11,7 +11,7 @@ defmodule Hound.Matchers do
   @doc """
   Returns true if text is found on the page.
 
-  visible_in_page?(~r/Paragraph/)
+      visible_in_page?(~r/Paragraph/)
   """
   @spec visible_in_page?(Regex.t) :: Boolean.t
   def visible_in_page?(pattern) do
@@ -23,8 +23,8 @@ defmodule Hound.Matchers do
   @doc """
   Returns true if text is found on the page inside an element.
 
-  visible_in_element?({:class, "block"}, ~r/Paragraph/)
-  visible_in_element?({:id, "foo"}, ~r/paragraph/iu)
+      visible_in_element?({:class, "block"}, ~r/Paragraph/)
+      visible_in_element?({:id, "foo"}, ~r/paragraph/iu)
 
   If the element matching the selector itself is a hidden element,
   then the match will return true even if the text is not hidden.
@@ -35,4 +35,15 @@ defmodule Hound.Matchers do
     Regex.match?(pattern, text)
   end
 
+
+  @doc """
+  Returns true if an element is present.
+
+      element?(:class, "block")
+      element?(:id, "foo")
+  """
+  @spec element?(element_selector, String.t)
+  def element?(strategy, selector) do
+    find_all_elements(strategy, selector) != []
+  end
 end
