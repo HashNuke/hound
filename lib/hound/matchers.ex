@@ -39,16 +39,4 @@ defmodule Hound.Matchers do
     Regex.match?(pattern, inner_text)
   end
 
-
-  defp xpath_query(text) do
-    "//*[contains(text(), '#{text}') or @value = '#{text}']"
-  end
-
-  defp xpath_query({:class, selector}, text) do
-    "//*[contains(concat(' ', normalize-space(@class), ' '), ' #{selector} ')]//*[contains(text(), '#{text}')]"
-  end
-
-  defp xpath_query({:id, selector}, text) do
-    "//*[@id='#{selector}' and contains(text(), '#{text}')]"
-  end
 end
