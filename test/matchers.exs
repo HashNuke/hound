@@ -18,7 +18,7 @@ defmodule MatcherTests do
   end
 
 
-  test "should *not* return true when text is not visible" do
+  test "should return false when text is *not* visible" do
     navigate_to "http://localhost:9090/page1.html"
     assert visible_in_page?(~r/hidden/) == false
   end
@@ -37,8 +37,20 @@ defmodule MatcherTests do
     assert visible_in_element?({:id, "javascript"}, ~r/Javascript/)
   end
 
-  test "should *not* return true when text is not visible inside element" do
+  test "should return false when text is *not* visible inside element" do
     navigate_to "http://localhost:9090/page1.html"
     assert visible_in_element?({:class, "hidden-wrapper"}, ~r/hidden/) == false
+  end
+
+
+  test "should return true if element is present" do
+    navigate_to "http://localhost:9090/page1.html"
+    assert element?(:css, ".container")
+  end
+
+
+  test "should return false if element is *not* present" do
+    navigate_to "http://localhost:9090/page1.html"
+    assert element?(:css, ".contra") == false
   end
 end
