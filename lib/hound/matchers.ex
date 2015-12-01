@@ -15,10 +15,8 @@ defmodule Hound.Matchers do
   """
   @spec visible_in_page?(Regex.t) :: Boolean.t
   def visible_in_page?(pattern) do
-    inner_text = {:tag, "body"}
-    |> attribute_value("innerText")
-
-    Regex.match?(pattern, inner_text)
+    text = inner_text({:tag, "body"})
+    Regex.match?(pattern, text)
   end
 
 
@@ -33,8 +31,8 @@ defmodule Hound.Matchers do
   """
   @spec visible_in_element?(element, Regex.t) :: Boolean.t
   def visible_in_element?(selector, pattern) do
-    inner_text = attribute_value(selector, "innerText")
-    Regex.match?(pattern, inner_text)
+    text = inner_text(selector)
+    Regex.match?(pattern, text)
   end
 
 end
