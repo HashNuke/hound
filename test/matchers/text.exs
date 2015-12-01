@@ -4,39 +4,41 @@ defmodule MatcherTests do
 
   hound_session
 
-  #visible_on_page?
+  #visible_text_in_page?
   test "should return true when text is visible" do
     navigate_to "http://localhost:9090/page1.html"
-    assert visible_text?("Paragraph")
+    assert visible_in_page?(~r/Paragraph/)
   end
 
 
   test "should return true when text is loaded by javascript" do
     navigate_to "http://localhost:9090/page1.html"
-    assert visible_text?("Javascript!")
+    :timer.sleep(1000)
+    assert visible_in_page?(~r/Javascript/)
   end
 
 
-  test "should return false when text is not visible" do
+  test "should *not* return true when text is not visible" do
     navigate_to "http://localhost:9090/page1.html"
-    assert !visible_text?("hidden", 1)
+    assert visible_in_page?(~r/hidden/) == false
   end
 
 
-  # visible_on_page_within?
+  # visible_text_in_element?
   test "should return true when text is visible inside block" do
     navigate_to "http://localhost:9090/page1.html"
-    assert visible_text_within?({:class, "container"}, "Another Paragraph")
+    assert visible_in_element?({:class, "container"}, ~r/Another Paragraph/)
   end
 
 
   test "should return true when text is loaded by javascript inside block" do
     navigate_to "http://localhost:9090/page1.html"
-    assert visible_text_within?({:id, "javascript"}, "Javascript!")
+    :timer.sleep(1000)
+    assert visible_in_element?({:id, "javascript"}, ~r/Javascript/)
   end
 
-  test "should return false when text is not visible inside block" do
+  test "should *not* return true when text is not visible inside element" do
     navigate_to "http://localhost:9090/page1.html"
-    assert !visible_text_within?({:class, "container"}, "hidden", 1)
+    assert visible_in_element?({:class, "hidden-wrapper"}, ~r/hidden/) == false
   end
 end
