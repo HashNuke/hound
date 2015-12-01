@@ -42,7 +42,7 @@ defmodule Hound.Matchers do
       element?(:class, "block")
       element?(:id, "foo")
   """
-  @spec element?(element_selector, String.t)
+  @spec element?(atom, String.t) :: Boolean.t
   def element?(strategy, selector) do
     find_all_elements(strategy, selector) != []
   end
