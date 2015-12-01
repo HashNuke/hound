@@ -14,6 +14,7 @@ defmodule Hound.Helpers do
       import Hound.Helpers.ScriptExecution
       import Hound.Helpers.Session
       import Hound.Helpers.Window
+      import Hound.Matchers
       import unquote(__MODULE__)
     end
   end
