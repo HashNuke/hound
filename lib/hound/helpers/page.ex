@@ -63,12 +63,12 @@ defmodule Hound.Helpers.Page do
 
   Valid selector strategies are `:css`, `:class`, `:id`, `:name`, `:tag`, `:xpath`, `:link_text` and `:partial_link_text`
 
-      find_elements(:name, "username")
-      find_elements(:class, "example")
-      find_elements(:id, "example")
-      find_elements(:css, ".example")
-      find_elements(:tag, "footer")
-      find_elements(:link_text, "Home")
+      find_all_elements(:name, "username")
+      find_all_elements(:class, "example")
+      find_all_elements(:id, "example")
+      find_all_elements(:css, ".example")
+      find_all_elements(:tag, "footer")
+      find_all_elements(:link_text, "Home")
   """
   @spec find_all_elements(atom, String.t, Integer.t) :: List.t
   def find_all_elements(strategy, selector, retries \\ 5) do
