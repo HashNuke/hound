@@ -85,6 +85,20 @@ defmodule ElementWithSelectorsTest do
   end
 
 
+  test "should return true when an element has a class, when selector is passed" do
+    navigate_to "http://localhost:9090/page1.html"
+    assert has_class?({:class, "example"}, "example")
+    assert has_class?({:class, "another_example"}, "another_class")
+  end
+
+
+  test "should return false when an element does not have a class, when selector is passed" do
+    navigate_to "http://localhost:9090/page1.html"
+    refute has_class?({:class, "example"}, "ex")
+    refute has_class?({:class, "example"}, "other")
+  end
+
+
   test "should return true if an element is displayed, when selector is passed" do
     navigate_to "http://localhost:9090/page1.html"
     assert element_displayed?({:class, "example"})
