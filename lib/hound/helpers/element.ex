@@ -165,6 +165,23 @@ defmodule Hound.Helpers.Element do
 
 
   @doc """
+  Checks if an element has a given class.
+
+      element_id = find_element(:class, "another_example")
+      has_class?(element_id, "another_class")
+
+  You can also pass the selector as a tuple, for the first argument
+
+      has_class?({:class, "another_example"}, "another_class")
+  """
+  @spec has_class?(element, String.t) :: :true | :false
+  def has_class?(element, class) do
+    class_attribute = attribute_value(element, "class")
+    String.split(class_attribute) |> Enum.member?(class)
+  end
+
+
+  @doc """
   Checks if two element IDs refer to the same DOM element.
 
       element_id1 = find_element(:name, "username")
