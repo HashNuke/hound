@@ -18,19 +18,21 @@ defmodule Hound.Session do
 
 
   @doc "Creates a session associated with the current pid"
-  @spec create_session(String.t) :: String.t
-  def create_session(browser_name) do
+  @spec create_session(String.t, Map.m) :: String.t
+  def create_session(browser_name, additional_capabilities) do
+    base_capabilities = %{
+      javascriptEnabled: false,
+      version: "",
+      rotatable: false,
+      takesScreenshot: true,
+      cssSelectorsEnabled: true,
+      browserName: browser_name,
+      nativeEvents: false,
+      platform: "ANY"
+    }
+
     params = %{
-      desiredCapabilities: %{
-        javascriptEnabled: false,
-        version: "",
-        rotatable: false,
-        takesScreenshot: true,
-        cssSelectorsEnabled: true,
-        browserName: browser_name,
-        nativeEvents: false,
-        platform: "ANY"
-      }
+      desiredCapabilities: Map.merge(base_capabilities, additional_capabilities)
     }
 
     # No retries for this request

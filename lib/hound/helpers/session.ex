@@ -11,8 +11,8 @@ defmodule Hound.Helpers.Session do
 
   The name can be an atom or a string. The default session created is called `:default`.
   """
-  def change_session_to(session_name) do
-    Hound.SessionServer.change_current_session_for_pid(self, session_name)
+  def change_session_to(session_name, additional_capabilities \\ %{}) do
+    Hound.SessionServer.change_current_session_for_pid(self, session_name, additional_capabilities)
   end
 
 
@@ -74,8 +74,8 @@ defmodule Hound.Helpers.Session do
 
       end
   """
-  def start_session do
-    Hound.SessionServer.session_for_pid(self)
+  def start_session(additional_capabilities \\ %{}) do
+    Hound.SessionServer.session_for_pid(self, additional_capabilities)
   end
 
 
