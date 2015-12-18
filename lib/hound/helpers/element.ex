@@ -56,7 +56,7 @@ defmodule Hound.Helpers.Element do
 
 
   @doc """
-  Sets a field's value. The difference with `input_info_field` is that, the field is cleared before entering the new value.
+  Sets a field's value. The difference with `input_into_field` is that, the field is cleared before entering the new value.
 
       element_id = find_element(:id, "example")
       fill_field(element_id, "John Doe")
