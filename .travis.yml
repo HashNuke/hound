@@ -2,11 +2,6 @@ language: elixir
 elixir: 1.0.4
 otp_release: 17.4
 
-addons:
-  apt:
-    packages:
-      - tree
-
 env:
   - WEBDRIVER=selenium
   - WEBDRIVER=phantomjs
@@ -20,4 +15,3 @@ script: mix test
 
 after_failure:
   - cat nohup.out
-  - tree
