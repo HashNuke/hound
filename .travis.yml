@@ -12,3 +12,7 @@ before_script:
   - bash $TRAVIS_BUILD_DIR/test/tools/start_webdriver.sh
 
 script: mix test
+
+after_failure:
+  - cat nohup.out
+  - tree
