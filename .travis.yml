@@ -2,6 +2,11 @@ language: elixir
 elixir: 1.0.4
 otp_release: 17.4
 
+addons:
+  apt:
+    packages:
+      - tree
+
 env:
   - WEBDRIVER=selenium
   - WEBDRIVER=phantomjs
@@ -12,3 +17,7 @@ before_script:
   - bash $TRAVIS_BUILD_DIR/test/tools/start_webdriver.sh
 
 script: mix test
+
+after_failure:
+  - cat nohup.out
+  - tree

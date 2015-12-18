@@ -4,7 +4,7 @@ defmodule Hound.SessionServer do
   use GenServer
 
   def start_link do
-    state = HashDict.new
+    state = %{}
     :gen_server.start_link({:local, __MODULE__}, __MODULE__, state, [])
   end
 
@@ -21,15 +21,10 @@ defmodule Hound.SessionServer do
       nil ->
         {:ok, session_id} = Hound.Session.create_session(driver_info[:browser], additional_capabilities)
 
-        all_sessions = HashDict.new
-          |> HashDict.put :default, session_id
-
-        session_info = HashDict.new
-          |> HashDict.put(:current, session_id)
-          |> HashDict.put(:all_sessions, all_sessions)
-
-        state_upgrade = HashDict.new |> HashDict.put(pid, session_info)
-        new_state = HashDict.merge(state, state_upgrade)
+        all_sessions = %{default: session_id}
+        session_info = %{current: session_id, all_sessions: all_sessions}
+        state_upgrade = %{} |> Map.put(pid, session_info)
+        new_state = Map.merge(state, state_upgrade)
         {:reply, session_id, new_state}
       session_id ->
         {:reply, session_id, state}
@@ -38,7 +33,7 @@ defmodule Hound.SessionServer do
 
 
   def handle_call({:current_session, pid}, _from, state) do
-    if HashDict.has_key?(state, pid) do
+    if Map.has_key?(state, pid) do
       {:reply, state[pid][:current], state}
     else
       {:reply, nil, state}
@@ -53,23 +48,24 @@ defmodule Hound.SessionServer do
     session_id = pid_info[:all_sessions][session_name]
 
     if session_id do
-      pid_info_update = HashDict.put(pid_info, :current, session_id)
+      pid_info_update = Map.put(pid_info, :current, session_id)
     else
       {:ok, session_id} = Hound.Session.create_session(driver_info[:browser], additional_capabilities)
 
-      all_sessions_update = HashDict.put(pid_info[:all_sessions], session_name, session_id)
-      pid_info_update = pid_info
-        |> HashDict.put(:current, session_id)
-        |> HashDict.put(:all_sessions, all_sessions_update)
+      all_sessions_update = Map.put(pid_info[:all_sessions], session_name, session_id)
+      pid_info_update = Map.merge(pid_info, %{
+        current: session_id,
+        all_sessions: all_sessions_update
+      })
     end
 
-    new_state = HashDict.put(state, pid, pid_info_update)
+    new_state = Map.put(state, pid, pid_info_update)
     {:reply, session_id, new_state}
   end
 
 
   def handle_call({:all_sessions, pid}, _from, state) do
-    if HashDict.has_key?(state, pid) do
+    if Map.has_key?(state, pid) do
       {:reply, state[pid][:all_sessions], state}
     else
       {:reply, [], state}
@@ -78,12 +74,12 @@ defmodule Hound.SessionServer do
 
 
   def handle_call({:destroy_sessions, pid}, _from, state) do
-    if HashDict.has_key?(state, pid) do
+    if Map.has_key?(state, pid) do
       sessions = state[pid][:all_sessions]
       Enum.each sessions, fn({_session_name, session_id})->
         Hound.Session.destroy_session(session_id)
       end
-      state = HashDict.delete(state, pid)
+      state = Map.delete(state, pid)
     end
     {:reply, :ok, state}
   end
