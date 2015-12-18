@@ -2,6 +2,9 @@ language: elixir
 elixir: 1.0.4
 otp_release: 17.4
 
+before_install:
+  - sudo apt-get install tree
+
 env:
   - WEBDRIVER=selenium
   - WEBDRIVER=phantomjs
