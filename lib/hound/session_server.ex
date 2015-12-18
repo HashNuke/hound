@@ -14,12 +14,12 @@ defmodule Hound.SessionServer do
   end
 
 
-  def handle_call({:find_or_create_session, pid}, _from, state) do
+  def handle_call({:find_or_create_session, pid, additional_capabilities}, _from, state) do
     {:ok, driver_info} = Hound.driver_info
 
     case state[pid][:current] do
       nil ->
-        {:ok, session_id} = Hound.Session.create_session(driver_info[:browser])
+        {:ok, session_id} = Hound.Session.create_session(driver_info[:browser], additional_capabilities)
 
         all_sessions = %{default: session_id}
         session_info = %{current: session_id, all_sessions: all_sessions}
@@ -41,7 +41,7 @@ defmodule Hound.SessionServer do
   end
 
 
-  def handle_call({:change_session, pid, session_name}, _from, state) do
+  def handle_call({:change_session, pid, session_name, additional_capabilities}, _from, state) do
     {:ok, driver_info} = Hound.driver_info
 
     pid_info = state[pid]
@@ -50,7 +50,7 @@ defmodule Hound.SessionServer do
     if session_id do
       pid_info_update = Map.put(pid_info, :current, session_id)
     else
-      {:ok, session_id} = Hound.Session.create_session(driver_info[:browser])
+      {:ok, session_id} = Hound.Session.create_session(driver_info[:browser], additional_capabilities)
 
       all_sessions_update = Map.put(pid_info[:all_sessions], session_name, session_id)
       pid_info_update = Map.merge(pid_info, %{
@@ -85,8 +85,8 @@ defmodule Hound.SessionServer do
   end
 
 
-  def session_for_pid(pid) do
-    :gen_server.call __MODULE__, {:find_or_create_session, pid}, 60000
+  def session_for_pid(pid, additional_capabilities) do
+    :gen_server.call __MODULE__, {:find_or_create_session, pid, additional_capabilities}, 60000
   end
 
 
@@ -95,8 +95,8 @@ defmodule Hound.SessionServer do
   end
 
 
-  def change_current_session_for_pid(pid, session_name) do
-    :gen_server.call __MODULE__, {:change_session, pid, session_name}, 30000
+  def change_current_session_for_pid(pid, session_name, additional_capabilities) do
+    :gen_server.call __MODULE__, {:change_session, pid, session_name, additional_capabilities}, 30000
   end
 
 

@@ -21,7 +21,8 @@ defmodule Hound do
 
 
   @doc "Alias of Hound.Helpers.Session.start_session"
-  defdelegate start_session,      to: Hound.Helpers.Session
+  defdelegate start_session,                               to: Hound.Helpers.Session
+  defdelegate start_session(additional_capabilities),      to: Hound.Helpers.Session
 
   @doc "Alias of Hound.Helpers.Session.end_session"
   defdelegate end_session,        to: Hound.Helpers.Session
