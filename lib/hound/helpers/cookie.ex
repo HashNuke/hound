@@ -18,10 +18,10 @@ defmodule Hound.Helpers.Cookie do
   @doc """
   Sets cookie.
 
-      set_cookie([name: "cart_id", value: 123213])
-      set_cookie([name: "cart_id", value: "23fa0ev5a6er", secure: true])
+      set_cookie(%{name: "cart_id", value: 123213})
+      set_cookie(%{name: "cart_id", value: "23fa0ev5a6er", secure: true})
 
-  Accepts a ListDict with the following keys:
+  Accepts a Map with the following keys:
 
   * name (string) - REQUIRED
   * value (string) - REQUIRED
@@ -30,7 +30,7 @@ defmodule Hound.Helpers.Cookie do
   * secure (boolean)
   * expiry (integer, specified in seconds since midnight, January 1, 1970 UTC)
   """
-  @spec set_cookie(Dict.t) :: :ok
+  @spec set_cookie(Map.t) :: :ok
   def set_cookie(cookie) do
     session_id = Hound.current_session_id
     make_req(:post, "session/#{session_id}/cookie", %{cookie: cookie})
