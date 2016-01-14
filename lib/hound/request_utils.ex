@@ -26,28 +26,29 @@ defmodule Hound.RequestUtils do
 
 
   defp send_req(type, path, params, options) do
+    headers = []
+    body = ""
     url = get_url(path)
 
     if params != %{} && type == :post do
       headers = [{"Content-Type", "text/json"}]
-      if options[:json_encode] != false do
-        body = Poison.encode! params
-      else
-        body = params
-      end
-    else
-      headers = []
-      body = ""
+      body =
+        if options[:json_encode] != false do
+          Poison.encode! params
+        else
+          params
+        end
     end
 
-    case type do
-      :get ->
-        {:ok, resp} = HTTPoison.get(url, headers, @http_options)
-      :post ->
-        {:ok, resp} = HTTPoison.post(url, body, headers, @http_options)
-      :delete ->
-        {:ok, resp} = HTTPoison.delete(url, headers, @http_options)
-    end
+    {:ok, resp} =
+      case type do
+        :get ->
+          HTTPoison.get(url, headers, @http_options)
+        :post ->
+          HTTPoison.post(url, body, headers, @http_options)
+        :delete ->
+          HTTPoison.delete(url, headers, @http_options)
+      end
 
     case response_parser.parse(path, resp.status_code, resp.body) do
       :error ->

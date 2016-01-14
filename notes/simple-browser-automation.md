@@ -1,7 +1,6 @@
 ## Simple browser automation using Hound
 
 ```elixir
-# use :application.start(:hound) if using Elixir 0.13.x
 Application.start :hound
 
 defmodule Example do
@@ -13,6 +12,7 @@ defmodule Example do
     navigate_to "http://akash.im"
     IO.inspect page_title()
 
+    # Automatically invoked if the session owner process crashes
     Hound.end_session
   end
 end

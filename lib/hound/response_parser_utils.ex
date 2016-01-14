@@ -1,7 +1,7 @@
 defmodule Hound.ResponseParserUtils do
   @moduledoc false
 
-  import Logger
+  require Logger
 
   def is_error?(value) do
     is_map(value) && Map.has_key?(value, "message")

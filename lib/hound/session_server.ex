@@ -47,17 +47,18 @@ defmodule Hound.SessionServer do
     pid_info = state[pid]
     session_id = pid_info[:all_sessions][session_name]
 
-    if session_id do
-      pid_info_update = Map.put(pid_info, :current, session_id)
-    else
-      {:ok, session_id} = Hound.Session.create_session(driver_info[:browser], additional_capabilities)
+    pid_info_update =
+      if session_id do
+        Map.put(pid_info, :current, session_id)
+      else
+        {:ok, session_id} = Hound.Session.create_session(driver_info[:browser], additional_capabilities)
 
-      all_sessions_update = Map.put(pid_info[:all_sessions], session_name, session_id)
-      pid_info_update = Map.merge(pid_info, %{
-        current: session_id,
-        all_sessions: all_sessions_update
-      })
-    end
+        all_sessions_update = Map.put(pid_info[:all_sessions], session_name, session_id)
+        Map.merge(pid_info, %{
+          current: session_id,
+          all_sessions: all_sessions_update
+        })
+      end
 
     new_state = Map.put(state, pid, pid_info_update)
     {:reply, session_id, new_state}
