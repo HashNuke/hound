@@ -2,112 +2,93 @@ defmodule Hound.SessionServer do
   @moduledoc false
 
   use GenServer
+  @name __MODULE__
 
   def start_link do
-    state = %{}
-    :gen_server.start_link({:local, __MODULE__}, __MODULE__, state, [])
+    GenServer.start_link(__MODULE__, %{}, name: @name)
   end
 
+
+  def session_for_pid(pid, additional_capabilities) do
+    current_session_id(pid) ||
+      change_current_session_for_pid(pid, :default, additional_capabilities)
+  end
+
+
+  def current_session_id(pid) do
+    case :ets.lookup(@name, pid) do
+      [{^pid, _ref, session_id, _all_sessions}] -> session_id
+      [] -> nil
+    end
+  end
+
+
+  def change_current_session_for_pid(pid, session_name, additional_capabilities) do
+    GenServer.call(@name, {:change_session, pid, session_name, additional_capabilities}, 60000)
+  end
+
+
+  def all_sessions_for_pid(pid) do
+    case :ets.lookup(@name, pid) do
+      [{^pid, _ref, _session_id, all_sessions}] -> all_sessions
+      [] -> %{}
+    end
+  end
+
+
+  def destroy_sessions_for_pid(pid) do
+    GenServer.call(@name, {:destroy_sessions, pid}, 60000)
+  end
+
+  ## Callbacks
 
   def init(state) do
+    :ets.new(@name, [:set, :named_table, :protected, read_concurrency: true])
     {:ok, state}
-  end
-
-
-  def handle_call({:find_or_create_session, pid, additional_capabilities}, _from, state) do
-    {:ok, driver_info} = Hound.driver_info
-
-    case state[pid][:current] do
-      nil ->
-        {:ok, session_id} = Hound.Session.create_session(driver_info[:browser], additional_capabilities)
-
-        all_sessions = %{default: session_id}
-        session_info = %{current: session_id, all_sessions: all_sessions}
-        state_upgrade = %{} |> Map.put(pid, session_info)
-        new_state = Map.merge(state, state_upgrade)
-        {:reply, session_id, new_state}
-      session_id ->
-        {:reply, session_id, state}
-    end
-  end
-
-
-  def handle_call({:current_session, pid}, _from, state) do
-    if Map.has_key?(state, pid) do
-      {:reply, state[pid][:current], state}
-    else
-      {:reply, nil, state}
-    end
   end
 
 
   def handle_call({:change_session, pid, session_name, additional_capabilities}, _from, state) do
     {:ok, driver_info} = Hound.driver_info
 
-    pid_info = state[pid]
-    session_id = pid_info[:all_sessions][session_name]
-
-    pid_info_update =
-      if session_id do
-        Map.put(pid_info, :current, session_id)
-      else
-        {:ok, session_id} = Hound.Session.create_session(driver_info[:browser], additional_capabilities)
-
-        all_sessions_update = Map.put(pid_info[:all_sessions], session_name, session_id)
-        Map.merge(pid_info, %{
-          current: session_id,
-          all_sessions: all_sessions_update
-        })
+    {ref, sessions} =
+      case :ets.lookup(@name, pid) do
+        [{^pid, ref, _session_id, sessions}] ->
+          {ref, sessions}
+        [] ->
+          {Process.monitor(pid), %{}}
       end
 
-    new_state = Map.put(state, pid, pid_info_update)
-    {:reply, session_id, new_state}
+    {session_id, sessions} =
+      case Map.fetch(sessions, session_name) do
+        {:ok, session_id} ->
+          {session_id, sessions}
+        :error ->
+          {:ok, session_id} = Hound.Session.create_session(driver_info[:browser], additional_capabilities)
+          {session_id, Map.put(sessions, session_name, session_id)}
+      end
+
+    :ets.insert(@name, {pid, ref, session_id, sessions})
+    {:reply, session_id, Map.put(state, ref, pid)}
   end
-
-
-  def handle_call({:all_sessions, pid}, _from, state) do
-    if Map.has_key?(state, pid) do
-      {:reply, state[pid][:all_sessions], state}
-    else
-      {:reply, [], state}
-    end
-  end
-
 
   def handle_call({:destroy_sessions, pid}, _from, state) do
-    if Map.has_key?(state, pid) do
-      sessions = state[pid][:all_sessions]
-      Enum.each sessions, fn({_session_name, session_id})->
-        Hound.Session.destroy_session(session_id)
-      end
-      state = Map.delete(state, pid)
-    end
+    destroy_sessions(pid)
     {:reply, :ok, state}
   end
 
-
-  def session_for_pid(pid, additional_capabilities) do
-    :gen_server.call __MODULE__, {:find_or_create_session, pid, additional_capabilities}, 60000
+  def handle_info({:DOWN, ref, _, _, _}, state) do
+    if pid = state[ref] do
+      destroy_sessions(pid)
+    end
+    {:noreply, state}
   end
 
-
-  def current_session_id(pid) do
-    :gen_server.call __MODULE__, {:current_session, pid}, 30000
+  defp destroy_sessions(pid) do
+    sessions = all_sessions_for_pid(pid)
+    :ets.delete(@name, pid)
+    Enum.each sessions, fn({_session_name, session_id})->
+      Hound.Session.destroy_session(session_id)
+    end
   end
-
-
-  def change_current_session_for_pid(pid, session_name, additional_capabilities) do
-    :gen_server.call __MODULE__, {:change_session, pid, session_name, additional_capabilities}, 30000
-  end
-
-
-  def all_sessions_for_pid(pid) do
-    :gen_server.call __MODULE__, {:all_sessions, pid}, 30000
-  end
-
-
-  def destroy_sessions_for_pid(pid) do
-    :gen_server.call __MODULE__, {:destroy_sessions, pid}, 30000
-  end
-
 end
