@@ -16,9 +16,7 @@ For browser automation and writing integration tests in Elixir.
 
 * Implements the WebDriver Wire Protocol.
 
-
 **Internet Explorer may work under Selenium, but hasn't been tested.
-
 
 #### Example
 
@@ -53,11 +51,8 @@ Hound requires Elixir 1.0.2 or higher.
 * Add dependency to your mix project
 
 ```elixir
-# If you are using hex
-{ :hound, "~> 0.7.4" }
 
-# If you are not using hex
-{ :hound, github: "HashNuke/hound", tag: "v0.7.4" }
+{:hound, "~> 0.7"}
 ```
 
 * Start Hound in your `test/test_helper.exs` file **before** the `ExUnit.start()` line:
@@ -72,7 +67,6 @@ When you run `mix tests`, Hound is automatically started. __You'll need a webdri
 ## Configure
 
 To configure Hound, use your `config/config.exs` file or equivalent. [Examples are here](https://github.com/HashNuke/hound/blob/master/notes/configuring-hound.md).
-
 
 ## Usage
 
@@ -123,17 +117,23 @@ The number of tests you can run async at any point in time, depends on the numbe
 
 #### Will Hound guarantee an isolated session per test?
 
-Yes. A separate session is started for each session.
+Yes. A separate session is started for each test process.
 
 ## PhantomJs caveats
 
-PhantomJs is extremely fast, but there are certain caveats. It uses Ghostdriver for it's webdriver server, which currently has unimplemented features or open issues.
+PhantomJs is extremely fast, but there are certain caveats. It uses Ghostdriver for its webdriver server, which currently has unimplemented features or open issues.
 
 * Cookie jar isn't seperate for sessions - <https://github.com/ariya/phantomjs/issues/11417>
   Which means all sessions share the same cookies. Make sure you run `delete_cookies()` at the end of each test.
 * Isolated sessions were added to GhostDriver recently and are yet to land in a PhantomJs release.
 * Javascript alerts aren't yet supported - <https://github.com/detro/ghostdriver/issues/20>.
 
+## Running tests
+
+You need a webdriver in order to run tests. We recommend `phantomjs` but any can be used by setting the WEBDRIVER environment variable as shown below:
+
+    $ phantomjs --wd
+    $ WEBDRIVER=phantomjs mix test
 
 ## Customary proclamation...
 

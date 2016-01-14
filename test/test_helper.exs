@@ -1,4 +1,4 @@
-:application.start :inets
+Application.start :inets
 
 server_root = '#{Path.absname("test/sample_pages")}'
 test_server_config = [
@@ -11,13 +11,12 @@ test_server_config = [
 
 {:ok, pid} = :inets.start(:httpd, test_server_config)
 
-IO.inspect "Stopping Hound and restarting with options for test suite..."
-:ok = :application.stop(:hound)
-Hound.Supervisor.start_link([
+IO.puts "Stopping Hound and restarting with options for test suite..."
+:ok = Application.stop(:hound)
+Hound.Supervisor.start_link(
   driver: System.get_env("WEBDRIVER"),
   app_port: 9090
-])
-
+)
 
 System.at_exit fn(_exit_status) ->
   :ok = :inets.stop(:httpd, pid)

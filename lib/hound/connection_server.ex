@@ -1,8 +1,6 @@
 defmodule Hound.ConnectionServer do
   @moduledoc false
 
-  use GenServer
-
   def start_link(options \\ []) do
     driver = options[:driver] || Application.get_env(:hound, :driver, "selenium")
 
@@ -36,27 +34,14 @@ defmodule Hound.ConnectionServer do
     }
 
     state = %{sessions: [], driver_info: driver_info, configs: configs}
-    :gen_server.start_link({:local, __MODULE__}, __MODULE__, state, [])
-  end
-
-
-  def init(state) do
-    {:ok, state}
-  end
-
-
-  def handle_call(state_key, _from, state) do
-    {:reply, state[state_key], state}
+    Agent.start_link(fn -> state end, name: __MODULE__)
   end
 
   def driver_info do
-    driver_info = :gen_server.call __MODULE__, :driver_info, 60000
-    {:ok, driver_info}
+    {:ok, Agent.get(__MODULE__, &(&1.driver_info), 60000)}
   end
 
   def configs do
-    configs = :gen_server.call __MODULE__, :configs, 60000
-    {:ok, configs}
+    {:ok, Agent.get(__MODULE__, &(&1.configs), 60000)}
   end
-
 end

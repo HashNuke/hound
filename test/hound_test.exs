@@ -22,7 +22,7 @@ defmodule HoundTest do
 
   test "Should destroy all sessions for current process" do
     Hound.end_session
-    assert Hound.SessionServer.all_sessions_for_pid(self) == []
+    assert Hound.SessionServer.all_sessions_for_pid(self) == %{}
   end
 
 end
