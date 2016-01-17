@@ -1,7 +1,7 @@
 defmodule Hound.Mixfile do
   use Mix.Project
 
-  @version "0.7.6"
+  @version "0.8.0"
 
   def project do
     [ app: :hound,
@@ -11,7 +11,7 @@ defmodule Hound.Mixfile do
       source_url: "https://github.com/HashNuke/hound",
       deps: deps,
       package: package,
-      docs: [source_ref: "v#{@version}", extras: ["README.md"], main: "extra-readme"]
+      docs: [source_ref: "#{@version}", extras: ["README.md"], main: "extra-readme"]
     ]
   end
 
