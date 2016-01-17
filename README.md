@@ -46,13 +46,13 @@ Here's another [simple browser-automation example](https://github.com/HashNuke/h
 
 ## Setup
 
-Hound requires Elixir 1.0.2 or higher.
+Hound requires Elixir 1.0.4 or higher.
 
 * Add dependency to your mix project
 
 ```elixir
 
-{:hound, "~> 0.7"}
+{:hound, "~> 0.8"}
 ```
 
 * Start Hound in your `test/test_helper.exs` file **before** the `ExUnit.start()` line:
