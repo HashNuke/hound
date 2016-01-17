@@ -1,7 +1,7 @@
 defmodule Hound.Mixfile do
   use Mix.Project
 
-  @version "0.8.0"
+  @version "0.8.1"
 
   def project do
     [ app: :hound,
