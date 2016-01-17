@@ -11,7 +11,7 @@ defmodule Hound.Mixfile do
       source_url: "https://github.com/HashNuke/hound",
       deps: deps,
       package: package,
-      docs: [source_ref: "#{@version}", extras: ["README.md"], main: "extra-readme"]
+      docs: [source_ref: "#{@version}", extras: ["README.md"], main: "readme"]
     ]
   end
 
