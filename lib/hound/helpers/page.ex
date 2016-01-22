@@ -168,7 +168,7 @@ defmodule Hound.Helpers.Page do
 
 
   @doc """
-  Holds on to the spcified modifier keys when the block is executing.
+  Holds on to the specified modifier keys when the block is executing.
 
       # Simulates Ctrl + e
       with_keys :control do
