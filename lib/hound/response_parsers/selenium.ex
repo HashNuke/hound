@@ -14,7 +14,7 @@ defmodule Hound.ResponseParsers.Selenium do
         warn value["message"]
         value
       is_error?(value) ->
-        raise value["message"]
+        handle_error(value)
       resp["status"] == 0 ->
         resp["value"]
       status < 400 ->
@@ -23,4 +23,10 @@ defmodule Hound.ResponseParsers.Selenium do
     end
   end
 
+  defp handle_error(%{"class" => "org.openqa.selenium.NoSuchElementException"}) do
+    {:error, :no_such_element}
+  end
+  defp handle_error(err) do
+    {:error, err["message"]}
+  end
 end

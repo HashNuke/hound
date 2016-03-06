@@ -13,7 +13,7 @@ defmodule Hound.Helpers.Page do
   @doc "Gets the visible text of current page."
   @spec visible_page_text() :: String.t
   def visible_page_text do
-    element_id = find_element(:css, "body")
+    element_id = find_element!(:css, "body")
     session_id = Hound.current_session_id
     make_req(:get, "session/#{session_id}/element/#{element_id}/text")
   end
@@ -33,6 +33,8 @@ defmodule Hound.Helpers.Page do
   * The second argument is the selector.
 
   Valid selector strategies are `:css`, `:class`, `:id`, `:name`, `:tag`, `:xpath`, `:link_text` and `:partial_link_text`
+  `nil` will be returned if the element is not found.
+
 
       find_element(:name, "username")
       find_element(:class, "example")
@@ -41,16 +43,23 @@ defmodule Hound.Helpers.Page do
       find_element(:tag, "footer")
       find_element(:link_text, "Home")
   """
-  @spec find_element(String.t, String.t, Integer.t) :: Dict.t
+  @spec find_element(String.t, String.t, Integer.t) :: String.t | nil
   def find_element(strategy, selector, retries \\ 5) do
     session_id = Hound.current_session_id
     params = %{using: Hound.InternalHelpers.selector_strategy(strategy), value: selector}
 
-    case make_req(:post, "session/#{session_id}/element", params, %{}, retries*2) do
-      %{"ELEMENT" => element_id} ->
-        element_id
-      value ->
-        value
+    make_req(:post, "session/#{session_id}/element", params, %{safe: true}, retries*2)
+    |> process_element_response
+  end
+
+  @doc """
+  Same as `find_element/3`, but raises an exception if the element is not found.
+  """
+  @spec find_element!(String.t, String.t, Integer.t) :: String.t
+  def find_element!(strategy, selector, retries \\ 5) do
+    case find_element(strategy, selector, retries) do
+      nil -> raise Hound.NoSuchElementError, strategy: strategy, selector: selector
+      element -> element
     end
   end
 
@@ -105,18 +114,27 @@ defmodule Hound.Helpers.Page do
       find_within_element(parent_element_id, :tag, "footer")
       find_within_element(parent_element_id, :link_text, "Home")
   """
-  @spec find_within_element(String.t, atom, String.t, Integer.t) :: Dict.t
+  @spec find_within_element(String.t, atom, String.t, Integer.t) :: String.t | nil
   def find_within_element(element_id, strategy, selector, retries \\ 5) do
     session_id = Hound.current_session_id
     params = %{using: Hound.InternalHelpers.selector_strategy(strategy), value: selector}
 
-    case make_req(:post, "session/#{session_id}/element/#{element_id}/element", params, %{}, retries*2) do
-      %{"ELEMENT" => element_id} ->
-        element_id
-      value ->
-        value
+    make_req(:post, "session/#{session_id}/element/#{element_id}/element", params, %{safe: true}, retries*2)
+    |> process_element_response
+  end
+
+  @doc """
+  Same as `find_within_element/4`, but raises an exception if the element is not found.
+  """
+  @spec find_within_element!(String.t, atom, String.t, Integer.t) :: String.t
+  def find_within_element!(element_id, strategy, selector, retries \\ 5) do
+    case find_within_element(element_id, strategy, selector, retries) do
+      nil ->
+        raise Hound.NoSuchElementError, strategy: strategy, selector: selector, parent: element_id
+      element -> element
     end
   end
+
 
 
   @doc """
@@ -265,4 +283,13 @@ defmodule Hound.Helpers.Page do
     session_id = Hound.current_session_id
     make_req(:post, "session/#{session_id}/keys", %{value: [keys]})
   end
+
+  defp process_element_response(%{"ELEMENT" => element_id}),
+    do: element_id
+  defp process_element_response({:error, :no_such_element}),
+    do: nil
+  defp process_element_response({:error, err}),
+    do: raise err
+  defp process_element_response(value),
+    do: value
 end

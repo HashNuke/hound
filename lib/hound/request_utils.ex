@@ -56,6 +56,10 @@ defmodule Hound.RequestUtils do
         Webdriver call status code #{resp.status_code} for #{type} request #{url}.
         Check if webdriver server is running. Make sure it supports the feature being requested.
         """
+      {:error, err} = value ->
+        if options[:safe],
+          do: value,
+          else: raise err
       response -> response
     end
   end
