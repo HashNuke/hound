@@ -9,6 +9,13 @@ defmodule ElementWithSelectorsTest do
     assert visible_text({:class, "example"}) == "Paragraph"
   end
 
+  test "should raise when passed selector does not match any element" do
+    navigate_to "http://localhost:9090/page1.html"
+    assert_raise Hound.NoSuchElementError, fn ->
+      visible_text({:class, "i-dont-exist"})
+    end
+  end
+
 
   test "should input value into field, when selector is passed" do
     navigate_to "http://localhost:9090/page1.html"
