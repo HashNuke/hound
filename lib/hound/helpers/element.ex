@@ -309,7 +309,7 @@ defmodule Hound.Helpers.Element do
   defp get_element_id(element) do
     if is_tuple(element) do
       {strategy, selector} = element
-      Hound.Helpers.Page.find_element(strategy, selector)
+      Hound.Helpers.Page.find_element!(strategy, selector)
     else
       element
     end
