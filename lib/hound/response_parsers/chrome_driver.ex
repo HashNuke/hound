@@ -14,7 +14,7 @@ defmodule Hound.ResponseParsers.ChromeDriver do
         warn value["message"]
         value
       is_error?(value) ->
-        raise value["message"]
+        handle_error(value)
       resp["status"] == 0 ->
         value
       status < 400 ->
@@ -23,4 +23,8 @@ defmodule Hound.ResponseParsers.ChromeDriver do
     end
   end
 
+  defp handle_error(%{"message" => "no such element" <> _rest}),
+    do: {:error, :no_such_element}
+  defp handle_error(%{"message" => msg}),
+    do: {:error, msg}
 end

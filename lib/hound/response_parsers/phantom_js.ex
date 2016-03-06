@@ -14,14 +14,21 @@ defmodule Hound.ResponseParsers.PhantomJs do
       is_map(resp["value"]) && Map.has_key?(value, "message") ->
         case Poison.decode(value["message"]) do
           {:ok, decoded_error} ->
-            raise decoded_error["errorMessage"]
+            decoded_error
           _ ->
-            raise value
+            value
         end
+        |> handle_error
 
       status < 400 -> :ok
       true         -> :error
     end
   end
 
+  defp handle_error(%{"errorMessage" => "Unable to find element" <> _rest}),
+    do: {:error, :no_such_element}
+  defp handle_error(%{"errorMessage" => msg}),
+    do: {:error, msg}
+  defp handle_error(err),
+    do: {:error, err}
 end

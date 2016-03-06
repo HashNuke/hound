@@ -34,6 +34,18 @@ defmodule PageTest do
   end
 
 
+  test "find_element/3 should return nil if element does not exist" do
+    navigate_to("http://localhost:9090/page1.html")
+    refute find_element(:css, ".i-dont-exist")
+  end
+
+  test "find_element!/3 should raise NoSuchElementError if element does not exist" do
+    navigate_to("http://localhost:9090/page1.html")
+    assert_raise Hound.NoSuchElementError, fn ->
+      find_element!(:css, ".i-dont-exist")
+    end
+  end
+
   test "should find all elements within page" do
     navigate_to("http://localhost:9090/page1.html")
     element_ids = find_all_elements(:tag, "p")
@@ -51,6 +63,17 @@ defmodule PageTest do
     assert is_binary(element)
   end
 
+  test "find_within_element/4 should return nil if element is not found" do
+    navigate_to("http://localhost:9090/page1.html")
+    container_id = find_element(:class, "container")
+    refute find_within_element(container_id, :class, "i-dont-exist")
+  end
+
+  test "find_within_element!/4 should raise NoSuchElementError if element is not found" do
+    navigate_to("http://localhost:9090/page1.html")
+    container_id = find_element(:class, "container")
+    assert_raise Hound.NoSuchElementError, fn -> find_within_element!(container_id, :class, "i-dont-exist") end
+  end
 
   test "should find all elements within another element" do
     navigate_to("http://localhost:9090/page1.html")
