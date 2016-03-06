@@ -9,21 +9,24 @@ defmodule Hound.RequestUtils do
   def make_req(type, path, params \\ %{}, options \\ %{}, retries \\ 0) do
     if retries > 0 do
       try do
-        send_req(type, path, params, options)
+        case send_req(type, path, params, options) do
+          {:error, _} -> make_retry(type, path, params, options, retries)
+          result      -> result
+        end
       catch
-        _ ->
-          :timer.sleep(@retry_time)
-          make_req(type, path, params, options, retries - 1)
+        _ -> make_retry(type, path, params, options, retries)
       rescue
-        _ ->
-          :timer.sleep(@retry_time)
-          make_req(type, path, params, options, retries - 1)
+        _ -> make_retry(type, path, params, options, retries)
       end
     else
       send_req(type, path, params, options)
     end
   end
 
+  defp make_retry(type, path, params, options, retries) do
+    :timer.sleep(@retry_time)
+    make_req(type, path, params, options, retries - 1)
+  end
 
   defp send_req(type, path, params, options) do
     headers = []
