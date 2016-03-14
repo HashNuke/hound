@@ -6,20 +6,20 @@ defmodule Hound.RequestUtils do
   @http_options Application.get_env(:hound, :http, [])
 
 
-  def make_req(type, path, params \\ %{}, options \\ %{}, retries \\ 0) do
-    if retries > 0 do
-      try do
-        case send_req(type, path, params, options) do
-          {:error, _} -> make_retry(type, path, params, options, retries)
-          result      -> result
-        end
-      catch
-        _ -> make_retry(type, path, params, options, retries)
-      rescue
-        _ -> make_retry(type, path, params, options, retries)
+  def make_req(type, path, params \\ %{}, options \\ %{}, retries \\ 0)
+  def make_req(type, path, params, options, 0) do
+    send_req(type, path, params, options)
+  end
+  def make_req(type, path, params, options, retries) do
+    try do
+      case send_req(type, path, params, options) do
+        {:error, _} -> make_retry(type, path, params, options, retries)
+        result      -> result
       end
-    else
-      send_req(type, path, params, options)
+    catch
+      _ -> make_retry(type, path, params, options, retries)
+    rescue
+      _ -> make_retry(type, path, params, options, retries)
     end
   end
 
@@ -53,7 +53,7 @@ defmodule Hound.RequestUtils do
           HTTPoison.delete(url, headers, @http_options)
       end
 
-    case response_parser.parse(path, resp.status_code, resp.body) do
+    case response_parser.parse(path, resp) do
       :error ->
         raise """
         Webdriver call status code #{resp.status_code} for #{type} request #{url}.
@@ -81,16 +81,6 @@ defmodule Hound.RequestUtils do
         raise "No response parser found for #{other_driver}"
     end
   end
-
-
-  def decode_content(content) do
-    if content != [] do
-      Poison.decode!(content)
-    else
-      Map.new
-    end
-  end
-
 
   defp get_url(path) do
     {:ok, driver_info} = Hound.driver_info
