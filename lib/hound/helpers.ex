@@ -24,6 +24,8 @@ defmodule Hound.Helpers do
     quote do
       setup do
         Hound.start_session
+        on_exit fn-> Hound.end_session end
+
         :ok
       end
     end
