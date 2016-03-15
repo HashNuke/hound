@@ -13,9 +13,9 @@ defmodule Hound.Helpers.Page do
   @doc "Gets the visible text of current page."
   @spec visible_page_text() :: String.t
   def visible_page_text do
-    element_id = find_element!(:css, "body")
+    element = find_element!(:css, "body")
     session_id = Hound.current_session_id
-    make_req(:get, "session/#{session_id}/element/#{element_id}/text")
+    make_req(:get, "session/#{session_id}/element/#{element}/text")
   end
 
   @doc "Gets the title of the current page."
@@ -27,7 +27,7 @@ defmodule Hound.Helpers.Page do
 
 
   @doc """
-  Finds element on current page. It returns an element ID that can be used with other element functions.
+  Finds element on current page. It returns an element that can be used with other element functions.
 
   * The first argument is the strategy.
   * The second argument is the selector.
@@ -65,7 +65,7 @@ defmodule Hound.Helpers.Page do
 
 
   @doc """
-  Finds elements on current page. Returns an array of element IDs that can be used with other element functions.
+  Finds elements on current page. Returns an array of elements that can be used with other element functions.
 
   * The first argument is the strategy.
   * The second argument is the selector.
@@ -88,38 +88,36 @@ defmodule Hound.Helpers.Page do
       {:error, value} ->
         {:error, value}
       elements ->
-        Enum.map(elements, fn(%{"ELEMENT" => element_id})->
-          element_id
-        end)
+        Enum.map(elements, &Hound.Element.from_response/1)
     end
   end
 
 
   @doc """
-  Finds element within a specific element. Returns an element ID to use with element helper functions.
+  Finds element within a specific element. Returns an element to use with element helper functions.
 
-  * The first argument is the element ID of the element within which you want to search.
+  * The first argument is the element within which you want to search.
   * The second argument is the strategy.
   * The third argument is the selector.
 
   Valid selector strategies are `:css`, `:class`, `:id`, `:name`, `:tag`, `:xpath`, `:link_text` and `:partial_link_text`
 
-      # First get an element ID to search within
-      parent_element_id = find_element(:class, "container")
+      # First get an element to search within
+      parent_element = find_element(:class, "container")
 
-      find_within_element(parent_element_id, :name, "username")
-      find_within_element(parent_element_id, :class, "example")
-      find_within_element(parent_element_id, :id, "example")
-      find_within_element(parent_element_id, :css, ".example")
-      find_within_element(parent_element_id, :tag, "footer")
-      find_within_element(parent_element_id, :link_text, "Home")
+      find_within_element(parent_element, :name, "username")
+      find_within_element(parent_element, :class, "example")
+      find_within_element(parent_element, :id, "example")
+      find_within_element(parent_element, :css, ".example")
+      find_within_element(parent_element, :tag, "footer")
+      find_within_element(parent_element, :link_text, "Home")
   """
   @spec find_within_element(String.t, atom, String.t, Integer.t) :: String.t | nil
-  def find_within_element(element_id, strategy, selector, retries \\ 5) do
+  def find_within_element(element, strategy, selector, retries \\ 5) do
     session_id = Hound.current_session_id
     params = %{using: Hound.InternalHelpers.selector_strategy(strategy), value: selector}
 
-    make_req(:post, "session/#{session_id}/element/#{element_id}/element", params, %{safe: true}, retries*2)
+    make_req(:post, "session/#{session_id}/element/#{element}/element", params, %{safe: true}, retries*2)
     |> process_element_response
   end
 
@@ -127,10 +125,10 @@ defmodule Hound.Helpers.Page do
   Same as `find_within_element/4`, but raises an exception if the element is not found.
   """
   @spec find_within_element!(String.t, atom, String.t, Integer.t) :: String.t
-  def find_within_element!(element_id, strategy, selector, retries \\ 5) do
-    case find_within_element(element_id, strategy, selector, retries) do
+  def find_within_element!(element, strategy, selector, retries \\ 5) do
+    case find_within_element(element, strategy, selector, retries) do
       nil ->
-        raise Hound.NoSuchElementError, strategy: strategy, selector: selector, parent: element_id
+        raise Hound.NoSuchElementError, strategy: strategy, selector: selector, parent: element
       element -> element
     end
   end
@@ -138,36 +136,34 @@ defmodule Hound.Helpers.Page do
 
 
   @doc """
-  Finds elements within a specific element. Returns an array of element IDs that can be used with other element functions.
+  Finds elements within a specific element. Returns an array of elements that can be used with other element functions.
 
-  * The first argument is the element ID of the element within which you want to search.
+  * The first argument is the element within which you want to search.
   * The second argument is the strategy.
   * The third argument is the selector.
 
   Valid selector strategies are `:css`, `:class`, `:id`, `:name`, `:tag`, `:xpath`, `:link_text` and `:partial_link_text`
 
-      # First get an element ID to search within
-      parent_element_id = find_element(:class, "container")
+      # First get an element to search within
+      parent_element = find_element(:class, "container")
 
-      find_all_within_element(parent_element_id, :name, "username")
-      find_all_within_element(parent_element_id, :class, "example")
-      find_all_within_element(parent_element_id, :id, "example")
-      find_all_within_element(parent_element_id, :css, ".example")
-      find_all_within_element(parent_element_id, :tag, "footer")
-      find_all_within_element(parent_element_id, :link_text, "Home")
+      find_all_within_element(parent_element, :name, "username")
+      find_all_within_element(parent_element, :class, "example")
+      find_all_within_element(parent_element, :id, "example")
+      find_all_within_element(parent_element, :css, ".example")
+      find_all_within_element(parent_element, :tag, "footer")
+      find_all_within_element(parent_element, :link_text, "Home")
   """
   @spec find_all_within_element(String.t, atom, String.t, Integer.t) :: List.t
-  def find_all_within_element(element_id, strategy, selector, retries \\ 5) do
+  def find_all_within_element(element, strategy, selector, retries \\ 5) do
     session_id = Hound.current_session_id
     params = %{using: Hound.InternalHelpers.selector_strategy(strategy), value: selector}
 
-    case make_req(:post, "session/#{session_id}/element/#{element_id}/elements", params, %{}, retries*2) do
+    case make_req(:post, "session/#{session_id}/element/#{element}/elements", params, %{}, retries*2) do
       {:error, value} ->
         {:error, value}
       elements ->
-        Enum.map(elements, fn(%{"ELEMENT" => element_id})->
-          element_id
-        end)
+        Enum.map(elements, &Hound.Element.from_response/1)
     end
   end
 
@@ -176,12 +172,8 @@ defmodule Hound.Helpers.Page do
   @spec element_in_focus() :: Dict.t
   def element_in_focus do
     session_id = Hound.current_session_id
-    case make_req(:post, "session/#{session_id}/element/active") do
-      %{"ELEMENT" => element_id} ->
-        element_id
-      value ->
-        value
-    end
+    make_req(:post, "session/#{session_id}/element/active")
+    |> Hound.Element.from_response
   end
 
 
@@ -285,7 +277,7 @@ defmodule Hound.Helpers.Page do
   end
 
   defp process_element_response(%{"ELEMENT" => element_id}),
-    do: element_id
+    do: %Hound.Element{uuid: element_id}
   defp process_element_response({:error, :no_such_element}),
     do: nil
   defp process_element_response({:error, err}),

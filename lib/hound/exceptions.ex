@@ -6,3 +6,11 @@ defmodule Hound.NoSuchElementError do
     "No element #{parent_text}found for #{err.strategy} '#{err.selector}'"
   end
 end
+
+defmodule Hound.InvalidElementError do
+  defexception [:value]
+
+  def message(err) do
+    "Could not transform value #{inspect(err.value)} to element"
+  end
+end
