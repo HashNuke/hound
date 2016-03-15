@@ -4,16 +4,12 @@ defmodule Hound.Matchers do
   import Hound.Helpers.Page
   import Hound.Helpers.Element
 
-  @type element_selector :: {atom, String.t}
-  @type element :: element_selector | String.t
-
-
   @doc """
   Returns true if text is found on the page.
 
       visible_in_page?(~r/Paragraph/)
   """
-  @spec visible_in_page?(Regex.t) :: Boolean.t
+  @spec visible_in_page?(Regex.t) :: boolean
   def visible_in_page?(pattern) do
     text = inner_text({:tag, "body"})
     Regex.match?(pattern, text)
@@ -29,7 +25,7 @@ defmodule Hound.Matchers do
   If the element matching the selector itself is a hidden element,
   then the match will return true even if the text is not hidden.
   """
-  @spec visible_in_element?(element, Regex.t) :: Boolean.t
+  @spec visible_in_element?(Hound.Element.selector, Regex.t) :: boolean
   def visible_in_element?(selector, pattern) do
     text = inner_text(selector)
     Regex.match?(pattern, text)
@@ -42,7 +38,7 @@ defmodule Hound.Matchers do
       element?(:class, "block")
       element?(:id, "foo")
   """
-  @spec element?(atom, String.t) :: Boolean.t
+  @spec element?(Hound.Element.strategy, String.t) :: boolean
   def element?(strategy, selector) do
     find_all_elements(strategy, selector) != []
   end
