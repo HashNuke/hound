@@ -2,6 +2,8 @@ defmodule PageTest do
   use ExUnit.Case
   use Hound.Helpers
 
+  alias Hound.Element
+
   hound_session
 
   test "should get page source" do
@@ -30,7 +32,7 @@ defmodule PageTest do
 
   test "should find element within page" do
     navigate_to("http://localhost:9090/page1.html")
-    assert is_binary(find_element(:css, ".example"))
+    assert Element.element?(find_element(:css, ".example"))
   end
 
 
@@ -48,10 +50,10 @@ defmodule PageTest do
 
   test "should find all elements within page" do
     navigate_to("http://localhost:9090/page1.html")
-    element_ids = find_all_elements(:tag, "p")
-    assert length(element_ids) == 6
-    for element_id <- element_ids do
-      assert is_binary(element_id)
+    elements = find_all_elements(:tag, "p")
+    assert length(elements) == 6
+    for element <- elements do
+      assert Element.element?(element)
     end
   end
 
@@ -60,7 +62,7 @@ defmodule PageTest do
     navigate_to("http://localhost:9090/page1.html")
     container_id = find_element(:class, "container")
     element = find_within_element(container_id, :class, "example")
-    assert is_binary(element)
+    assert Element.element?(element)
   end
 
   test "find_within_element/4 should return nil if element is not found" do
@@ -78,17 +80,17 @@ defmodule PageTest do
   test "should find all elements within another element" do
     navigate_to("http://localhost:9090/page1.html")
     container_id = find_element(:class, "container")
-    element_ids = find_all_within_element(container_id, :tag, "p")
-    assert length(element_ids) == 2
-    for element_id <- element_ids do
-      assert is_binary(element_id)
+    elements = find_all_within_element(container_id, :tag, "p")
+    assert length(elements) == 2
+    for element <- elements do
+      assert Element.element?(element)
     end
   end
 
 
   test "should get element in focus" do
     navigate_to("http://localhost:9090/page1.html")
-    assert is_binary(element_in_focus())
+    assert Element.element?(element_in_focus())
   end
 
 

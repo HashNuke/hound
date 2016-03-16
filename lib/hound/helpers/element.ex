@@ -7,10 +7,10 @@ defmodule Hound.Helpers.Element do
   @type element :: element_selector | String.t
 
   @doc """
-  Gets visible text of element. Requires the element ID.
+  Gets visible text of element. Requires the element.
 
-      element_id = find_element(:css, ".example")
-      visible_text(element_id)
+      element = find_element(:css, ".example")
+      visible_text(element)
 
   You can also directly pass the selector as a tuple.
 
@@ -18,9 +18,9 @@ defmodule Hound.Helpers.Element do
   """
   @spec visible_text(element) :: String.t
   def visible_text(element) do
-    element_id = get_element_id(element)
+    element = get_element(element)
     session_id = Hound.current_session_id
-    make_req(:get, "session/#{session_id}/element/#{element_id}/text")
+    make_req(:get, "session/#{session_id}/element/#{element}/text")
   end
 
 
@@ -40,8 +40,8 @@ defmodule Hound.Helpers.Element do
 
   It does not clear the field before entering the new value. Anything passed is added to the value already present.
 
-      element_id = find_element(:id, "example")
-      input_into_field(element_id, "John Doe")
+      element = find_element(:id, "example")
+      input_into_field(element, "John Doe")
 
   You can also pass the selector as a tuple, for the first argument.
 
@@ -49,17 +49,17 @@ defmodule Hound.Helpers.Element do
   """
   @spec input_into_field(element, String.t) :: :ok
   def input_into_field(element, input) do
-    element_id = get_element_id(element)
+    element = get_element(element)
     session_id = Hound.current_session_id
-    make_req(:post, "session/#{session_id}/element/#{element_id}/value", %{value: ["#{input}"]})
+    make_req(:post, "session/#{session_id}/element/#{element}/value", %{value: ["#{input}"]})
   end
 
 
   @doc """
   Sets a field's value. The difference with `input_into_field` is that, the field is cleared before entering the new value.
 
-      element_id = find_element(:id, "example")
-      fill_field(element_id, "John Doe")
+      element = find_element(:id, "example")
+      fill_field(element, "John Doe")
 
   You can also pass the selector as a tuple, for the first argument.
 
@@ -67,18 +67,18 @@ defmodule Hound.Helpers.Element do
   """
   @spec fill_field(element, String.t) :: :ok
   def fill_field(element, input) do
-    element_id = get_element_id(element)
+    element = get_element(element)
     session_id = Hound.current_session_id
-    clear_field(element_id)
-    make_req(:post, "session/#{session_id}/element/#{element_id}/value", %{value: ["#{input}"]})
+    clear_field(element)
+    make_req(:post, "session/#{session_id}/element/#{element}/value", %{value: ["#{input}"]})
   end
 
 
   @doc """
   Gets an element's tag name.
 
-      element_id = find_element(:class, "example")
-      tag_name(element_id)
+      element = find_element(:class, "example")
+      tag_name(element)
 
   You can also directly pass the selector as a tuple.
 
@@ -86,17 +86,17 @@ defmodule Hound.Helpers.Element do
   """
   @spec tag_name(element) :: String.t
   def tag_name(element) do
-    element_id = get_element_id(element)
+    element = get_element(element)
     session_id = Hound.current_session_id
-    make_req(:get, "session/#{session_id}/element/#{element_id}/name")
+    make_req(:get, "session/#{session_id}/element/#{element}/name")
   end
 
 
   @doc """
   Clears textarea or input field's value
 
-      element_id = find_element(:class, "example")
-      clear_field(element_id)
+      element = find_element(:class, "example")
+      clear_field(element)
 
   You can also directly pass the selector as a tuple.
 
@@ -104,17 +104,17 @@ defmodule Hound.Helpers.Element do
   """
   @spec clear_field(element) :: :ok
   def clear_field(element) do
-    element_id = get_element_id(element)
+    element = get_element(element)
     session_id = Hound.current_session_id
-    make_req(:post, "session/#{session_id}/element/#{element_id}/clear")
+    make_req(:post, "session/#{session_id}/element/#{element}/clear")
   end
 
 
   @doc """
   Checks if a radio input group or checkbox has any value selected.
 
-      element_id = find_element(:name, "example")
-      selected?(element_id)
+      element = find_element(:name, "example")
+      selected?(element)
 
   You can also pass the selector as a tuple.
 
@@ -122,17 +122,17 @@ defmodule Hound.Helpers.Element do
   """
   @spec selected?(element) :: :true | :false
   def selected?(element) do
-    element_id = get_element_id(element)
+    element = get_element(element)
     session_id = Hound.current_session_id
-    make_req(:get, "session/#{session_id}/element/#{element_id}/selected")
+    make_req(:get, "session/#{session_id}/element/#{element}/selected")
   end
 
 
   @doc """
   Checks if an input field is enabled.
 
-      element_id = find_element(:name, "example")
-      element_enabled?(element_id)
+      element = find_element(:name, "example")
+      element_enabled?(element)
 
   You can also pass the selector as a tuple.
 
@@ -140,17 +140,17 @@ defmodule Hound.Helpers.Element do
   """
   @spec element_enabled?(element) :: :true | :false
   def element_enabled?(element) do
-    element_id = get_element_id(element)
+    element = get_element(element)
     session_id = Hound.current_session_id
-    make_req(:get, "session/#{session_id}/element/#{element_id}/enabled")
+    make_req(:get, "session/#{session_id}/element/#{element}/enabled")
   end
 
 
   @doc """
   Gets an element's attribute value.
 
-      element_id = find_element(:name, "example")
-      attribute_value(element_id, "data-greeting")
+      element = find_element(:name, "example")
+      attribute_value(element, "data-greeting")
 
   You can also pass the selector as a tuple, for the first argument
 
@@ -158,17 +158,17 @@ defmodule Hound.Helpers.Element do
   """
   @spec attribute_value(element, String.t) :: String.t | :nil
   def attribute_value(element, attribute_name) do
-    element_id = get_element_id(element)
+    element = get_element(element)
     session_id = Hound.current_session_id
-    make_req(:get, "session/#{session_id}/element/#{element_id}/attribute/#{attribute_name}")
+    make_req(:get, "session/#{session_id}/element/#{element}/attribute/#{attribute_name}")
   end
 
 
   @doc """
   Checks if an element has a given class.
 
-      element_id = find_element(:class, "another_example")
-      has_class?(element_id, "another_class")
+      element = find_element(:class, "another_example")
+      has_class?(element, "another_class")
 
   You can also pass the selector as a tuple, for the first argument
 
@@ -182,24 +182,24 @@ defmodule Hound.Helpers.Element do
 
 
   @doc """
-  Checks if two element IDs refer to the same DOM element.
+  Checks if two elements refer to the same DOM element.
 
-      element_id1 = find_element(:name, "username")
-      element_id2 = find_element(:id, "user_name")
-      same_element?(element_id1, element_id2)
+      element1 = find_element(:name, "username")
+      element2 = find_element(:id, "user_name")
+      same_element?(element1, element2)
   """
   @spec same_element?(String.t, String.t) :: :true | :false
-  def same_element?(element_id1, element_id2) do
+  def same_element?(element1, element2) do
     session_id = Hound.current_session_id
-    make_req(:get, "session/#{session_id}/element/#{element_id1}/equals/#{element_id2}")
+    make_req(:get, "session/#{session_id}/element/#{element1}/equals/#{element2}")
   end
 
 
   @doc """
   Checks if an element is currently displayed.
 
-      element_id = find_element(:name, "example")
-      element_displayed?(element_id)
+      element = find_element(:name, "example")
+      element_displayed?(element)
 
   You can also pass the selector as a tuple.
 
@@ -207,17 +207,17 @@ defmodule Hound.Helpers.Element do
   """
   @spec element_displayed?(element) :: :true | :false
   def element_displayed?(element) do
-    element_id = get_element_id(element)
+    element = get_element(element)
     session_id = Hound.current_session_id
-    make_req(:get, "session/#{session_id}/element/#{element_id}/displayed")
+    make_req(:get, "session/#{session_id}/element/#{element}/displayed")
   end
 
 
   @doc """
   Gets an element's location on page. It returns the location as a tuple of the form {x, y}.
 
-      element_id = find_element(:name, "example")
-      element_location(element_id)
+      element = find_element(:name, "example")
+      element_location(element)
 
   You can also pass the selector as a tuple.
 
@@ -225,9 +225,9 @@ defmodule Hound.Helpers.Element do
   """
   @spec element_location(element) :: tuple
   def element_location(element) do
-    element_id = get_element_id(element)
+    element = get_element(element)
     session_id = Hound.current_session_id
-    result = make_req(:get, "session/#{session_id}/element/#{element_id}/location")
+    result = make_req(:get, "session/#{session_id}/element/#{element}/location")
     {result["x"], result["y"]}
   end
 
@@ -235,8 +235,8 @@ defmodule Hound.Helpers.Element do
   @doc """
   Gets an element's size in pixels. It returns the size as a tuple of the form {width, height}.
 
-      element_id = find_element(:name, "example")
-      element_location(element_id)
+      element = find_element(:name, "example")
+      element_location(element)
 
   You can also pass the selector as a tuple.
 
@@ -244,9 +244,9 @@ defmodule Hound.Helpers.Element do
   """
   @spec element_size(element) :: tuple
   def element_size(element) do
-    element_id = get_element_id(element)
+    element = get_element(element)
     session_id = Hound.current_session_id
-    result = make_req(:get, "session/#{session_id}/element/#{element_id}/size")
+    result = make_req(:get, "session/#{session_id}/element/#{element}/size")
     {result["width"], result["height"]}
   end
 
@@ -254,8 +254,8 @@ defmodule Hound.Helpers.Element do
   @doc """
   Gets an element's computed CSS property.
 
-      element_id = find_element(:name, "example")
-      css_property(element_id, "display")
+      element = find_element(:name, "example")
+      css_property(element, "display")
 
   You can also pass the selector as a tuple, for the first argument
 
@@ -263,17 +263,17 @@ defmodule Hound.Helpers.Element do
   """
   @spec css_property(element, String.t) :: String.t
   def css_property(element, property_name) do
-    element_id = get_element_id(element)
+    element = get_element(element)
     session_id = Hound.current_session_id
-    make_req(:get, "session/#{session_id}/element/#{element_id}/css/#{property_name}")
+    make_req(:get, "session/#{session_id}/element/#{element}/css/#{property_name}")
   end
 
 
   @doc """
   Click on an element. You can also use this to click on checkboxes and radio buttons.
 
-      element_id = find_element(:id, ".example")
-      click(element_id)
+      element = find_element(:id, ".example")
+      click(element)
 
   You can also directly pass the selector as a tuple.
 
@@ -281,17 +281,17 @@ defmodule Hound.Helpers.Element do
   """
   @spec click(element) :: :ok
   def click(element) do
-    element_id = get_element_id(element)
+    element = get_element(element)
     session_id = Hound.current_session_id
-    make_req(:post, "session/#{session_id}/element/#{element_id}/click")
+    make_req(:post, "session/#{session_id}/element/#{element}/click")
   end
 
 
   @doc """
   Sends a submit event to any field or form element.
 
-      element_id = find_element(:name, "username")
-      submit(element_id)
+      element = find_element(:name, "username")
+      submit(element)
 
   You can also directly pass the selector as a tuple.
 
@@ -299,19 +299,15 @@ defmodule Hound.Helpers.Element do
   """
   @spec submit_element(element) :: :ok
   def submit_element(element) do
-    element_id = get_element_id(element)
+    element = get_element(element)
     session_id = Hound.current_session_id
-    make_req(:post, "session/#{session_id}/element/#{element_id}/submit")
+    make_req(:post, "session/#{session_id}/element/#{element}/submit")
   end
 
 
   @doc false
-  defp get_element_id(element) do
-    if is_tuple(element) do
-      {strategy, selector} = element
-      Hound.Helpers.Page.find_element!(strategy, selector)
-    else
-      element
-    end
-  end
+  defp get_element({strategy, selector}),
+    do: Hound.Helpers.Page.find_element!(strategy, selector)
+  defp get_element(%Hound.Element{} = elem),
+    do: elem
 end
