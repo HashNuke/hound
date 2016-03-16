@@ -29,30 +29,28 @@ defmodule Hound.RequestUtils do
   end
 
   defp send_req(type, path, params, options) do
-    headers = []
-    body = ""
     url = get_url(path)
-
-    if params != %{} && type == :post do
-      headers = [{"Content-Type", "text/json"}]
-      body =
-        if options[:json_encode] != false do
-          Poison.encode! params
-        else
-          params
-        end
+    has_body = params != %{} && type == :post
+    {headers, body} = cond do
+       has_body && options[:json_encode] != false ->
+        {[{"Content-Type", "text/json"}], Poison.encode!(params)}
+      has_body ->
+        {[], params}
+      true ->
+        {[], ""}
     end
 
-    {:ok, resp} =
-      case type do
-        :get ->
-          HTTPoison.get(url, headers, @http_options)
-        :post ->
-          HTTPoison.post(url, body, headers, @http_options)
-        :delete ->
-          HTTPoison.delete(url, headers, @http_options)
-      end
+    case type do
+      :get ->
+        HTTPoison.get(url, headers, @http_options)
+      :post ->
+        HTTPoison.post(url, body, headers, @http_options)
+      :delete ->
+        HTTPoison.delete(url, headers, @http_options)
+    end |> handle_response({url, path, type}, options)
+  end
 
+  defp handle_response({:ok, resp}, {url, path, type}, options) do
     case response_parser.parse(path, resp) do
       :error ->
         raise """
@@ -67,6 +65,9 @@ defmodule Hound.RequestUtils do
     end
   end
 
+  defp handle_response({:error, %HTTPoison.Error{reason: reason}}, _, _) do
+    {:error, reason}
+  end
 
   defp response_parser do
     {:ok, driver_info} = Hound.driver_info

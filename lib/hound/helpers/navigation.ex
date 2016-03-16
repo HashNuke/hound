@@ -21,11 +21,11 @@ defmodule Hound.Helpers.Navigation do
       navigate_to("http://example.com/page1")
       navigate_to("/page1")
   """
-  @spec navigate_to(String.t) :: :ok
-  def navigate_to(url) do
+  @spec navigate_to(String.t, integer) :: nil
+  def navigate_to(url, retries \\ 0) do
     final_url = generate_final_url(url)
     session_id = Hound.current_session_id
-    make_req(:post, "session/#{session_id}/url", %{url: final_url})
+    make_req(:post, "session/#{session_id}/url", %{url: final_url}, %{}, retries)
   end
 
 
