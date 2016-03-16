@@ -14,7 +14,7 @@ defmodule Hound.Helpers.ScriptExecution do
 
           execute_script("doSomething(); return(arguments[0] + arguments[1]);")
   """
-  @spec execute_script(String.t, List.t) :: any
+  @spec execute_script(String.t, list) :: any
   def execute_script(script_function, function_args \\ []) do
     session_id = Hound.current_session_id
     make_req(:post,
@@ -45,7 +45,7 @@ defmodule Hound.Helpers.ScriptExecution do
   Unless you call the callback function, the function is not assumed to be completed.
   It will error out.
   """
-  @spec execute_script_async(String.t, List.t) :: any
+  @spec execute_script_async(String.t, list) :: any
   def execute_script_async(script_function, function_args \\ []) do
     session_id = Hound.current_session_id
     make_req(:post,

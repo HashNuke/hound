@@ -6,15 +6,21 @@ defmodule Hound.Element do
   defstruct uuid: nil
   @type t :: %__MODULE__{uuid: String.t}
 
+  @type strategy :: :css | :class | :id | :name | :tag | :xpath | :link_text | :partial_link_text
+  @type matcher  :: {strategy, String.t}
+  @type selector :: t | matcher
+
   @doc """
   Returns true if the argument is an Element
   """
+  @spec element?(any) :: boolean
   def element?(%__MODULE__{}), do: true
   def element?(_),             do: false
 
   @doc """
   Returns an element from a driver element response
   """
+  @spec from_response(map) :: t
   def from_response(%{"ELEMENT" => uuid}), do: %__MODULE__{uuid: uuid}
   def from_response(value) do
     raise Hound.InvalidElementError, value: value

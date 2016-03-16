@@ -8,7 +8,7 @@ defmodule Hound.Helpers.Cookie do
 
       cookies()
   """
-  @spec cookies() :: List.t
+  @spec cookies() :: list
   def cookies() do
     session_id = Hound.current_session_id
     make_req(:get, "session/#{session_id}/cookie")
@@ -30,7 +30,7 @@ defmodule Hound.Helpers.Cookie do
   * secure (boolean)
   * expiry (integer, specified in seconds since midnight, January 1, 1970 UTC)
   """
-  @spec set_cookie(Map.t) :: :ok
+  @spec set_cookie(map) :: :ok
   def set_cookie(cookie) do
     session_id = Hound.current_session_id
     make_req(:post, "session/#{session_id}/cookie", %{cookie: cookie})

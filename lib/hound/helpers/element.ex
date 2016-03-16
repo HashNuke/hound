@@ -3,9 +3,6 @@ defmodule Hound.Helpers.Element do
 
   import Hound.RequestUtils
 
-  @type element_selector :: {atom, String.t}
-  @type element :: element_selector | String.t
-
   @doc """
   Gets visible text of element. Requires the element.
 
@@ -16,7 +13,7 @@ defmodule Hound.Helpers.Element do
 
       visible_text({:css, ".example"})
   """
-  @spec visible_text(element) :: String.t
+  @spec visible_text(Hound.Element.selector) :: String.t
   def visible_text(element) do
     element = get_element(element)
     session_id = Hound.current_session_id
@@ -24,13 +21,13 @@ defmodule Hound.Helpers.Element do
   end
 
 
-  @spec inner_html(element) :: String.t
+  @spec inner_html(Hound.Element.selector) :: String.t
   def inner_html(element) do
     attribute_value(element, "innerHTML")
   end
 
 
-  @spec inner_text(element) :: String.t
+  @spec inner_text(Hound.Element.selector) :: String.t
   def inner_text(element) do
     attribute_value(element, "innerText")
   end
@@ -47,7 +44,7 @@ defmodule Hound.Helpers.Element do
 
       input_into_field({:id, "example"}, "John Doe")
   """
-  @spec input_into_field(element, String.t) :: :ok
+  @spec input_into_field(Hound.Element.selector, String.t) :: :ok
   def input_into_field(element, input) do
     element = get_element(element)
     session_id = Hound.current_session_id
@@ -65,7 +62,7 @@ defmodule Hound.Helpers.Element do
 
       fill_field({:id, "example"}, "John Doe")
   """
-  @spec fill_field(element, String.t) :: :ok
+  @spec fill_field(Hound.Element.selector, String.t) :: :ok
   def fill_field(element, input) do
     element = get_element(element)
     session_id = Hound.current_session_id
@@ -84,7 +81,7 @@ defmodule Hound.Helpers.Element do
 
       tag_name({:class, "example"})
   """
-  @spec tag_name(element) :: String.t
+  @spec tag_name(Hound.Element.selector) :: String.t
   def tag_name(element) do
     element = get_element(element)
     session_id = Hound.current_session_id
@@ -102,7 +99,7 @@ defmodule Hound.Helpers.Element do
 
       clear_field({:class, "example"})
   """
-  @spec clear_field(element) :: :ok
+  @spec clear_field(Hound.Element.selector) :: :ok
   def clear_field(element) do
     element = get_element(element)
     session_id = Hound.current_session_id
@@ -120,7 +117,7 @@ defmodule Hound.Helpers.Element do
 
       selected?({:name, "example"})
   """
-  @spec selected?(element) :: :true | :false
+  @spec selected?(Hound.Element.selector) :: boolean
   def selected?(element) do
     element = get_element(element)
     session_id = Hound.current_session_id
@@ -138,7 +135,7 @@ defmodule Hound.Helpers.Element do
 
       element_enabled?({:name, "example"})
   """
-  @spec element_enabled?(element) :: :true | :false
+  @spec element_enabled?(Hound.Element.selector) :: boolean
   def element_enabled?(element) do
     element = get_element(element)
     session_id = Hound.current_session_id
@@ -156,7 +153,7 @@ defmodule Hound.Helpers.Element do
 
       attribute_value({:name, "example"}, "data-greeting")
   """
-  @spec attribute_value(element, String.t) :: String.t | :nil
+  @spec attribute_value(Hound.Element.selector, String.t) :: String.t | :nil
   def attribute_value(element, attribute_name) do
     element = get_element(element)
     session_id = Hound.current_session_id
@@ -174,7 +171,7 @@ defmodule Hound.Helpers.Element do
 
       has_class?({:class, "another_example"}, "another_class")
   """
-  @spec has_class?(element, String.t) :: :true | :false
+  @spec has_class?(Hound.Element.selector, String.t) :: boolean
   def has_class?(element, class) do
     class_attribute = attribute_value(element, "class")
     String.split(class_attribute) |> Enum.member?(class)
@@ -188,7 +185,7 @@ defmodule Hound.Helpers.Element do
       element2 = find_element(:id, "user_name")
       same_element?(element1, element2)
   """
-  @spec same_element?(String.t, String.t) :: :true | :false
+  @spec same_element?(Hound.Element.t, Hound.Element.t) :: boolean
   def same_element?(element1, element2) do
     session_id = Hound.current_session_id
     make_req(:get, "session/#{session_id}/element/#{element1}/equals/#{element2}")
@@ -205,7 +202,7 @@ defmodule Hound.Helpers.Element do
 
       element_displayed?({:name, "example"})
   """
-  @spec element_displayed?(element) :: :true | :false
+  @spec element_displayed?(Hound.Element.selector) :: :true | :false
   def element_displayed?(element) do
     element = get_element(element)
     session_id = Hound.current_session_id
@@ -223,7 +220,7 @@ defmodule Hound.Helpers.Element do
 
       element_location({:name, "example"})
   """
-  @spec element_location(element) :: tuple
+  @spec element_location(Hound.Element.selector) :: {non_neg_integer(), non_neg_integer()}
   def element_location(element) do
     element = get_element(element)
     session_id = Hound.current_session_id
@@ -242,7 +239,7 @@ defmodule Hound.Helpers.Element do
 
       element_location({:name, "example"})
   """
-  @spec element_size(element) :: tuple
+  @spec element_size(Hound.Element.selector) :: {non_neg_integer(), non_neg_integer()}
   def element_size(element) do
     element = get_element(element)
     session_id = Hound.current_session_id
@@ -261,7 +258,7 @@ defmodule Hound.Helpers.Element do
 
       css_property({:name, "example"}, "display")
   """
-  @spec css_property(element, String.t) :: String.t
+  @spec css_property(Hound.Element.selector, String.t) :: String.t
   def css_property(element, property_name) do
     element = get_element(element)
     session_id = Hound.current_session_id
@@ -279,7 +276,7 @@ defmodule Hound.Helpers.Element do
 
       click({:id, "example"})
   """
-  @spec click(element) :: :ok
+  @spec click(Hound.Element.selector) :: :ok
   def click(element) do
     element = get_element(element)
     session_id = Hound.current_session_id
@@ -297,7 +294,7 @@ defmodule Hound.Helpers.Element do
 
       submit({:name, "username"})
   """
-  @spec submit_element(element) :: :ok
+  @spec submit_element(Hound.Element.selector) :: :ok
   def submit_element(element) do
     element = get_element(element)
     session_id = Hound.current_session_id

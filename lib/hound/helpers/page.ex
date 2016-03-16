@@ -43,7 +43,7 @@ defmodule Hound.Helpers.Page do
       find_element(:tag, "footer")
       find_element(:link_text, "Home")
   """
-  @spec find_element(String.t, String.t, Integer.t) :: String.t | nil
+  @spec find_element(Hound.Element.strategy, String.t, non_neg_integer) :: Hound.Element.t | nil
   def find_element(strategy, selector, retries \\ 5) do
     session_id = Hound.current_session_id
     params = %{using: Hound.InternalHelpers.selector_strategy(strategy), value: selector}
@@ -55,7 +55,7 @@ defmodule Hound.Helpers.Page do
   @doc """
   Same as `find_element/3`, but raises an exception if the element is not found.
   """
-  @spec find_element!(String.t, String.t, Integer.t) :: String.t
+  @spec find_element!(Hound.Element.strategy, String.t, non_neg_integer) :: Hound.Element.t
   def find_element!(strategy, selector, retries \\ 5) do
     case find_element(strategy, selector, retries) do
       nil -> raise Hound.NoSuchElementError, strategy: strategy, selector: selector
@@ -79,7 +79,7 @@ defmodule Hound.Helpers.Page do
       find_all_elements(:tag, "footer")
       find_all_elements(:link_text, "Home")
   """
-  @spec find_all_elements(atom, String.t, Integer.t) :: List.t
+  @spec find_all_elements(atom, String.t, non_neg_integer) :: list
   def find_all_elements(strategy, selector, retries \\ 5) do
     session_id = Hound.current_session_id
     params = %{using: Hound.InternalHelpers.selector_strategy(strategy), value: selector}
@@ -112,7 +112,7 @@ defmodule Hound.Helpers.Page do
       find_within_element(parent_element, :tag, "footer")
       find_within_element(parent_element, :link_text, "Home")
   """
-  @spec find_within_element(String.t, atom, String.t, Integer.t) :: String.t | nil
+  @spec find_within_element(Hound.Element.t, Hound.Element.strategy, String.t, non_neg_integer) :: Hound.Element.t | nil
   def find_within_element(element, strategy, selector, retries \\ 5) do
     session_id = Hound.current_session_id
     params = %{using: Hound.InternalHelpers.selector_strategy(strategy), value: selector}
@@ -124,7 +124,7 @@ defmodule Hound.Helpers.Page do
   @doc """
   Same as `find_within_element/4`, but raises an exception if the element is not found.
   """
-  @spec find_within_element!(String.t, atom, String.t, Integer.t) :: String.t
+  @spec find_within_element!(Hound.Element.t, Hound.Element.strategy, String.t, non_neg_integer) :: Hound.Element.t
   def find_within_element!(element, strategy, selector, retries \\ 5) do
     case find_within_element(element, strategy, selector, retries) do
       nil ->
@@ -154,7 +154,7 @@ defmodule Hound.Helpers.Page do
       find_all_within_element(parent_element, :tag, "footer")
       find_all_within_element(parent_element, :link_text, "Home")
   """
-  @spec find_all_within_element(String.t, atom, String.t, Integer.t) :: List.t
+  @spec find_all_within_element(Hound.Element.t, atom, String.t, non_neg_integer) :: list
   def find_all_within_element(element, strategy, selector, retries \\ 5) do
     session_id = Hound.current_session_id
     params = %{using: Hound.InternalHelpers.selector_strategy(strategy), value: selector}
@@ -169,7 +169,7 @@ defmodule Hound.Helpers.Page do
 
 
   @doc "Gets element on page that is currently in focus."
-  @spec element_in_focus() :: Dict.t
+  @spec element_in_focus() :: map
   def element_in_focus do
     session_id = Hound.current_session_id
     make_req(:post, "session/#{session_id}/element/active")
@@ -251,7 +251,7 @@ defmodule Hound.Helpers.Page do
   * :divide - divide key
   * :seperator - seperator key
   """
-  @spec send_keys(List.t | atom) :: :ok
+  @spec send_keys(list | atom) :: :ok
   def send_keys(keys) do
     if is_atom(keys), do: keys = [keys]
     session_id = Hound.current_session_id

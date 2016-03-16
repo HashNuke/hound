@@ -7,7 +7,7 @@ defmodule Hound.ResponseParser do
   require Logger
 
   @callback handle_response(any, integer, String.t) :: any
-  @callback handle_error(Map.t) :: {:error, any}
+  @callback handle_error(map) :: {:error, any}
 
   defmacro __using__(_) do
     quote do
