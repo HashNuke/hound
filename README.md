@@ -135,6 +135,11 @@ You need a webdriver in order to run tests. We recommend `phantomjs` but any can
     $ phantomjs --wd
     $ WEBDRIVER=phantomjs mix test
 
+## Maintainers
+
+* Akash Manohar ([HashNuke](https://github.com/HashNuke))
+* Daniel Perez ([tuvistavie](https://github.com/tuvistavie))
+
 ## Customary proclamation...
 
 Copyright &copy; 2013-2015, Akash Manohar J, under the MIT License (basically, do whatever you want)
