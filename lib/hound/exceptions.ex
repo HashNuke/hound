@@ -14,3 +14,14 @@ defmodule Hound.InvalidElementError do
     "Could not transform value #{inspect(err.value)} to element"
   end
 end
+
+defmodule Hound.NotSupportedError do
+  defexception [:function, :browser, :driver]
+
+  def message(err) do
+    {:ok, info} = Hound.ConnectionServer.driver_info
+    driver = err.driver || info.driver
+    browser = err.browser || info.browser
+    "#{err.function} is not supported by driver #{driver} with browser #{browser}"
+  end
+end
