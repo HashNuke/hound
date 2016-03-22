@@ -252,8 +252,8 @@ defmodule Hound.Helpers.Page do
   * :seperator - seperator key
   """
   @spec send_keys(list | atom) :: :ok
-  def send_keys(keys) do
-    if is_atom(keys), do: keys = [keys]
+  def send_keys(keys) when is_atom(keys) or is_list(keys) do
+    keys = List.wrap(keys)
     session_id = Hound.current_session_id
     make_req(:post,
       "session/#{session_id}/keys",
