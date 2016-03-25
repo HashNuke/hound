@@ -19,9 +19,35 @@ defmodule Hound.NotSupportedError do
   defexception [:function, :browser, :driver]
 
   def message(err) do
-    {:ok, info} = Hound.ConnectionServer.driver_info
-    driver = err.driver || info.driver
-    browser = err.browser || info.browser
+    %{browser: browser, driver: driver} = driver_info(err)
     "#{err.function} is not supported by driver #{driver} with browser #{browser}"
+  end
+
+  @doc "Raises an exception if the given parameters match the current driver"
+  defmacro raise_for(params) do
+    function = case __CALLER__.function do
+                 {func, arity} -> "#{func}/#{arity}"
+                 func          -> to_string(func)
+               end
+    quote bind_quoted: binding do
+      Hound.NotSupportedError.raise_for(params, function)
+    end
+  end
+
+  @doc "Same as raise_for/1 but accepts a function name to customize the error output"
+  def raise_for(params, function) when is_map(params) do
+    {:ok, info} = Hound.ConnectionServer.driver_info
+    if Map.take(info, Map.keys(params)) == params do
+      raise __MODULE__, function: function, browser: info.browser, driver: info.driver
+    end
+  end
+
+  defp driver_info(err) do
+    if err.browser && err.driver do
+      Map.take(err, [:browser, :driver])
+    else
+      {:ok, info} = Hound.ConnectionServer.driver_info
+      %{driver: err.driver || info.driver, browser: err.browser || info.browser}
+    end
   end
 end
