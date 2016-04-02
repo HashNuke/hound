@@ -16,8 +16,7 @@ defmodule Hound.Helpers.Screenshot do
       # Pass a full file path
       take_screenshot("/media/screenshots/test.png")
 
-      # Or you can also pass a path relative to the current directory.
-      take_screenshot("screenshot-test.png")
+      # Or you can also pass a path relative to the current directory. take_screenshot("screenshot-test.png")
   """
   @spec take_screenshot(String.t) :: String.t
   def take_screenshot(path \\ default_path) do
@@ -30,8 +29,7 @@ defmodule Hound.Helpers.Screenshot do
   end
 
   defp default_path do
-    {hour, minutes, seconds} = :erlang.time()
-    {year, month, day} = :erlang.date()
+    {{year, month, day}, {hour, minutes, seconds}} = :erlang.localtime()
     cwd = File.cwd!()
     "#{cwd}/screenshot-#{year}-#{month}-#{day}-#{hour}-#{minutes}-#{seconds}.png"
   end
