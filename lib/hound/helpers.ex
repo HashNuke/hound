@@ -21,11 +21,10 @@ defmodule Hound.Helpers do
   end
 
 
-  defmacro hound_session do
+  defmacro hound_session(opts \\ []) do
     quote do
       setup do
-        Hound.start_session
-        on_exit fn-> Hound.end_session end
+        Hound.start_session(unquote(opts))
 
         :ok
       end

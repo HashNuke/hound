@@ -18,27 +18,33 @@ defmodule Hound.Session do
 
 
   @doc "Creates a session associated with the current pid"
-  @spec create_session(String.t, map) :: {:ok, String.t}
-  def create_session(browser_name, additional_capabilities) do
-    base_capabilities = %{
-      javascriptEnabled: false,
-      version: "",
-      rotatable: false,
-      takesScreenshot: true,
-      cssSelectorsEnabled: true,
-      browserName: browser_name,
-      nativeEvents: false,
-      platform: "ANY"
-    }
-
+  @spec create_session(Hound.Browser.t, map | Keyword.t) :: {:ok, String.t}
+  def create_session(browser, opts) do
+    capabilities = make_capabilities(browser, opts)
     params = %{
-      desiredCapabilities: Map.merge(base_capabilities, additional_capabilities)
+      desiredCapabilities: capabilities
     }
 
     # No retries for this request
     make_req(:post, "session", params)
   end
 
+  @doc "Make capabilities for session"
+  @spec make_capabilities(Hound.Browser.t, map | Keyword.t) :: map
+  def make_capabilities(browser, opts \\ []) do
+    browser = opts[:browser] || browser
+    %{
+      javascriptEnabled: false,
+      version: "",
+      rotatable: false,
+      takesScreenshot: true,
+      cssSelectorsEnabled: true,
+      nativeEvents: false,
+      platform: "ANY"
+    }
+    |> Map.merge(Hound.Browser.make_capabilities(browser, opts))
+    |> Map.merge(opts[:driver] || %{})
+  end
 
   @doc "Get capabilities of a particular session"
   @spec session_info(String.t) :: map
@@ -59,5 +65,4 @@ defmodule Hound.Session do
   def set_timeout(session_id, operation, time) do
     make_req(:post, "session/#{session_id}/timeouts", %{type: operation, ms: time})
   end
-
 end

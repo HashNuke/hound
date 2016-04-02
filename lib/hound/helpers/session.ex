@@ -13,8 +13,8 @@ defmodule Hound.Helpers.Session do
 
   The name can be an atom or a string. The default session created is called `:default`.
   """
-  def change_session_to(session_name, additional_capabilities \\ %{}) do
-    Hound.SessionServer.change_current_session_for_pid(self, session_name, additional_capabilities)
+  def change_session_to(session_name, opts \\ []) do
+    Hound.SessionServer.change_current_session_for_pid(self, session_name, opts)
   end
 
 
@@ -74,9 +74,25 @@ defmodule Hound.Helpers.Session do
         end
 
       end
+
+  ## Options
+
+  The following options can be passed to `start_session`:
+
+    * `:browser` - The browser to be used (`"chrome"` | `"phantomjs"` | `"firefox"`)
+    * `:user_agent` - The user agent string that will be used for the requests.
+      The following atoms can also be passed
+        * `:firefox_desktop` (aliased to `:firefox`)
+        * `:chrome_desktop` (aliased to `:chrome`)
+        * `:phantomjs`
+        * `:chrome_android_sp` (aliased to `:android`)
+        * `:safari_iphone` (aliased to `:iphone`)
+    * `:metadata` - The metadata to be included in the requests.
+      See `Hound.Metadata` for more information
+    * `:driver` - The additional capabilities to be passed directly to the webdriver.
   """
-  def start_session(additional_capabilities \\ %{}) do
-    Hound.SessionServer.session_for_pid(self, additional_capabilities)
+  def start_session(opts \\ []) do
+    Hound.SessionServer.session_for_pid(self, opts)
   end
 
 
@@ -95,5 +111,4 @@ defmodule Hound.Helpers.Session do
     Hound.SessionServer.current_session_id(self) ||
       raise "could not find a session for process #{inspect self}"
   end
-
 end

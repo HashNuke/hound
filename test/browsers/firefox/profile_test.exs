@@ -1,7 +1,7 @@
-defmodule Firefox.ProfileTest do
+defmodule Hound.Browser.Firefox.ProfileTest do
   use ExUnit.Case
 
-  alias Hound.Firefox.Profile
+  alias Hound.Browser.Firefox.Profile
 
   test "new/1 returns a new Profile" do
     assert %Profile{} = Profile.new

@@ -51,3 +51,11 @@ defmodule Hound.NotSupportedError do
     end
   end
 end
+
+defmodule Hound.InvalidMetadataError do
+  defexception [:value]
+
+  def message(err) do
+    "could not parse metadata for value #{err.value}"
+  end
+end

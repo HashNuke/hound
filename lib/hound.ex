@@ -20,17 +20,14 @@ defmodule Hound do
   end
 
 
-  @doc "Alias of Hound.Helpers.Session.start_session"
-  defdelegate start_session,                               to: Hound.Helpers.Session
-  defdelegate start_session(additional_capabilities),      to: Hound.Helpers.Session
+  @doc "See `Hound.Helpers.Session.start_session/1`"
+  defdelegate start_session,            to: Hound.Helpers.Session
+  defdelegate start_session(opts),      to: Hound.Helpers.Session
 
-  @doc "Alias of Hound.Helpers.Session.end_session"
+  @doc "See `Hound.Helpers.Session.end_session/1`"
   defdelegate end_session,        to: Hound.Helpers.Session
-
-  @doc "Alias of Hound.Helpers.Session.end_session/1"
   defdelegate end_session(pid),   to: Hound.Helpers.Session
 
   @doc false
   defdelegate current_session_id, to: Hound.Helpers.Session
-
 end
