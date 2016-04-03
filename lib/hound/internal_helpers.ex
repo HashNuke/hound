@@ -1,6 +1,19 @@
 defmodule Hound.InternalHelpers do
   @moduledoc false
 
+  @unsupported_features [
+    phantomjs: [
+      "dialog_text",
+      "input_into_prompt",
+      "accept_dialog",
+      "dismiss_dialog",
+      "delete_cookies",
+      "focus_parent_frame"
+    ],
+    chrome_driver: [],
+    selenium: []
+  ]
+
 
   def selector_strategy(:class), do: "class name"
   def selector_strategy(:css),   do: "css selector"
@@ -68,26 +81,9 @@ defmodule Hound.InternalHelpers do
 
   def driver_supports?(feature) do
     {:ok, driver_info} = Hound.driver_info
-    unsupported_features = [
-      phantomjs: [
-        "dialog_text",
-        "input_into_prompt",
-        "accept_dialog",
-        "dismiss_dialog",
-        "delete_cookies",
-        "focus_parent_frame"
-      ]
-    ]
+    driver = String.to_atom(driver_info[:driver])
 
-    if driver_info[:driver] == "phantomjs" do
-      if Enum.member?(unsupported_features[:phantomjs], feature) do
-        false
-      else
-        true
-      end
-    else
-      true
-    end
+    not Enum.member?(@unsupported_features[driver], feature)
   end
 
 end
