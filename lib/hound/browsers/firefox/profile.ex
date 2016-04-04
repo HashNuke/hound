@@ -1,4 +1,6 @@
-defmodule Hound.Firefox.Profile do
+defmodule Hound.Browser.Firefox.Profile do
+  @moduledoc false
+
   @default_prefs %{
   }
 

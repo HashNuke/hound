@@ -9,9 +9,9 @@ defmodule Hound.SessionServer do
   end
 
 
-  def session_for_pid(pid, additional_capabilities) do
+  def session_for_pid(pid, opts) do
     current_session_id(pid) ||
-      change_current_session_for_pid(pid, :default, additional_capabilities)
+      change_current_session_for_pid(pid, :default, opts)
   end
 
 
@@ -23,8 +23,8 @@ defmodule Hound.SessionServer do
   end
 
 
-  def change_current_session_for_pid(pid, session_name, additional_capabilities) do
-    GenServer.call(@name, {:change_session, pid, session_name, additional_capabilities}, 60000)
+  def change_current_session_for_pid(pid, session_name, opts) do
+    GenServer.call(@name, {:change_session, pid, session_name, opts}, 60000)
   end
 
 
@@ -48,7 +48,7 @@ defmodule Hound.SessionServer do
   end
 
 
-  def handle_call({:change_session, pid, session_name, additional_capabilities}, _from, state) do
+  def handle_call({:change_session, pid, session_name, opts}, _from, state) do
     {:ok, driver_info} = Hound.driver_info
 
     {ref, sessions} =
@@ -64,7 +64,7 @@ defmodule Hound.SessionServer do
         {:ok, session_id} ->
           {session_id, sessions}
         :error ->
-          {:ok, session_id} = Hound.Session.create_session(driver_info[:browser], additional_capabilities)
+          {:ok, session_id} = Hound.Session.create_session(driver_info[:browser], opts)
           {session_id, Map.put(sessions, session_name, session_id)}
       end
 
