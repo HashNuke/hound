@@ -281,7 +281,7 @@ defmodule Hound.Helpers.Page do
   defp process_element_response({:error, :no_such_element}),
     do: nil
   defp process_element_response({:error, err}),
-    do: raise err
+    do: {:error, err}
   defp process_element_response(value),
     do: value
 end
