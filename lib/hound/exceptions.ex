@@ -1,3 +1,7 @@
+defmodule Hound.Error do
+  defexception [:message]
+end
+
 defmodule Hound.NoSuchElementError do
   defexception [:strategy, :selector, :parent]
 
