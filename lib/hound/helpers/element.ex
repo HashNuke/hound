@@ -304,7 +304,7 @@ defmodule Hound.Helpers.Element do
 
   @doc false
   defp get_element({strategy, selector}),
-    do: Hound.Helpers.Page.find_element!(strategy, selector)
+    do: Hound.Helpers.Page.find_element(strategy, selector)
   defp get_element(%Hound.Element{} = elem),
     do: elem
 end

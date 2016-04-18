@@ -36,15 +36,15 @@ defmodule PageTest do
   end
 
 
-  test "find_element/3 should return nil if element does not exist" do
+  test "search_element/3 should return {:error, :no_such_element} if element does not exist" do
     navigate_to("http://localhost:9090/page1.html")
-    refute find_element(:css, ".i-dont-exist")
+    assert search_element(:css, ".i-dont-exist") == {:error, :no_such_element}
   end
 
-  test "find_element!/3 should raise NoSuchElementError if element does not exist" do
+  test "find_element/3 should raise NoSuchElementError if element does not exist" do
     navigate_to("http://localhost:9090/page1.html")
     assert_raise Hound.NoSuchElementError, fn ->
-      find_element!(:css, ".i-dont-exist")
+      find_element(:css, ".i-dont-exist")
     end
   end
 
@@ -65,16 +65,16 @@ defmodule PageTest do
     assert Element.element?(element)
   end
 
-  test "find_within_element/4 should return nil if element is not found" do
+  test "search_within_element/4 should return {:error, :no_such_element} if element is not found" do
     navigate_to("http://localhost:9090/page1.html")
     container_id = find_element(:class, "container")
-    refute find_within_element(container_id, :class, "i-dont-exist")
+    assert search_within_element(container_id, :class, "i-dont-exist") == {:error, :no_such_element}
   end
 
-  test "find_within_element!/4 should raise NoSuchElementError if element is not found" do
+  test "find_within_element/4 should raise NoSuchElementError if element is not found" do
     navigate_to("http://localhost:9090/page1.html")
     container_id = find_element(:class, "container")
-    assert_raise Hound.NoSuchElementError, fn -> find_within_element!(container_id, :class, "i-dont-exist") end
+    assert_raise Hound.NoSuchElementError, fn -> find_within_element(container_id, :class, "i-dont-exist") end
   end
 
   test "should find all elements within another element" do

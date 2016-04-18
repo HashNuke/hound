@@ -13,7 +13,7 @@ defmodule Hound.Helpers.Page do
   @doc "Gets the visible text of current page."
   @spec visible_page_text() :: String.t
   def visible_page_text do
-    element = find_element!(:css, "body")
+    element = find_element(:css, "body")
     session_id = Hound.current_session_id
     make_req(:get, "session/#{session_id}/element/#{element}/text")
   end
@@ -33,7 +33,7 @@ defmodule Hound.Helpers.Page do
   * The second argument is the selector.
 
   Valid selector strategies are `:css`, `:class`, `:id`, `:name`, `:tag`, `:xpath`, `:link_text` and `:partial_link_text`
-  `nil` will be returned if the element is not found.
+  `raises` if the element is not found or an error happens.
 
 
       find_element(:name, "username")
@@ -43,24 +43,27 @@ defmodule Hound.Helpers.Page do
       find_element(:tag, "footer")
       find_element(:link_text, "Home")
   """
-  @spec find_element(Hound.Element.strategy, String.t, non_neg_integer) :: Hound.Element.t | nil
+  @spec find_element(Hound.Element.strategy, String.t, non_neg_integer) :: Hound.Element.t
   def find_element(strategy, selector, retries \\ 5) do
+    case search_element(strategy, selector, retries) do
+      {:ok, element} -> element
+      {:error, :no_such_element} ->
+        raise Hound.NoSuchElementError, strategy: strategy, selector: selector
+      {:error, err} ->
+        raise Hound.Error, "could not get element {#{inspect(strategy)}, #{inspect(selector)}}: #{inspect(err)}"
+    end
+  end
+
+  @doc """
+  Same as `find_element/3`, but returns the a tuple with `{:error, error}` instead of raising
+  """
+  @spec search_element(Hound.Element.strategy, String.t, non_neg_integer) :: {:ok, Hound.Element.t} | {:error, any}
+  def search_element(strategy, selector, retries \\ 5) do
     session_id = Hound.current_session_id
     params = %{using: Hound.InternalHelpers.selector_strategy(strategy), value: selector}
 
     make_req(:post, "session/#{session_id}/element", params, %{safe: true}, retries*2)
     |> process_element_response
-  end
-
-  @doc """
-  Same as `find_element/3`, but raises an exception if the element is not found.
-  """
-  @spec find_element!(Hound.Element.strategy, String.t, non_neg_integer) :: Hound.Element.t
-  def find_element!(strategy, selector, retries \\ 5) do
-    case find_element(strategy, selector, retries) do
-      nil -> raise Hound.NoSuchElementError, strategy: strategy, selector: selector
-      element -> element
-    end
   end
 
 
@@ -112,27 +115,28 @@ defmodule Hound.Helpers.Page do
       find_within_element(parent_element, :tag, "footer")
       find_within_element(parent_element, :link_text, "Home")
   """
-  @spec find_within_element(Hound.Element.t, Hound.Element.strategy, String.t, non_neg_integer) :: Hound.Element.t | nil
+  @spec find_within_element(Hound.Element.t, Hound.Element.strategy, String.t, non_neg_integer) :: Hound.Element.t
   def find_within_element(element, strategy, selector, retries \\ 5) do
+    case search_within_element(element, strategy, selector, retries) do
+      {:error, :no_such_element} ->
+        raise Hound.NoSuchElementError, strategy: strategy, selector: selector, parent: element
+      {:error, err} ->
+        raise Hound.Error, "could not get element {#{inspect(strategy)}, #{inspect(selector)}} in #{element}: #{inspect(err)}"
+      {:ok, element} -> element
+    end
+  end
+
+  @doc """
+  Same as `find_within_element/4`, but returns a `{:error, err}` tuple instead of raising
+  """
+  @spec search_within_element(Hound.Element.t, Hound.Element.strategy, String.t, non_neg_integer) :: {:ok, Hound.Element.t} | {:error, any}
+  def search_within_element(element, strategy, selector, retries \\ 5) do
     session_id = Hound.current_session_id
     params = %{using: Hound.InternalHelpers.selector_strategy(strategy), value: selector}
 
     make_req(:post, "session/#{session_id}/element/#{element}/element", params, %{safe: true}, retries*2)
     |> process_element_response
   end
-
-  @doc """
-  Same as `find_within_element/4`, but raises an exception if the element is not found.
-  """
-  @spec find_within_element!(Hound.Element.t, Hound.Element.strategy, String.t, non_neg_integer) :: Hound.Element.t
-  def find_within_element!(element, strategy, selector, retries \\ 5) do
-    case find_within_element(element, strategy, selector, retries) do
-      nil ->
-        raise Hound.NoSuchElementError, strategy: strategy, selector: selector, parent: element
-      element -> element
-    end
-  end
-
 
 
   @doc """
@@ -277,11 +281,9 @@ defmodule Hound.Helpers.Page do
   end
 
   defp process_element_response(%{"ELEMENT" => element_id}),
-    do: %Hound.Element{uuid: element_id}
-  defp process_element_response({:error, :no_such_element}),
-    do: nil
-  defp process_element_response({:error, err}),
-    do: raise err
-  defp process_element_response(value),
-    do: value
+    do: {:ok, %Hound.Element{uuid: element_id}}
+  defp process_element_response({:error, _err} = error),
+    do: error
+  defp process_element_response(unknown_error),
+    do: {:error, unknown_error}
 end
