@@ -52,7 +52,7 @@ Hound requires Elixir 1.0.4 or higher.
 
 ```elixir
 
-{:hound, "~> 0.8"}
+{:hound, "~> 1.0"}
 ```
 
 * Start Hound in your `test/test_helper.exs` file **before** the `ExUnit.start()` line:
