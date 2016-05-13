@@ -201,6 +201,9 @@ defmodule Hound.Helpers.Element do
   You can also pass the selector as a tuple.
 
       element_displayed?({:name, "example"})
+      
+  Note: If you'd like to check presence of elements in the DOM use `element?/2`, 
+  `element_displayed?/1` will only consider elements that are always present in the DOM, either in visible or hidden state.
   """
   @spec element_displayed?(Hound.Element.selector) :: :true | :false
   def element_displayed?(element) do
