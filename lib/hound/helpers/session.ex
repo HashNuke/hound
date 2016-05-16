@@ -40,9 +40,10 @@ defmodule Hound.Helpers.Session do
       end
   """
   def in_browser_session(session_name, func) do
+    previous_session_name = current_session_name
     change_session_to(session_name)
     apply(func, [])
-    change_to_default_session()
+    change_session_to(previous_session_name)
   end
 
 
@@ -110,5 +111,14 @@ defmodule Hound.Helpers.Session do
   def current_session_id do
     Hound.SessionServer.current_session_id(self) ||
       raise "could not find a session for process #{inspect self}"
+  end
+
+
+  @doc false
+  def current_session_name do
+      Hound.SessionServer.current_session_name(self) ||
+        raise "could not find a session for process #{inspect self}"
+
+
   end
 end
