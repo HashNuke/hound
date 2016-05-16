@@ -34,7 +34,7 @@ defmodule Hound.Helpers.Session do
   @doc """
   Execute commands in a seperate browser session.
 
-      in_browser_session "another_user" do
+      in_browser_session "another_user", fn ->
         navigate_to "http://example.com"
         click({:id, "announcement"})
       end
