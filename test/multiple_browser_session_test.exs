@@ -69,4 +69,17 @@ defmodule MultipleBrowserSessionTest do
     # Assert the current url is the one we visited in the default session
     assert url1 == current_url
   end
+
+  test "in_browser_session should return the result of the given function" do
+    url1 = "http://localhost:9090/page1.html"
+
+    # In another session, navigate to url1 and return the current url
+    result =
+      in_browser_session :another_session, fn ->
+        navigate_to(url1)
+        current_url
+      end
+
+    assert result == url1
+  end
 end
