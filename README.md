@@ -5,6 +5,7 @@ For browser automation and writing integration tests in Elixir.
 <a href="http://github.com/HashNuke/Hound" target="_parent">Source</a> | <a href="http://hexdocs.pm/hound" target="_parent">Documentation</a>
 
 [![Build Status](https://travis-ci.org/HashNuke/hound.png?branch=master)](https://travis-ci.org/HashNuke/hound)
+[![Deps Status](https://beta.hexfaktor.org/badge/all/github/HashNuke/hound.svg)](https://beta.hexfaktor.org/github/HashNuke/hound)
 
 ## Features
 
