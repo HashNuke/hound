@@ -26,8 +26,8 @@ defmodule Hound.SessionServer do
     case :ets.lookup(@name, pid) do
       [{^pid, _ref, session_id, all_sessions}] ->
         Enum.find_value all_sessions, fn
-          {name, id} when id == session_id -> name
-          _ -> nil 
+          {name, ^session_id} -> name
+          _ -> nil
         end
       [] -> nil
     end
