@@ -291,11 +291,11 @@ defmodule Hound.Helpers.Element do
   Sends a submit event to any field or form element.
 
       element = find_element(:name, "username")
-      submit(element)
+      submit_element(element)
 
   You can also directly pass the selector as a tuple.
 
-      submit({:name, "username"})
+      submit_element({:name, "username"})
   """
   @spec submit_element(Hound.Element.selector) :: :ok
   def submit_element(element) do
