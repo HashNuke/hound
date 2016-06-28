@@ -16,7 +16,7 @@ defmodule Hound.Metadata do
   `Hound.Metadata.extract/1` on the user agent string, so supposing you are using plug,
 
 
-      user_agent =  conn |> get_resp_header("user-agent") |> List.first
+      user_agent =  conn |> get_req_header("user-agent") |> List.first
       metadata   = Hound.Metadata.extract(user_agent)
       assert %{pid: pid} = metadata
       # you can use your pid here
