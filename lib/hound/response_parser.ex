@@ -63,13 +63,15 @@ defmodule Hound.ResponseParser do
   def decode_content(content), do: Poison.decode!(content)
 
   defmacro __before_compile__(_env) do
-    # We want this to be a fallback
     quote do
       @doc """
       Fallback case if we did not match the message in the using module
       """
-      def handle_error(%{"message" => message}) do
-        {:error, message}
+      def handle_error(response) do
+        case response do
+          %{"message" => message} -> {:error, message}
+          _                       -> {:error, response}
+        end
       end
     end
   end
