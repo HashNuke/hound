@@ -64,7 +64,7 @@ defmodule Hound.ResponseParser do
 
   defmacro __before_compile__(_env) do
     # We want this to be a fallback
-    quote line: -1 do
+    quote line: 0 do
       @doc """
       Fallback case if we did not match the message in the using module
       """

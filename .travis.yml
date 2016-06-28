@@ -1,6 +1,9 @@
 language: elixir
 elixir: 1.0.4
-otp_release: 17.4
+otp_release:
+  - 17.4
+  - 18.3
+  - 19.0
 
 env:
   - WEBDRIVER=selenium

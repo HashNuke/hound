@@ -1,9 +1,9 @@
-%{"certifi": {:hex, :certifi, "0.3.0"},
-  "earmark": {:hex, :earmark, "0.2.1"},
-  "ex_doc": {:hex, :ex_doc, "0.11.3"},
-  "hackney": {:hex, :hackney, "1.4.6"},
-  "httpoison": {:hex, :httpoison, "0.8.0"},
-  "idna": {:hex, :idna, "1.0.2"},
-  "mimerl": {:hex, :mimerl, "1.0.0"},
-  "poison": {:hex, :poison, "1.5.2"},
-  "ssl_verify_hostname": {:hex, :ssl_verify_hostname, "1.0.5"}}
+%{"certifi": {:hex, :certifi, "0.3.0", "389d4b126a47895fe96d65fcf8681f4d09eca1153dc2243ed6babad0aac1e763", [:rebar3], []},
+  "earmark": {:hex, :earmark, "0.2.1", "ba6d26ceb16106d069b289df66751734802777a3cbb6787026dd800ffeb850f3", [:mix], []},
+  "ex_doc": {:hex, :ex_doc, "0.11.3", "bb16cb3f4135d880ce25279dc19a9d70802bc4f4942f0c3de9e4862517ae3ace", [:mix], [{:earmark, "~> 0.1.17 or ~> 0.2", [hex: :earmark, optional: true]}]},
+  "hackney": {:hex, :hackney, "1.4.6", "dcef5aa50e01d41379b410f02b51c1b2a9072b1cf24b85774bb2bc721455964f", [:rebar3], [{:ssl_verify_hostname, "1.0.5", [hex: :ssl_verify_hostname, optional: false]}, {:mimerl, "1.0.0", [hex: :mimerl, optional: false]}, {:idna, "1.0.2", [hex: :idna, optional: false]}, {:certifi, "0.3.0", [hex: :certifi, optional: false]}]},
+  "httpoison": {:hex, :httpoison, "0.8.0", "52a958d40b2aa46da418cdf6d8dfd82ba83e94d5e60920dfa5f40c05b34fe073", [:mix], [{:hackney, "~> 1.4.4", [hex: :hackney, optional: false]}]},
+  "idna": {:hex, :idna, "1.0.2", "397e3d001c002319da75759b0a81156bf11849c71d565162436d50020cb7265e", [:make], []},
+  "mimerl": {:hex, :mimerl, "1.0.0", "b9813e0fa1019420da8c8001748d7c34791fd49464cb28762bc22638b1ff6198", [:rebar3], []},
+  "poison": {:hex, :poison, "1.5.2", "560bdfb7449e3ddd23a096929fb9fc2122f709bcc758b2d5d5a5c7d0ea848910", [:mix], []},
+  "ssl_verify_hostname": {:hex, :ssl_verify_hostname, "1.0.5", "2e73e068cd6393526f9fa6d399353d7c9477d6886ba005f323b592d389fb47be", [:make], []}}
