@@ -45,6 +45,9 @@ defmodule Hound.Browser do
   def user_agent(:safari_iphone) do
     "Mozilla/5.0 (iPhone; CPU iPhone OS 6_0 like Mac OS X) AppleWebKit/536.26 (KHTML, like Gecko) Version/6.0 Mobile/10A5376e Safari/8536.25"
   end
+  def user_agent(:default) do
+    ""
+  end
 
   # add some simpler aliases
   def user_agent(:chrome),  do: user_agent(:chrome_desktop)
@@ -58,4 +61,5 @@ defmodule Hound.Browser do
   defp browser("firefox"),   do: Hound.Browser.Firefox
   defp browser("chrome"),    do: Hound.Browser.Chrome
   defp browser("phantomjs"), do: Hound.Browser.PhantomJS
+  defp browser(_),           do: Hound.Browser.Default
 end
