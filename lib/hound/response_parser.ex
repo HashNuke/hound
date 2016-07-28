@@ -15,11 +15,6 @@ defmodule Hound.ResponseParser do
 
       @before_compile unquote(__MODULE__)
 
-      def parse(path, %HTTPoison.Response{body: raw_content, status_code: code}) do
-        body = Hound.ResponseParser.decode_content(raw_content)
-        handle_response(path, code, body)
-      end
-
       def handle_response(path, code, body) do
         Hound.ResponseParser.handle_response(__MODULE__, path, code, body)
       end
@@ -28,6 +23,11 @@ defmodule Hound.ResponseParser do
 
       defoverridable [handle_response: 3, warning?: 1]
     end
+  end
+
+  def parse(parser, path, code, _headers, raw_content) do
+    body = Hound.ResponseParser.decode_content(raw_content)
+    parser.handle_response(path, code, body)
   end
 
   @doc """

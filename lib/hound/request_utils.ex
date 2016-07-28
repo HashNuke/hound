@@ -40,21 +40,15 @@ defmodule Hound.RequestUtils do
         {[], ""}
     end
 
-    case type do
-      :get ->
-        HTTPoison.get(url, headers, @http_options)
-      :post ->
-        HTTPoison.post(url, body, headers, @http_options)
-      :delete ->
-        HTTPoison.delete(url, headers, @http_options)
-    end |> handle_response({url, path, type}, options)
+    :hackney.request(type, url, headers, body, [:with_body | @http_options])
+    |> handle_response({url, path, type}, options)
   end
 
-  defp handle_response({:ok, resp}, {url, path, type}, options) do
-    case response_parser.parse(path, resp) do
+  defp handle_response({:ok, code, headers, body}, {url, path, type}, options) do
+    case Hound.ResponseParser.parse(response_parser(), path, code, headers, body) do
       :error ->
         raise """
-        Webdriver call status code #{resp.status_code} for #{type} request #{url}.
+        Webdriver call status code #{code} for #{type} request #{url}.
         Check if webdriver server is running. Make sure it supports the feature being requested.
         """
       {:error, err} = value ->
@@ -65,7 +59,7 @@ defmodule Hound.RequestUtils do
     end
   end
 
-  defp handle_response({:error, %HTTPoison.Error{reason: reason}}, _, _) do
+  defp handle_response({:error, reason}, _, _) do
     {:error, reason}
   end
 

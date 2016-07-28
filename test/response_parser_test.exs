@@ -1,6 +1,8 @@
 defmodule ResponseParserTest do
   use ExUnit.Case
 
+  alias Hound.ResponseParser
+
   defmodule DummyParser do
     use Hound.ResponseParser
   end
@@ -14,8 +16,8 @@ defmodule ResponseParserTest do
   end
 
   test "parse/2" do
-    response = %HTTPoison.Response{status_code: 200, body: ~s({"sessionId": 1})}
-    assert DummyParser.parse("session", response) == {:ok, 1}
+    body = ~s({"sessionId": 1})
+    assert ResponseParser.parse(DummyParser, "session", 200, [], body) == {:ok, 1}
   end
 
   test "handle_response/3 session" do
