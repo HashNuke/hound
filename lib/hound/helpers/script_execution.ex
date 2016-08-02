@@ -4,7 +4,7 @@ defmodule Hound.Helpers.ScriptExecution do
   import Hound.RequestUtils
 
   @doc """
-  Execute javascript synchoronously.
+  Execute javascript synchronously.
 
   * The first argument is the script to execute.
   * The second argument is a list of arguments that is passed.
@@ -25,7 +25,7 @@ defmodule Hound.Helpers.ScriptExecution do
 
 
   @doc """
-  Execute javascript asynchoronously.
+  Execute javascript asynchronously.
 
   * The first argument is the script to execute.
   * The second argument is a list of arguments that is passed.
