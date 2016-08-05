@@ -89,7 +89,7 @@ defmodule Hound.Helpers.Session do
   Ends the current session for the process
   """
   def end_session() do
-    Hound.SessionServer.destroy_session(self)
+    Hound.SessionServer.destroy_session_for_pid(self)
   end
 
   @doc false
@@ -98,5 +98,11 @@ defmodule Hound.Helpers.Session do
       raise "could not find a session for process #{inspect self}"
   end
 
+  @doc """
+  Get list of active sessions
+  """
+  def active_sessions() do
+    Hound.Session.active_sessions()
+  end
 
 end

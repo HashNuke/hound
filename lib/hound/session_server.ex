@@ -21,8 +21,9 @@ defmodule Hound.SessionServer do
   end
 
   def destroy_session_for_pid(pid) do
-    GenServer.cast(@name, {:destroy_session, pid}, 60000)
+    GenServer.call(@name, {:destroy_session, pid}, 60000)
   end
+
 
   ## Callbacks
 
@@ -38,21 +39,21 @@ defmodule Hound.SessionServer do
   end
 
   def handle_call({:current_session, pid}, _from, state) do
-    state[pid]
+    {:reply, state[pid], state}
   end
 
   def handle_call({:change_session, pid, session_id}, _from, state) do
-    if (!Enum.member?(Hound.Session.active_sessions(), session_id)) do
+    if (!Enum.any?(Hound.Session.active_sessions(), fn(session) -> session["id"] == session_id end)) do
       raise "Error: Session id does not exist"
     end
     state = Map.put(state, pid, session_id)
     {:reply, session_id, state}
   end
 
-  def handle_cast({:destroy_session, pid}, _from, state) do
+  def handle_call({:destroy_session, pid}, _from, state) do
     Hound.Session.destroy_session(state[pid])
     state = Map.put(state, pid, [])
-    {:noreply, state}
+    {:reply, :ok, state}
   end
 
 end
