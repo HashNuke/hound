@@ -124,7 +124,7 @@ Yes. A separate session is started for each test process.
 
 PhantomJs is extremely fast, but there are certain caveats. It uses Ghostdriver for its webdriver server, which currently has unimplemented features or open issues.
 
-* Cookie jar isn't seperate for sessions - <https://github.com/ariya/phantomjs/issues/11417>
+* Cookie jar isn't separate for sessions - <https://github.com/ariya/phantomjs/issues/11417>
   Which means all sessions share the same cookies. Make sure you run `delete_cookies()` at the end of each test.
 * Isolated sessions were added to GhostDriver recently and are yet to land in a PhantomJs release.
 * Javascript alerts aren't yet supported - <https://github.com/detro/ghostdriver/issues/20>.
