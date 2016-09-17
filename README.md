@@ -67,7 +67,13 @@ When you run `mix test`, Hound is automatically started. __You'll need a webdriv
 
 ## Configure
 
-To configure Hound, use your `config/config.exs` file or equivalent. [Examples are here](https://github.com/HashNuke/hound/blob/master/notes/configuring-hound.md).
+To configure Hound, use your `config/config.exs` file or equivalent. 
+
+Example:
+
+```config :hound, driver: "phantomjs"```
+
+[More examples here](https://github.com/HashNuke/hound/blob/master/notes/configuring-hound.md).
 
 ## Usage
 
