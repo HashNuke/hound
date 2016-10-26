@@ -11,8 +11,7 @@ defmodule Hound.Helpers.Log do
     fail_if_webdriver_selenium("fetch_log()")
     
     get_browser_log()
-    |> Enum.map(&(Map.get(&1, "message")))
-    |> Enum.join("\n")
+    |> Enum.map_join("\n", &(Map.get(&1, "message")))
   end
 
   @doc """
@@ -23,8 +22,7 @@ defmodule Hound.Helpers.Log do
     
     get_browser_log()
     |> Enum.filter(&(is_error(&1)))
-    |> Enum.map(&(Map.get(&1, "message")))
-    |> Enum.join("\n")
+    |> Enum.map_join("\n", &(Map.get(&1, "message")))
   end
 
   defp fail_if_webdriver_selenium(function) do

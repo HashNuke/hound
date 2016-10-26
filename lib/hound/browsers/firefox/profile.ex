@@ -24,10 +24,9 @@ defmodule Hound.Browser.Firefox.Profile do
 
   def serialize_preferences(profile) do
     profile.prefs
-    |> Enum.map(fn {key, value} ->
+    |> Enum.map_join("\n", fn {key, value} ->
       ~s[user_pref("#{key}", #{Poison.encode!(value)});]
     end)
-    |> Enum.join("\n")
   end
 
   def dump(profile) do
