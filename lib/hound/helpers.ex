@@ -11,6 +11,7 @@ defmodule Hound.Helpers do
       import Hound.Helpers.Orientation
       import Hound.Helpers.Page
       import Hound.Helpers.Screenshot
+      import Hound.Helpers.SavePage
       import Hound.Helpers.ScriptExecution
       import Hound.Helpers.Session
       import Hound.Helpers.Window
