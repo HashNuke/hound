@@ -272,7 +272,7 @@ defmodule Hound.Helpers.Element do
   @doc """
   Click on an element. You can also use this to click on checkboxes and radio buttons.
 
-      element = find_element(:id, ".example")
+      element = find_element(:id, "example")
       click(element)
 
   You can also directly pass the selector as a tuple.
