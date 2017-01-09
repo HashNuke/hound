@@ -65,4 +65,18 @@ defmodule Hound.Session do
   def set_timeout(session_id, operation, time) do
     make_req(:post, "session/#{session_id}/timeouts", %{type: operation, ms: time})
   end
+
+
+  @doc "Get the session log for a particular log type"
+  @spec fetch_log(String.t, String.t) :: :ok
+  def fetch_log(session_id, logtype) do
+    make_req(:post, "session/#{session_id}/log", %{type: logtype})
+  end
+
+
+  @doc "Get a list of all supported log types"
+  @spec fetch_log_types(String.t) :: :ok
+  def fetch_log_types(session_id) do
+    make_req(:get, "session/#{session_id}/log/types")
+  end
 end
