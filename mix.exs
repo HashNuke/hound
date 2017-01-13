@@ -9,8 +9,8 @@ defmodule Hound.Mixfile do
       elixir: ">= 1.0.4",
       description: "Webdriver library for integration testing and browser automation",
       source_url: "https://github.com/HashNuke/hound",
-      deps: deps,
-      package: package,
+      deps: deps(),
+      package: package(),
       docs: [source_ref: "#{@version}", extras: ["README.md"], main: "readme"]
     ]
   end
