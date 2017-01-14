@@ -14,7 +14,7 @@ defmodule Hound.Helpers.Session do
   The name can be an atom or a string. The default session created is called `:default`.
   """
   def change_session_to(session_name, opts \\ []) do
-    Hound.SessionServer.change_current_session_for_pid(self, session_name, opts)
+    Hound.SessionServer.change_current_session_for_pid(self(), session_name, opts)
   end
 
 
@@ -40,7 +40,7 @@ defmodule Hound.Helpers.Session do
       end
   """
   def in_browser_session(session_name, func) do
-    previous_session_name = current_session_name
+    previous_session_name = current_session_name()
     change_session_to(session_name)
     result = apply(func, [])
     change_session_to(previous_session_name)
@@ -94,7 +94,7 @@ defmodule Hound.Helpers.Session do
     * `:driver` - The additional capabilities to be passed directly to the webdriver.
   """
   def start_session(opts \\ []) do
-    Hound.SessionServer.session_for_pid(self, opts)
+    Hound.SessionServer.session_for_pid(self(), opts)
   end
 
 
@@ -110,15 +110,15 @@ defmodule Hound.Helpers.Session do
 
   @doc false
   def current_session_id do
-    Hound.SessionServer.current_session_id(self) ||
-      raise "could not find a session for process #{inspect self}"
+    Hound.SessionServer.current_session_id(self()) ||
+      raise "could not find a session for process #{inspect self()}"
   end
 
 
   @doc false
   def current_session_name do
-      Hound.SessionServer.current_session_name(self) ||
-        raise "could not find a session for process #{inspect self}"
+      Hound.SessionServer.current_session_name(self()) ||
+        raise "could not find a session for process #{inspect self()}"
 
 
   end

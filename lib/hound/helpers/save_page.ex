@@ -19,7 +19,7 @@ defmodule Hound.Helpers.SavePage do
       # Or you can also pass a path relative to the current directory. save_page("page.html")
   """
   @spec save_page(String.t) :: String.t
-  def save_page(path \\ default_path) do
+  def save_page(path \\ default_path()) do
     session_id = Hound.current_session_id
     page_data = make_req(:get, "session/#{session_id}/source")
 

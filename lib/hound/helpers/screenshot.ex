@@ -19,7 +19,7 @@ defmodule Hound.Helpers.Screenshot do
       # Or you can also pass a path relative to the current directory. take_screenshot("screenshot-test.png")
   """
   @spec take_screenshot(String.t) :: String.t
-  def take_screenshot(path \\ default_path) do
+  def take_screenshot(path \\ default_path()) do
     session_id = Hound.current_session_id
     base64_png_data = make_req(:get, "session/#{session_id}/screenshot")
     binary_image_data = :base64.decode(base64_png_data)
