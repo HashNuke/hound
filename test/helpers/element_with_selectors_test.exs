@@ -2,7 +2,7 @@ defmodule ElementWithSelectorsTest do
   use ExUnit.Case
   use Hound.Helpers
 
-  hound_session
+  hound_session()
 
   test "should get visible text of an element, when selector is passed" do
     navigate_to "http://localhost:9090/page1.html"
@@ -142,13 +142,13 @@ defmodule ElementWithSelectorsTest do
   test "should click on an element, when selector is passed" do
     navigate_to "http://localhost:9090/page1.html"
     click({:class, "submit-form"})
-    assert current_url == "http://localhost:9090/page2.html"
+    assert current_url() == "http://localhost:9090/page2.html"
   end
 
 
   test "should submit a form element, when selector is passed" do
     navigate_to "http://localhost:9090/page1.html"
     submit_element({:name, "username"})
-    assert current_url == "http://localhost:9090/page2.html"
+    assert current_url() == "http://localhost:9090/page2.html"
   end
 end

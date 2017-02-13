@@ -2,7 +2,7 @@ defmodule ScriptExecutionTest do
   use ExUnit.Case
   use Hound.Helpers
 
-  hound_session
+  hound_session()
 
   test "Execute javascript synchronously" do
     navigate_to "http://localhost:9090/page1.html"

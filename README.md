@@ -28,7 +28,7 @@ defmodule HoundTest do
   use ExUnit.Case
   use Hound.Helpers
 
-  hound_session
+  hound_session()
 
   test "the truth", meta do
     navigate_to("http://example.com/guestbook.html")
@@ -67,7 +67,7 @@ When you run `mix test`, Hound is automatically started. __You'll need a webdriv
 
 ## Configure
 
-To configure Hound, use your `config/config.exs` file or equivalent. 
+To configure Hound, use your `config/config.exs` file or equivalent.
 
 Example:
 
@@ -84,7 +84,7 @@ Add the following lines to your ExUnit test files.
 use Hound.Helpers
 
 # Start hound session and destroy when tests are run
-hound_session
+hound_session()
 ```
 
 If you prefer to manually start and end sessions, use `Hound.start_session` and `Hound.end_session` in the setup and teardown blocks of your tests.

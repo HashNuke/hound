@@ -2,7 +2,7 @@ defmodule MultipleBrowserSessionTest do
   use ExUnit.Case
   use Hound.Helpers
 
-  hound_session
+  hound_session()
 
   test "should be able to run multiple sessions" do
     url1 = "http://localhost:9090/page1.html"
@@ -16,12 +16,12 @@ defmodule MultipleBrowserSessionTest do
     # Navigate to a url in the second session
     navigate_to(url2)
     # Then assert url
-    assert url2 == current_url
+    assert url2 == current_url()
 
     # Now go back to the default session
-    change_to_default_session
+    change_to_default_session()
     # Assert if the url is the one we visited
-    assert url1 == current_url
+    assert url1 == current_url()
   end
 
 
@@ -35,11 +35,11 @@ defmodule MultipleBrowserSessionTest do
     # In another session...
     in_browser_session :another_session, fn->
       navigate_to(url2)
-      assert url2 == current_url
+      assert url2 == current_url()
     end
 
     # Assert if the url is the one we visited
-    assert url1 == current_url
+    assert url1 == current_url()
   end
 
   test "should preserve session after using in_browser_session" do
@@ -57,17 +57,17 @@ defmodule MultipleBrowserSessionTest do
     # In a third session...
     in_browser_session :session_b, fn ->
       navigate_to(url3)
-      assert url3 == current_url
+      assert url3 == current_url()
     end
 
     # Assert the current url is the url we visited in :session_a
-    assert url2 == current_url
+    assert url2 == current_url()
 
     # Switch back to the default session
     change_session_to :default
 
     # Assert the current url is the one we visited in the default session
-    assert url1 == current_url
+    assert url1 == current_url()
   end
 
   test "in_browser_session should return the result of the given function" do
@@ -77,7 +77,7 @@ defmodule MultipleBrowserSessionTest do
     result =
       in_browser_session :another_session, fn ->
         navigate_to(url1)
-        current_url
+        current_url()
       end
 
     assert result == url1

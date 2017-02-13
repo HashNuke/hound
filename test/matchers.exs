@@ -2,7 +2,7 @@ defmodule MatcherTests do
   use ExUnit.Case
   use Hound.Helpers
 
-  hound_session
+  hound_session()
 
   #visible_text_in_page?
   test "should return true when text is visible" do

@@ -2,7 +2,7 @@ defmodule ElementTestWithIds do
   use ExUnit.Case
   use Hound.Helpers
 
-  hound_session
+  hound_session()
 
   test "should get visible text of an element" do
     navigate_to "http://localhost:9090/page1.html"
@@ -131,7 +131,7 @@ defmodule ElementTestWithIds do
     navigate_to "http://localhost:9090/page1.html"
     element = find_element(:class, "submit-form")
     click element
-    assert current_url == "http://localhost:9090/page2.html"
+    assert current_url() == "http://localhost:9090/page2.html"
   end
 
 
@@ -139,6 +139,6 @@ defmodule ElementTestWithIds do
     navigate_to "http://localhost:9090/page1.html"
     element = find_element(:name, "username")
     submit_element(element)
-    assert current_url == "http://localhost:9090/page2.html"
+    assert current_url() == "http://localhost:9090/page2.html"
   end
 end

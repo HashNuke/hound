@@ -8,7 +8,7 @@ defmodule CookieTest do
       delete_cookies()
     end
 
-    parent = self
+    parent = self()
     on_exit fn->
       # NOTE PhantomJs uses the same cookie jar for all sessions.
       # We'll delete cookies after each session, because we only want to test our APIs

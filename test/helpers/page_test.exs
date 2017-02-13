@@ -4,29 +4,29 @@ defmodule PageTest do
 
   alias Hound.Element
 
-  hound_session
+  hound_session()
 
   test "should get page source" do
     navigate_to("http://localhost:9090/page1.html")
-    assert(Regex.match?(~r/DOCTYPE/, page_source))
+    assert(Regex.match?(~r/DOCTYPE/, page_source()))
   end
 
   test "should get visible page text" do
     navigate_to("http://localhost:9090/page1.html")
-    assert(String.contains? visible_page_text, "Flying")
-    assert(not String.contains? visible_page_text, "This is hidden")
+    assert(String.contains? visible_page_text(), "Flying")
+    assert(not String.contains? visible_page_text(), "This is hidden")
   end
 
 
   test "should get page title" do
     navigate_to("http://localhost:9090/page1.html")
-    assert("Hound Test Page" == page_title)
+    assert("Hound Test Page" == page_title())
   end
 
 
   test "should get page title encoded with utf8" do
     navigate_to("http://localhost:9090/page_utf.html")
-    assert("This is UTF: zażółć gęślą jaźń" == page_title)
+    assert("This is UTF: zażółć gęślą jaźń" == page_title())
   end
 
 
