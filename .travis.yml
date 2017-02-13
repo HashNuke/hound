@@ -1,5 +1,8 @@
 language: elixir
-elixir: 1.0.4
+
+elixir:
+  - 1.0.4
+  - 1.4
 otp_release:
   - 17.4
   - 18.3
@@ -8,6 +11,13 @@ otp_release:
 env:
   - WEBDRIVER=selenium
   - WEBDRIVER=phantomjs
+
+matrix:
+  exclude:
+    - elixir: 1.4
+      otp_release: 17.4
+    - elixir: 1.4
+      otp_release: 18.3
 
 before_script:
   - "export DISPLAY=:99.0"
