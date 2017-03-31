@@ -20,6 +20,10 @@ defmodule ResponseParserTest do
     assert ResponseParser.parse(DummyParser, "session", 200, [], body) == {:ok, 1}
   end
 
+  test "parse/2 with 204 no-content response" do
+    assert ResponseParser.parse(DummyParser, "session", 204, [], "") == :ok
+  end
+
   test "handle_response/3 session" do
     assert DummyParser.handle_response("session", 200, %{"sessionId" => 1}) == {:ok, 1}
     assert DummyParser.handle_response("session", 400, %{"sessionId" => 1}) == :error

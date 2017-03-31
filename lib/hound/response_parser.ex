@@ -25,6 +25,10 @@ defmodule Hound.ResponseParser do
     end
   end
 
+  def parse(parser, path, code = 204, _headers, raw_content = "") do
+    # Don't try to parse the json because there is none.
+    parser.handle_response(path, code, raw_content)
+  end
   def parse(parser, path, code, _headers, raw_content) do
     body = Hound.ResponseParser.decode_content(raw_content)
     parser.handle_response(path, code, body)
