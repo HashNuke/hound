@@ -62,9 +62,9 @@ defmodule Hound.Helpers.ScriptExecution do
   * The second argument is a list of arguments that is passed.
     These arguments are accessible in the script via `arguments`.
 
-          execute_script("return(arguments[0] + arguments[1]);", [1, 2])
+          execute_phantom_script("return(arguments[0] + arguments[1]);", [1, 2])
 
-          execute_script("doSomething(); return(arguments[0] + arguments[1]);")
+          execute_phantom_script("doSomething(); return(arguments[0] + arguments[1]);")
 
   * NOTE: "this" in the context of the script function refers to the phantomjs
     result of require('webpage').create().
