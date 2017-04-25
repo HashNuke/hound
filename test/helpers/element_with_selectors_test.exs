@@ -151,4 +151,27 @@ defmodule ElementWithSelectorsTest do
     submit_element({:name, "username"})
     assert current_url() == "http://localhost:9090/page2.html"
   end
+
+
+  test "should move mouse to an element" do
+    navigate_to "http://localhost:9090/page1.html"
+    move_to({:id, "mouse-actions"}, 5, 5)
+    assert visible_text({:id, "mouse-actions"}) == "Mouse over"
+  end
+
+  test "should mouse down on an element" do
+    navigate_to "http://localhost:9090/page1.html"
+    move_to({:id, "mouse-actions"}, 5, 5)
+    mouse_down()
+    assert visible_text({:id, "mouse-actions"}) == "Mouse down"
+  end
+
+  test "should mouse up on an element" do
+    navigate_to "http://localhost:9090/page1.html"
+    move_to({:id, "mouse-actions"}, 5, 5)
+    # Mouse up needs a mouse down before
+    mouse_down()
+    mouse_up()
+    assert visible_text({:id, "mouse-actions"}) == "Mouse up"
+  end
 end
