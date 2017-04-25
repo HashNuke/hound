@@ -4,7 +4,7 @@ defmodule Hound.Helpers.ScriptExecution do
   import Hound.RequestUtils
 
   @doc """
-  Execute javascript synchoronously.
+  Execute javascript synchronously.
 
   * The first argument is the script to execute.
   * The second argument is a list of arguments that is passed.
@@ -25,7 +25,7 @@ defmodule Hound.Helpers.ScriptExecution do
 
 
   @doc """
-  Execute javascript asynchoronously.
+  Execute javascript asynchronously.
 
   * The first argument is the script to execute.
   * The second argument is a list of arguments that is passed.
@@ -50,6 +50,39 @@ defmodule Hound.Helpers.ScriptExecution do
     session_id = Hound.current_session_id
     make_req(:post,
       "session/#{session_id}/execute_async",
+      %{script: script_function, args: function_args}
+    )
+  end
+
+  @doc """
+  Execute a phantomjs script to configure callbacks.
+  This will only work with phantomjs driver.
+
+  * The first argument is the script to execute.
+  * The second argument is a list of arguments that is passed.
+    These arguments are accessible in the script via `arguments`.
+
+          execute_script("return(arguments[0] + arguments[1]);", [1, 2])
+
+          execute_script("doSomething(); return(arguments[0] + arguments[1]);")
+
+  * NOTE: "this" in the context of the script function refers to the phantomjs
+    result of require('webpage').create().
+
+    To use it, capture it in a variable at the beginning of the script.  Example:
+
+     page = this;
+
+     page.onResourceRequested = function(requestData, request) {
+       // Do something with the request
+     };
+
+  """
+  @spec execute_phantom_script(String.t, list) :: any
+  def execute_phantom_script(script_function, function_args \\ []) do
+    session_id = Hound.current_session_id
+    make_req(:post,
+      "/session/#{session_id}/phantom/execute",
       %{script: script_function, args: function_args}
     )
   end
