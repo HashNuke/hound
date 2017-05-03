@@ -30,8 +30,10 @@ defmodule Hound.ResponseParser do
     parser.handle_response(path, code, raw_content)
   end
   def parse(parser, path, code, _headers, raw_content) do
-    body = Hound.ResponseParser.decode_content(raw_content)
-    parser.handle_response(path, code, body)
+    case Hound.ResponseParser.decode_content(raw_content) do
+      {:ok, body} -> parser.handle_response(path, code, body)
+      _ -> :error
+    end
   end
 
   @doc """
@@ -64,7 +66,7 @@ defmodule Hound.ResponseParser do
   Decodes a response body
   """
   def decode_content([]), do: Map.new
-  def decode_content(content), do: Poison.decode!(content)
+  def decode_content(content), do: Poison.decode(content)
 
   defmacro __before_compile__(_env) do
     quote do

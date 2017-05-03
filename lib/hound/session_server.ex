@@ -75,7 +75,7 @@ defmodule Hound.SessionServer do
         {:ok, session_id} ->
           {session_id, sessions}
         :error ->
-          {:ok, session_id} = Hound.Session.create_session(driver_info[:browser], opts)
+          session_id = create_session(driver_info, opts)
           {session_id, Map.put(sessions, session_name, session_id)}
       end
 
@@ -93,6 +93,13 @@ defmodule Hound.SessionServer do
       destroy_sessions(pid)
     end
     {:noreply, state}
+  end
+
+  defp create_session(driver_info, opts) do
+    case Hound.Session.create_session(driver_info[:browser], opts) do
+      {:ok, session_id} -> session_id
+      {:error, reason} -> raise "could not create a new session: #{reason}, check webdriver is running"
+    end
   end
 
   defp destroy_sessions(pid) do
