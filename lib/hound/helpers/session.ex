@@ -32,7 +32,7 @@ defmodule Hound.Helpers.Session do
 
 
   @doc """
-  Execute commands in a seperate browser session.
+  Execute commands in a separate browser session.
 
       in_browser_session "another_user", fn ->
         navigate_to "http://example.com"
