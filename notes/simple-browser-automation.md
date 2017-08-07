@@ -1,3 +1,5 @@
+Make sure to [configure Hound](https://github.com/HashNuke/hound/blob/master/notes/configuring-hound.md) first, or you will get an error.
+
 ## Simple browser automation using Hound
 
 ```elixir
