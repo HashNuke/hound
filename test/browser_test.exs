@@ -31,4 +31,9 @@ defmodule Hound.BrowserTest do
     assert Browser.user_agent(:android)   =~ "Android"
     assert Browser.user_agent(:phantomjs) =~ "PhantomJS"
   end
+
+  test "make_capabilities supports additional_capabilities" do
+    result = Browser.make_capabilities("firefox", additional_capabilities: %{firefox_profile: :firefox_profile})
+    assert %{browserName: "firefox", firefox_profile: :firefox_profile} = result
+  end
 end
