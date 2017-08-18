@@ -53,7 +53,15 @@ defmodule Hound.Helpers.Window do
     make_req(:delete, "session/#{session_id}/window")
   end
 
-  @doc "Focus frame"
+  @doc """
+  Set the focus to a specific frame, such as an iframe
+
+  ## Example
+
+      iex> iframe = find_element(:id, "id-of-some-iframe")
+      iex> focus_frame(iframe)
+      nil
+  """
   @spec focus_frame(any) :: :ok
   def focus_frame(frame_id) do
     session_id = Hound.current_session_id
