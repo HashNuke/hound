@@ -22,8 +22,21 @@ defmodule Hound.Element do
   """
   @spec from_response(map) :: t
   def from_response(%{"ELEMENT" => uuid}), do: %__MODULE__{uuid: uuid}
+  def from_response(response) when is_map(response),
+    do: from_map_response(Map.to_list(response))
   def from_response(value) do
     raise Hound.InvalidElementError, value: value
+  end
+
+  defp from_map_response([{key, value}] = response) do
+    if String.starts_with?(key, "element-") do
+      %__MODULE__{uuid: value}
+    else
+      raise Hound.InvalidElementError, value: Enum.into(response, %{})
+    end
+  end
+  defp from_map_response(response) do
+    raise Hound.InvalidElementError, value: Enum.into(response, %{})
   end
 end
 

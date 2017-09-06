@@ -63,7 +63,7 @@ defmodule Hound.Helpers.Page do
     params = %{using: Hound.InternalHelpers.selector_strategy(strategy), value: selector}
 
     make_req(:post, "session/#{session_id}/element", params, %{safe: true}, retries*2)
-    |> process_element_response
+    |> process_element_response()
   end
 
 
@@ -280,8 +280,9 @@ defmodule Hound.Helpers.Page do
     make_req(:post, "session/#{session_id}/keys", %{value: [keys]})
   end
 
-  defp process_element_response(%{"ELEMENT" => element_id}),
-    do: {:ok, %Hound.Element{uuid: element_id}}
+  defp process_element_response(response) when is_map(response) do
+    {:ok, Hound.Element.from_response(response)}
+  end
   defp process_element_response({:error, _err} = error),
     do: error
   defp process_element_response(unknown_error),

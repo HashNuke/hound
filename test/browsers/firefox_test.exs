@@ -9,7 +9,7 @@ defmodule Hound.Browser.FirefoxTest do
 
   test "user_agent_capabilities" do
     ua = Hound.Browser.user_agent(:iphone)
-    assert %{firefox_profile: profile} = Firefox.user_agent_capabilities(ua)
+    assert %{"firefox_profile" => profile} = Firefox.user_agent_capabilities(ua)
     assert {:ok, files} = :zip.extract(Base.decode64!(profile), [:memory])
     assert [{'user.js', user_prefs}] = files
     assert user_prefs =~ ~s<user_pref("general.useragent.override", "#{ua}");>

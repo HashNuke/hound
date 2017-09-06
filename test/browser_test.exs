@@ -11,7 +11,7 @@ defmodule Hound.BrowserTest do
 
   test "make capabilities for firefox" do
     result = Browser.make_capabilities("firefox", metadata: %{"foo" => "bar"})
-    assert %{browserName: "firefox", firefox_profile: profile} = result
+    assert %{:browserName => "firefox", "firefox_profile" => profile} = result
     assert {:ok, files} = :zip.extract(Base.decode64!(profile), [:memory])
     assert [{'user.js', user_prefs}] = files
     assert [_, ua] = Regex.run(~r{user_pref\("general\.useragent\.override", "(.*?)"\);}, user_prefs)
