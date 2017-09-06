@@ -1,11 +1,6 @@
 defmodule Hound.RequestUtils do
   @moduledoc false
 
-  @retry_time Application.get_env(:hound, :retry_time, 250)
-
-  @http_options Application.get_env(:hound, :http, [])
-
-
   def make_req(type, path, params \\ %{}, options \\ %{}, retries \\ 0)
   def make_req(type, path, params, options, 0) do
     send_req(type, path, params, options)
@@ -24,7 +19,7 @@ defmodule Hound.RequestUtils do
   end
 
   defp make_retry(type, path, params, options, retries) do
-    :timer.sleep(@retry_time)
+    :timer.sleep(Application.get_env(:hound, :retry_time, 250))
     make_req(type, path, params, options, retries - 1)
   end
 
@@ -40,7 +35,7 @@ defmodule Hound.RequestUtils do
         {[], ""}
     end
 
-    :hackney.request(type, url, headers, body, [:with_body | @http_options])
+    :hackney.request(type, url, headers, body, [:with_body | http_options()])
     |> handle_response({url, path, type}, options)
   end
 
@@ -87,4 +82,7 @@ defmodule Hound.RequestUtils do
     "#{host}:#{port}/#{path_prefix}#{path}"
   end
 
+  defp http_options() do
+    Application.get_env(:hound, :http, [])
+  end
 end
