@@ -5,7 +5,7 @@ defmodule Hound.Browser do
 
   @callback default_user_agent :: String.t | atom
 
-  @callback user_agent_capabilities(String.t) :: map
+  @callback default_capabilities(String.t) :: map
 
   @doc "Creates capabilities for the browser and options, to be sent to the webdriver"
   @spec make_capabilities(t, map | Keyword.t) :: map
@@ -17,11 +17,11 @@ defmodule Hound.Browser do
       |> Hound.Metadata.append(opts[:metadata])
 
     capabilities = %{browserName: browser_name}
-    ua_capabilities = browser.user_agent_capabilities(user_agent)
+    default_capabilities = browser.default_capabilities(user_agent)
     additional_capabilities = opts[:additional_capabilities] || %{}
 
     capabilities
-    |> Map.merge(ua_capabilities)
+    |> Map.merge(default_capabilities)
     |> Map.merge(additional_capabilities)
   end
 
@@ -61,8 +61,9 @@ defmodule Hound.Browser do
   defp browser(browser) when is_atom(browser) do
     browser |> Atom.to_string |> browser()
   end
-  defp browser("firefox"),   do: Hound.Browser.Firefox
-  defp browser("chrome"),    do: Hound.Browser.Chrome
-  defp browser("phantomjs"), do: Hound.Browser.PhantomJS
-  defp browser(_),           do: Hound.Browser.Default
+  defp browser("firefox"),          do: Hound.Browser.Firefox
+  defp browser("chrome"),           do: Hound.Browser.Chrome
+  defp browser("chrome_headless"),  do: Hound.Browser.ChromeHeadless
+  defp browser("phantomjs"),        do: Hound.Browser.PhantomJS
+  defp browser(_),                  do: Hound.Browser.Default
 end

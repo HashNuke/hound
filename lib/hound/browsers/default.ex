@@ -5,5 +5,5 @@ defmodule Hound.Browser.Default do
 
   def default_user_agent, do: :default
 
-  def user_agent_capabilities(_ua), do: %{}
+  def default_capabilities(_ua), do: %{}
 end
