@@ -2,7 +2,7 @@ defmodule MultipleBrowserSessionTest do
   use ExUnit.Case
   use Hound.Helpers
 
-  hound_session
+  hound_session()
 
   test "should be able to run multiple sessions" do
     first_session = Hound.start_session
@@ -17,12 +17,12 @@ defmodule MultipleBrowserSessionTest do
     # Navigate to a url in the second session
     navigate_to(url2)
     # Then assert url
-    assert url2 == current_url
+    assert url2 == current_url()
 
     # Now go back to the original session
-    change_session_to first_session
+    change_session_to(first_session)
     # Assert if the url is the one we visited
-    assert url1 == current_url
+    assert url1 == current_url()
   end
 
 
@@ -37,11 +37,11 @@ defmodule MultipleBrowserSessionTest do
     another_session = Hound.start_session
     perform_in_session another_session, fn->
       navigate_to(url2)
-      assert url2 == current_url
+      assert url2 == current_url()
     end
 
     # Assert if the url is the one we visited
-    assert url1 == current_url
+    assert url1 == current_url()
   end
 
   test "should preserve session after using in_browser_session" do
@@ -62,17 +62,17 @@ defmodule MultipleBrowserSessionTest do
     session_b = Hound.start_session
     perform_in_session session_b, fn ->
       navigate_to(url3)
-      assert url3 == current_url
+      assert url3 == current_url()
     end
 
     # Assert the current url is the url we visited in :session_a
-    assert url2 == current_url
+    assert url2 == current_url()
 
     # Switch back to the default session
     change_session_to default
 
     # Assert the current url is the one we visited in the default session
-    assert url1 == current_url
+    assert url1 == current_url()
   end
 
   test "in_browser_session should return the result of the given function" do
@@ -83,7 +83,7 @@ defmodule MultipleBrowserSessionTest do
     result =
       perform_in_session another_session, fn ->
         navigate_to(url1)
-        current_url
+        current_url()
       end
 
     assert result == url1

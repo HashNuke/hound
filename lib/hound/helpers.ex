@@ -11,10 +11,12 @@ defmodule Hound.Helpers do
       import Hound.Helpers.Orientation
       import Hound.Helpers.Page
       import Hound.Helpers.Screenshot
+      import Hound.Helpers.SavePage
       import Hound.Helpers.ScriptExecution
       import Hound.Helpers.Session
       import Hound.Helpers.Window
       import Hound.Helpers.Log
+      import Hound.Helpers.Mouse
       import Hound.Matchers
       import unquote(__MODULE__)
     end
@@ -25,6 +27,8 @@ defmodule Hound.Helpers do
     quote do
       setup do
         Hound.start_session(unquote(opts))
+        parent = self()
+        on_exit(fn -> Hound.end_session(parent) end)
 
         :ok
       end

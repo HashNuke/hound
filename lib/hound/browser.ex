@@ -18,8 +18,11 @@ defmodule Hound.Browser do
 
     capabilities = %{browserName: browser_name}
     ua_capabilities = browser.user_agent_capabilities(user_agent)
+    additional_capabilities = opts[:additional_capabilities] || %{}
 
-    Map.merge(capabilities, ua_capabilities)
+    capabilities
+    |> Map.merge(ua_capabilities)
+    |> Map.merge(additional_capabilities)
   end
 
   @doc "Returns a user agent string"

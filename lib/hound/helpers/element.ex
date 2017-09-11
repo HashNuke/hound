@@ -272,7 +272,7 @@ defmodule Hound.Helpers.Element do
   @doc """
   Click on an element. You can also use this to click on checkboxes and radio buttons.
 
-      element = find_element(:id, ".example")
+      element = find_element(:id, "example")
       click(element)
 
   You can also directly pass the selector as a tuple.
@@ -286,6 +286,24 @@ defmodule Hound.Helpers.Element do
     make_req(:post, "session/#{session_id}/element/#{element}/click")
   end
 
+
+  @doc """
+  Moves the mouse to a given position within the given element. X and Y are relatively to the element
+  and start from top left.
+
+      element = find_element(:id, "example")
+      move_to(element, 10, 10)
+
+  You can also directly pass the selector as a tuple.
+
+      move_to({:id, "example"}, 10, 10)
+  """
+  @spec move_to(Hound.Element.selector, integer, integer) :: :ok
+  def move_to(element, xoffset, yoffset) do
+    element = get_element(element)
+    session_id = Hound.current_session_id
+    make_req(:post, "session/#{session_id}/moveto", %{element: element.uuid, xoffset: xoffset, yoffset: yoffset})
+  end
 
   @doc """
   Sends a submit event to any field or form element.

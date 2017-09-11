@@ -4,7 +4,7 @@ defmodule DialogTest do
 
   if Hound.InternalHelpers.driver_supports?("dialog_text") do
 
-    hound_session
+    hound_session()
 
     test "Get dialog text" do
       navigate_to "http://localhost:9090/page1.html"

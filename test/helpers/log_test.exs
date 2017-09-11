@@ -2,11 +2,11 @@ defmodule LogTest do
   use ExUnit.Case
   use Hound.Helpers
 
-  hound_session
+  hound_session()
 
   test "Should be able to extract log written in javascript" do
     navigate_to "http://localhost:9090/page1.html"
-    
+
     execute_script("console.log(\"Some log\");")
     execute_script("console.log(\"Next log\");")
 

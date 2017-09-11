@@ -28,7 +28,7 @@ defmodule HoundTest do
   use ExUnit.Case
   use Hound.Helpers
 
-  hound_session
+  hound_session()
 
   test "the truth", meta do
     navigate_to("http://example.com/guestbook.html")
@@ -67,7 +67,13 @@ When you run `mix test`, Hound is automatically started. __You'll need a webdriv
 
 ## Configure
 
-To configure Hound, use your `config/config.exs` file or equivalent. [Examples are here](https://github.com/HashNuke/hound/blob/master/notes/configuring-hound.md).
+To configure Hound, use your `config/config.exs` file or equivalent.
+
+Example:
+
+```config :hound, driver: "phantomjs"```
+
+[More examples here](https://github.com/HashNuke/hound/blob/master/notes/configuring-hound.md).
 
 ## Usage
 
@@ -78,7 +84,7 @@ Add the following lines to your ExUnit test files.
 use Hound.Helpers
 
 # Start hound session and destroy when tests are run
-hound_session
+hound_session()
 ```
 
 If you prefer to manually start and end sessions, use `Hound.start_session` and `Hound.end_session` in the setup and teardown blocks of your tests.
@@ -124,7 +130,7 @@ Yes. A separate session is started for each test process.
 
 PhantomJs is extremely fast, but there are certain caveats. It uses Ghostdriver for its webdriver server, which currently has unimplemented features or open issues.
 
-* Cookie jar isn't seperate for sessions - <https://github.com/ariya/phantomjs/issues/11417>
+* Cookie jar isn't separate for sessions - <https://github.com/ariya/phantomjs/issues/11417>
   Which means all sessions share the same cookies. Make sure you run `delete_cookies()` at the end of each test.
 * Isolated sessions were added to GhostDriver recently and are yet to land in a PhantomJs release.
 * Javascript alerts aren't yet supported - <https://github.com/detro/ghostdriver/issues/20>.

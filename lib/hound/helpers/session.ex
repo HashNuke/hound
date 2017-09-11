@@ -7,12 +7,12 @@ defmodule Hound.Helpers.Session do
   Exits if session does not exist.
   """
   def change_session_to(session_id) do
-    Hound.SessionServer.change_current_session_for_pid(self, session_id)
+    Hound.SessionServer.change_current_session_for_pid(self(), session_id)
   end
 
 
   @doc """
-  Execute commands in a seperate browser session.
+  Execute commands in a separate browser session.
 
       perform_in_session "another_user", fn ->
         navigate_to "http://example.com"
@@ -20,7 +20,7 @@ defmodule Hound.Helpers.Session do
       end
   """
   def perform_in_session(session_id, func) do
-    previous_session_id = current_session_id
+    previous_session_id = current_session_id()
     change_session_to(session_id)
     result = apply(func, [])
     change_session_to(previous_session_id)
@@ -74,7 +74,7 @@ defmodule Hound.Helpers.Session do
     * `:driver` - The additional capabilities to be passed directly to the webdriver.
   """
   def start_session(opts \\ []) do
-    Hound.SessionServer.start_session_for_pid(self, opts)
+    Hound.SessionServer.start_session_for_pid(self(), opts)
   end
 
 
@@ -93,9 +93,9 @@ defmodule Hound.Helpers.Session do
   end
 
   @doc false
-  def current_session_id do
-    Hound.SessionServer.current_session_id(self) ||
-      raise "could not find a session for process #{inspect self}"
+  def current_session_id() do
+    Hound.SessionServer.current_session_id(self()) ||
+      raise "could not find a session for process #{inspect self()}"
   end
 
   @doc """

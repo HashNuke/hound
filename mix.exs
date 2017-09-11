@@ -1,7 +1,7 @@
 defmodule Hound.Mixfile do
   use Mix.Project
 
-  @version "1.0.2"
+  @version "1.0.4"
 
   def project do
     [ app: :hound,
@@ -9,8 +9,8 @@ defmodule Hound.Mixfile do
       elixir: ">= 1.0.4",
       description: "Webdriver library for integration testing and browser automation",
       source_url: "https://github.com/HashNuke/hound",
-      deps: deps,
-      package: package,
+      deps: deps(),
+      package: package(),
       docs: [source_ref: "#{@version}", extras: ["README.md"], main: "readme"]
     ]
   end
@@ -28,9 +28,9 @@ defmodule Hound.Mixfile do
   defp deps do
     [
       {:hackney, "~> 1.5"},
-      {:poison,    ">= 1.4.0"},
-      {:earmark, "~> 0.1.17 or ~> 0.2", only: :docs},
-      {:ex_doc,  "~> 0.11.0", only: :docs}
+      {:poison,  ">= 1.4.0"},
+      {:earmark, "~> 1.2", only: :docs},
+      {:ex_doc,  "~> 0.16", only: :docs}
     ]
   end
 

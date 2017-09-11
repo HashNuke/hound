@@ -52,6 +52,9 @@
     <p class="hidden-element">This is hidden</p>
   </div>
 
+  <div id="mouse-actions">
+    I need action
+  </div>
 
   <iframe width=300 height=300 src="iframe.html"></iframe>
   <div id="javascript"></div>
@@ -59,6 +62,20 @@
     setTimeout(function (){
       document.getElementById("javascript").innerHTML = "Javascript!";
     }, 500);
+
+    var mouseActions = document.getElementById("mouse-actions")
+
+    mouseActions.onmouseover = function() {
+      mouseActions.innerHTML = "Mouse over"
+    }
+
+    mouseActions.onmousedown = function() {
+      mouseActions.innerHTML = "Mouse down"
+    }
+
+    mouseActions.onmouseup = function() {
+      mouseActions.innerHTML = "Mouse up"
+    }
   </script>
 </body>
 </html>

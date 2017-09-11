@@ -12,7 +12,7 @@ defmodule Hound.Helpers.Navigation do
 
   @doc "Gets the path of the current page."
   def current_path do
-    URI.parse(current_url).path
+    URI.parse(current_url()).path
   end
 
   @doc """

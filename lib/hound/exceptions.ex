@@ -33,7 +33,7 @@ defmodule Hound.NotSupportedError do
                  {func, arity} -> "#{func}/#{arity}"
                  func          -> to_string(func)
                end
-    quote bind_quoted: binding do
+    quote bind_quoted: binding() do
       Hound.NotSupportedError.raise_for(params, function)
     end
   end
