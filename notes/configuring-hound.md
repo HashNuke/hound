@@ -46,3 +46,12 @@ config :hound, retry_time: 500
 # Define http client settings
 config :hound, http: [recv_timeout: :infinity, proxy: ["socks5", "127.0.0.1", "9050"]]
 ```
+
+```elixir
+# Define selenium hub settings
+config :hound,
+  driver: "chrome_driver",
+  host: "http://localhost",
+  port: 32770,
+  path_prefix: "wd/hub/"
+```
