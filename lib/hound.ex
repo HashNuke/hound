@@ -26,7 +26,7 @@ defmodule Hound do
 
   @doc "See `Hound.Helpers.Session.end_session/1`"
   defdelegate end_session,        to: Hound.Helpers.Session
-  defdelegate end_session(pid),   to: Hound.Helpers.Session
+  defdelegate end_session(session_id),   to: Hound.Helpers.Session
 
   @doc false
   defdelegate current_session_id, to: Hound.Helpers.Session
