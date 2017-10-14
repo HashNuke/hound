@@ -5,7 +5,7 @@ defmodule Hound.Browser.Chrome do
 
   def default_user_agent, do: :chrome
 
-  def user_agent_capabilities(ua) do
+  def default_capabilities(ua) do
     %{chromeOptions: %{"args" => ["--user-agent=#{ua}"]}}
   end
 end

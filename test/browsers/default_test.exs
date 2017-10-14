@@ -7,8 +7,8 @@ defmodule Hound.Browser.DefaultTest do
     assert Default.default_user_agent == :default
   end
 
-  test "user_agent_capabilities" do
+  test "default_capabilities" do
     ua = Hound.Browser.user_agent(:iphone)
-    assert Default.user_agent_capabilities(ua) == %{}
+    assert Default.default_capabilities(ua) == %{}
   end
 end

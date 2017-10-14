@@ -28,6 +28,11 @@ config :hound, driver: "chrome_driver"
 ```
 
 ```elixir
+# Use Chrome in headless mode with ChromeDriver (default port 9515 assumed) 
+config :hound, driver: "chrome_driver", browser: "chrome_headless"
+```
+
+```elixir
 # Start Hound for remote PhantomJs server at port 5555
 config :hound, driver: "phantomjs", host: "http://example.com", port: 5555
 ```

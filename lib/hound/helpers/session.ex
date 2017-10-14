@@ -81,7 +81,7 @@ defmodule Hound.Helpers.Session do
 
   The following options can be passed to `start_session`:
 
-    * `:browser` - The browser to be used (`"chrome"` | `"phantomjs"` | `"firefox"`)
+    * `:browser` - The browser to be used (`"chrome"` | `"chrome_headless"` | `"phantomjs"` | `"firefox"`)
     * `:user_agent` - The user agent string that will be used for the requests.
       The following atoms can also be passed
         * `:firefox_desktop` (aliased to `:firefox`)

@@ -5,7 +5,7 @@ defmodule Hound.Browser.PhantomJS do
 
   def default_user_agent, do: :phantomjs
 
-  def user_agent_capabilities(ua) do
+  def default_capabilities(ua) do
     %{"phantomjs.page.settings.userAgent" => ua}
   end
 end
