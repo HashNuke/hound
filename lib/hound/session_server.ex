@@ -35,7 +35,7 @@ defmodule Hound.SessionServer do
 
 
   def change_current_session_for_pid(pid, session_name, opts) do
-    GenServer.call(@name, {:change_session, pid, session_name, opts}, 60000)
+    GenServer.call(@name, {:change_session, pid, session_name, opts}, genserver_timeout())
   end
 
 
@@ -108,5 +108,9 @@ defmodule Hound.SessionServer do
     Enum.each sessions, fn({_session_name, session_id})->
       Hound.Session.destroy_session(session_id)
     end
+  end
+
+  defp genserver_timeout() do
+    Application.get_env(:hound, :genserver_timeout, 60000)
   end
 end
