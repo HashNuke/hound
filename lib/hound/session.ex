@@ -25,8 +25,8 @@ defmodule Hound.Session do
       desiredCapabilities: capabilities
     }
 
-    # No retries for this request
-    make_req(:post, "session", params)
+    # 301, 302, 303 (only POST), 307 redirections need at least one retry for hackney to follow it.
+    make_req(:post, "session", params, 1)
   end
 
   @doc "Make capabilities for session"
