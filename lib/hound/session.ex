@@ -26,7 +26,7 @@ defmodule Hound.Session do
     }
 
     # No retries for this request
-    make_req(:post, "session", params)
+    make_req(:post, "session", params, %{}, 5)
   end
 
   @doc "Make capabilities for session"
