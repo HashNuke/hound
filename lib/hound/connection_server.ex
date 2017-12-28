@@ -13,7 +13,6 @@ defmodule Hound.ConnectionServer do
         {4444, "wd/hub/", "firefox"}
     end
 
-
     browser = options[:browser] || Application.get_env(:hound, :browser, default_browser)
     host = options[:host] || Application.get_env(:hound, :host, "http://localhost")
     port = options[:port] || Application.get_env(:hound, :port, default_port)
@@ -30,7 +29,8 @@ defmodule Hound.ConnectionServer do
 
     configs = %{
       :host => options[:app_host] || Application.get_env(:hound, :app_host, "http://localhost"),
-      :port => options[:app_port] || Application.get_env(:hound, :app_port, 4001)
+      :port => options[:app_port] || Application.get_env(:hound, :app_port, 4001),
+      :screenshot_dir => options[:screenshot_dir] || Application.get_env(:hound, :screenshot_dir, File.cwd!)
     }
 
     state = %{sessions: [], driver_info: driver_info, configs: configs}
