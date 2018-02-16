@@ -24,4 +24,23 @@ defmodule Hound.SessionTest do
     result = Session.make_capabilities("chrome", user_agent: ua)
     assert %{chromeOptions: %{"args" => ["--user-agent=" <> ^ua]}} = result
   end
+
+  test "make_capabilities deep merges chromeOptions" do
+    %{chromeOptions: resulting_options} =
+      Session.make_capabilities(
+        "chrome_headless",
+        driver: %{
+          chromeOptions: %{
+            "args" => [
+              "--window-size=1920x1080"
+            ]
+          }
+        }
+      )
+
+    %{chromeOptions: %{"args" => default_args}} =
+      Hound.Browser.make_capabilities("chrome_headless")
+
+    assert resulting_options == %{"args" => default_args ++ ["--window-size=1920x1080"]}
+  end
 end

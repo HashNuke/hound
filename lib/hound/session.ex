@@ -43,7 +43,7 @@ defmodule Hound.Session do
       platform: "ANY"
     }
     |> Map.merge(Hound.Browser.make_capabilities(browser, opts))
-    |> Map.merge(opts[:driver] || %{})
+    |> deep_merge(opts[:driver] || %{})
   end
 
   @doc "Get capabilities of a particular session"
@@ -79,4 +79,12 @@ defmodule Hound.Session do
   def fetch_log_types(session_id) do
     make_req(:get, "session/#{session_id}/log/types")
   end
+
+  defp deep_merge(map1, map2) when is_map(map1) and is_map(map2) do
+    Map.merge(map1, map2, fn _k, v1, v2 ->
+      deep_merge(v1, v2)
+    end)
+  end
+
+  defp deep_merge(list1, list2), do: list1 ++ list2
 end
