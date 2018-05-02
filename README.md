@@ -16,7 +16,7 @@ For browser automation and writing integration tests in Elixir.
 
 * Implements the WebDriver Wire Protocol.
 
-**Internet Explorer may work under Selenium, but hasn't been tested.
+**Internet Explorer may work under Selenium, but hasn't been tested.**
 
 #### Example
 
