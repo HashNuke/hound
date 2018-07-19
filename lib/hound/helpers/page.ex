@@ -282,6 +282,8 @@ defmodule Hound.Helpers.Page do
 
   defp process_element_response(%{"ELEMENT" => element_id}),
     do: {:ok, %Hound.Element{uuid: element_id}}
+  defp process_element_response(%{"element-6066-11e4-a52e-4f735466cecf" => element_id}),
+    do: {:ok, %Hound.Element{uuid: element_id}}
   defp process_element_response({:error, _err} = error),
     do: error
   defp process_element_response(unknown_error),
