@@ -3,11 +3,14 @@ language: elixir
 elixir:
   - 1.0.4
   - 1.4
+  - 1.5
+  - 1.6
 otp_release:
   - 17.4
   - 18.3
   - 19.3
-  - 20.0
+  - 20.3
+  - 21.0
 
 env:
   - WEBDRIVER=phantomjs
@@ -19,11 +22,22 @@ matrix:
     - elixir: 1.0.4
       otp_release: 19.3
     - elixir: 1.0.4
-      otp_release: 20.0
+      otp_release: 20.3
+    - elixir: 1.0.4
+      otp_release: 21.0
     - elixir: 1.4
       otp_release: 17.4
     - elixir: 1.4
+      otp_release: 21.0
+    - elixir: 1.5
+      otp_release: 17.4
+    - elixir: 1.5
+      otp_release: 21.0
+    - elixir: 1.6
+      otp_release: 17.4
+    - elixir: 1.6
       otp_release: 18.3
+
 
 before_script:
   - "export DISPLAY=:99.0"
