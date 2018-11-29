@@ -28,7 +28,7 @@ defmodule Hound.RequestUtils do
     has_body = params != %{} && type == :post
     {headers, body} = cond do
        has_body && options[:json_encode] != false ->
-        {[{"Content-Type", "text/json"}], Poison.encode!(params)}
+        {[{"Content-Type", "text/json"}], Jason.encode!(params)}
       has_body ->
         {[], params}
       true ->

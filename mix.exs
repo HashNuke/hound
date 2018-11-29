@@ -18,8 +18,8 @@ defmodule Hound.Mixfile do
 
   def application do
     [
-      applications: [:hackney, :poison, :logger],
-      mod: { Hound, [] },
+      extra_applications: [:logger],
+      mod: {Hound, []},
       description: 'Integration testing and browser automation library',
     ]
   end
@@ -28,7 +28,7 @@ defmodule Hound.Mixfile do
   defp deps do
     [
       {:hackney, "~> 1.5"},
-      {:poison,  "~> 1.4.0"},
+      {:jason,  "~> 1.1"},
       {:earmark, "~> 1.2", only: :docs},
       {:ex_doc,  "~> 0.16", only: :docs}
     ]
