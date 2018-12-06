@@ -27,9 +27,9 @@ defmodule Hound.Element do
   end
 end
 
-defimpl Poison.Encoder, for: Hound.Element do
+defimpl Jason.Encoder, for: Hound.Element do
   def encode(%{uuid: uuid}, options) do
-    Poison.Encoder.Map.encode(%{"ELEMENT" => uuid}, options)
+    Jason.Encode.map(%{"ELEMENT" => uuid}, options)
   end
 end
 

@@ -4,7 +4,7 @@ defmodule Hound.ResponseParsers.PhantomJs do
   use Hound.ResponseParser
 
   def handle_error(%{"message" => message} = value) do
-    case Poison.decode(message) do
+    case Jason.decode(message) do
       {:ok, decoded_error} -> decoded_error
       _                    -> value
     end |> do_handle_error

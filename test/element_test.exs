@@ -6,7 +6,7 @@ defmodule ElementTest do
   test "encoding to JSON" do
     uuid = "some-uuid"
     element = %Element{uuid: uuid}
-    assert Poison.encode!(element) == ~s({"ELEMENT":"#{uuid}"})
+    assert Jason.encode!(element) == ~s({"ELEMENT":"#{uuid}"})
   end
 
   test "string representation" do
