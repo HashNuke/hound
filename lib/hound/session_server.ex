@@ -35,7 +35,9 @@ defmodule Hound.SessionServer do
 
 
   def change_current_session_for_pid(pid, session_name, opts) do
-    GenServer.call(@name, {:change_session, pid, session_name, opts}, 60000)
+    {:ok, session_id} =
+      GenServer.call(@name, {:change_session, pid, session_name, opts}, 60000)
+    session_id
   end
 
 
@@ -80,7 +82,9 @@ defmodule Hound.SessionServer do
       end
 
     :ets.insert(@name, {pid, ref, session_id, sessions})
-    {:reply, session_id, Map.put(state, ref, pid)}
+    {:reply, {:ok, session_id}, Map.put(state, ref, pid)}
+  rescue
+    error -> {:reply, {:error, error}, state}
   end
 
   def handle_call({:destroy_sessions, pid}, _from, state) do
