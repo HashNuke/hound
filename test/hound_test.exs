@@ -19,8 +19,11 @@ defmodule HoundTest do
     assert is_binary(Hound.current_session_id)
   end
 
+  test "should return all sessions" do
+    assert Hound.SessionServer.all_sessions |> Enum.member?(Hound.current_session_id)
+  end
 
-  test "Should destroy all sessions for current process" do
+  test "should destroy all sessions for current process" do
     Hound.end_session
     assert Hound.SessionServer.all_sessions_for_pid(self()) == %{}
   end

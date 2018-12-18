@@ -49,6 +49,11 @@ defmodule Hound.SessionServer do
   end
 
 
+  def all_sessions do
+    :ets.foldl(fn {_pid, _ref, _session_id, sessions}, acc -> acc ++ Map.values(sessions) end, [], @name)
+  end
+
+
   def destroy_sessions_for_pid(pid) do
     GenServer.call(@name, {:destroy_sessions, pid}, 60000)
   end
