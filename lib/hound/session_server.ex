@@ -35,8 +35,25 @@ defmodule Hound.SessionServer do
 
 
   def change_current_session_for_pid(pid, session_name, opts) do
-    {:ok, session_id} =
-      GenServer.call(@name, {:change_session, pid, session_name, opts}, 60000)
+    {:ok, driver_info} = Hound.driver_info
+
+    sessions =
+      case :ets.lookup(@name, pid) do
+        [{^pid, _session_id, sessions}] ->
+          sessions
+        [] -> %{}
+      end
+
+    {session_id, sessions} =
+      case Map.fetch(sessions, session_name) do
+        {:ok, session_id} ->
+          {session_id, sessions}
+        :error ->
+          session_id = create_session(driver_info, opts)
+          {session_id, Map.put(sessions, session_name, session_id)}
+      end
+
+    :ok = GenServer.call(@name, {:register, pid, session_id, sessions}, 60000)
     session_id
   end
 
@@ -66,29 +83,9 @@ defmodule Hound.SessionServer do
   end
 
 
-  def handle_call({:change_session, pid, session_name, opts}, _from, state) do
-    {:ok, driver_info} = Hound.driver_info
-
-    sessions =
-      case :ets.lookup(@name, pid) do
-        [{^pid, _session_id, sessions}] ->
-          sessions
-        [] -> %{}
-      end
-
-    {session_id, sessions} =
-      case Map.fetch(sessions, session_name) do
-        {:ok, session_id} ->
-          {session_id, sessions}
-        :error ->
-          session_id = create_session(driver_info, opts)
-          {session_id, Map.put(sessions, session_name, session_id)}
-      end
-
+  def handle_call({:register, pid, session_id, sessions}, _from, state) do
     :ets.insert(@name, {pid, session_id, sessions})
-    {:reply, {:ok, session_id}, monitor_session(pid, state)}
-  rescue
-    error -> {:reply, {:error, error}, state}
+    {:reply, :ok, monitor_session(pid, state)}
   end
 
   def handle_call({:destroy_sessions, pid}, _from, state) do
