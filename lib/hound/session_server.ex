@@ -17,14 +17,14 @@ defmodule Hound.SessionServer do
 
   def current_session_id(pid) do
     case :ets.lookup(@name, pid) do
-      [{^pid, _ref, session_id, _all_sessions}] -> session_id
+      [{^pid, session_id, _all_sessions}] -> session_id
       [] -> nil
     end
   end
 
   def current_session_name(pid) do
     case :ets.lookup(@name, pid) do
-      [{^pid, _ref, session_id, all_sessions}] ->
+      [{^pid, session_id, all_sessions}] ->
         Enum.find_value all_sessions, fn
           {name, id} when id == session_id -> name
           _ -> nil
@@ -43,14 +43,14 @@ defmodule Hound.SessionServer do
 
   def all_sessions_for_pid(pid) do
     case :ets.lookup(@name, pid) do
-      [{^pid, _ref, _session_id, all_sessions}] -> all_sessions
+      [{^pid, _session_id, all_sessions}] -> all_sessions
       [] -> %{}
     end
   end
 
 
   def all_sessions do
-    :ets.foldl(fn {_pid, _ref, _session_id, sessions}, acc -> acc ++ Map.values(sessions) end, [], @name)
+    :ets.foldl(fn {_pid, _session_id, sessions}, acc -> acc ++ Map.values(sessions) end, [], @name)
   end
 
 
@@ -69,12 +69,11 @@ defmodule Hound.SessionServer do
   def handle_call({:change_session, pid, session_name, opts}, _from, state) do
     {:ok, driver_info} = Hound.driver_info
 
-    {ref, sessions} =
+    sessions =
       case :ets.lookup(@name, pid) do
-        [{^pid, ref, _session_id, sessions}] ->
-          {ref, sessions}
-        [] ->
-          {Process.monitor(pid), %{}}
+        [{^pid, _session_id, sessions}] ->
+          sessions
+        [] -> %{}
       end
 
     {session_id, sessions} =
@@ -86,8 +85,8 @@ defmodule Hound.SessionServer do
           {session_id, Map.put(sessions, session_name, session_id)}
       end
 
-    :ets.insert(@name, {pid, ref, session_id, sessions})
-    {:reply, {:ok, session_id}, Map.put(state, ref, pid)}
+    :ets.insert(@name, {pid, session_id, sessions})
+    {:reply, {:ok, session_id}, monitor_session(pid, state)}
   rescue
     error -> {:reply, {:error, error}, state}
   end
@@ -102,6 +101,15 @@ defmodule Hound.SessionServer do
       destroy_sessions(pid)
     end
     {:noreply, state}
+  end
+
+  defp monitor_session(pid, state) do
+    if state |> Map.values |> Enum.member?(pid) do
+      state
+    else
+      ref = Process.monitor(pid)
+      Map.put(state, ref, pid)
+    end
   end
 
   defp create_session(driver_info, opts) do
