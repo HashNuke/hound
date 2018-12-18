@@ -110,7 +110,12 @@ defmodule Hound.SessionServer do
     sessions = all_sessions_for_pid(pid)
     :ets.delete(@name, pid)
     Enum.each sessions, fn({_session_name, session_id})->
-      Hound.Session.destroy_session(session_id)
+      spawn fn -> destroy_session(session_id) end
     end
+  end
+
+  defp destroy_session(session_id) do
+    Hound.Session.destroy_session(session_id)
+  rescue Hound.Error -> false
   end
 end
