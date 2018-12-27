@@ -66,7 +66,7 @@ defmodule Hound.ResponseParser do
   Decodes a response body
   """
   def decode_content([]), do: Map.new
-  def decode_content(content), do: Poison.decode(content)
+  def decode_content(content), do: Jason.decode(content)
 
   defmacro __before_compile__(_env) do
     quote do

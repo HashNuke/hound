@@ -31,6 +31,11 @@ defmodule Hound.Helpers.Element do
   def inner_text(element) do
     attribute_value(element, "innerText")
   end
+  
+  @spec outer_html(Hound.Element.selector) :: String.t
+  def outer_html(element) do
+    attribute_value(element, "outerHTML")
+  end
 
   @doc """
   Enters value into field.

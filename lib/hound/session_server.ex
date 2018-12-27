@@ -53,7 +53,7 @@ defmodule Hound.SessionServer do
           {session_id, Map.put(sessions, session_name, session_id)}
       end
 
-    :ok = GenServer.call(@name, {:register, pid, session_id, sessions}, 60000)
+    :ok = GenServer.call(@name, {:register, pid, session_id, sessions}, genserver_timeout())
     session_id
   end
 
@@ -127,5 +127,9 @@ defmodule Hound.SessionServer do
   defp destroy_session(session_id) do
     Hound.Session.destroy_session(session_id)
   rescue Hound.Error -> false
+  end
+
+  defp genserver_timeout() do
+    Application.get_env(:hound, :genserver_timeout, 60000)
   end
 end

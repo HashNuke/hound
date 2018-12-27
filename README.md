@@ -5,7 +5,6 @@ For browser automation and writing integration tests in Elixir.
 <a href="http://github.com/HashNuke/Hound" target="_parent">Source</a> | <a href="http://hexdocs.pm/hound" target="_parent">Documentation</a>
 
 [![Build Status](https://travis-ci.org/HashNuke/hound.png?branch=master)](https://travis-ci.org/HashNuke/hound)
-[![Deps Status](https://beta.hexfaktor.org/badge/all/github/HashNuke/hound.svg)](https://beta.hexfaktor.org/github/HashNuke/hound)
 
 ## Features
 
@@ -17,7 +16,7 @@ For browser automation and writing integration tests in Elixir.
 
 * Implements the WebDriver Wire Protocol.
 
-**Internet Explorer may work under Selenium, but hasn't been tested.
+**Internet Explorer may work under Selenium, but hasn't been tested.**
 
 #### Example
 
@@ -74,6 +73,15 @@ config :myapp, MyAppWeb.Endpoint,
 ```
 
 * When you run `mix test`, Hound is automatically started, but __you'll need a webdriver server__ running, like Selenium Server or Chrome Driver. If you aren't sure what it is, then [read this](https://github.com/HashNuke/hound/wiki/Starting-a-webdriver-server).
+
+#### If you're using Phoenix
+Ensure the server is started when your tests are run. In `config/test.exs` change the `server` option of your endpoint config to `true`:
+
+```elixir
+config :hello_world_web, HelloWorldWeb.Endpoint,
+  http: [port: 4001],
+  server: true
+```
 
 ## Configure
 

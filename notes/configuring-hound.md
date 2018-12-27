@@ -60,3 +60,8 @@ config :hound,
   port: 32770,
   path_prefix: "wd/hub/"
 ```
+
+```elixir
+# Set genserver timeout
+config :hound, genserver_timeout: 480000
+```
