@@ -92,6 +92,7 @@ defmodule Hound.Helpers.Session do
     * `:metadata` - The metadata to be included in the requests.
       See `Hound.Metadata` for more information
     * `:driver` - The additional capabilities to be passed directly to the webdriver.
+    * `:screenshot_dir` - Override the default directory that screenshots are saved to.
   """
   def start_session(opts \\ []) do
     Hound.SessionServer.session_for_pid(self(), opts)
