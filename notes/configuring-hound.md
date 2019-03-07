@@ -65,3 +65,8 @@ config :hound,
 # Set genserver timeout
 config :hound, genserver_timeout: 480000
 ```
+
+```elixir
+# Set default request retries
+config :hound, retries: 3
+```
