@@ -277,7 +277,8 @@ defmodule Hound.Helpers.Page do
   @spec send_text(String.t) :: :ok
   def send_text(keys) do
     session_id = Hound.current_session_id
-    make_req(:post, "session/#{session_id}/keys", %{value: [keys]})
+    %Hound.Element{uuid: uuid} = element_in_focus()
+    make_req(:post, "session/#{session_id}/element/#{uuid}/value", %{value: [keys]})
   end
 
   defp process_element_response(%{"ELEMENT" => element_id}),
