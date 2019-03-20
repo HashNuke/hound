@@ -28,9 +28,7 @@ defmodule Hound.Helpers.SavePage do
   end
 
   defp default_path do
-    {{year, month, day}, {hour, minutes, seconds}} = :erlang.localtime()
-    cwd = File.cwd!()
-    "#{cwd}/page-#{year}-#{month}-#{day}-#{hour}-#{minutes}-#{seconds}.html"
+    Hound.Utils.temp_file_path("page", "html")
   end
 
 end

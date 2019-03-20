@@ -29,9 +29,7 @@ defmodule Hound.Helpers.Screenshot do
   end
 
   defp default_path do
-    {{year, month, day}, {hour, minutes, seconds}} = :erlang.localtime()
-    cwd = File.cwd!()
-    "#{cwd}/screenshot-#{year}-#{month}-#{day}-#{hour}-#{minutes}-#{seconds}.png"
+    Hound.Utils.temp_file_path("screenshot", "png")
   end
 
 end
