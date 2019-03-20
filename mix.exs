@@ -1,7 +1,7 @@
 defmodule Hound.Mixfile do
   use Mix.Project
 
-  @version "1.0.4"
+  @version "1.1.0"
 
   def project do
     [ app: :hound,
@@ -29,8 +29,8 @@ defmodule Hound.Mixfile do
     [
       {:hackney, "~> 1.5"},
       {:jason,  "~> 1.1"},
-      {:earmark, "~> 1.2", only: :docs},
-      {:ex_doc,  "~> 0.16", only: :docs}
+      {:earmark, "~> 1.2", only: :dev},
+      {:ex_doc,  "~> 0.16", only: :dev}
     ]
   end
 
