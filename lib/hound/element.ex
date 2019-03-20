@@ -21,10 +21,12 @@ defmodule Hound.Element do
   Returns an element from a driver element response
   """
   @spec from_response(map) :: t
-  def from_response(%{"ELEMENT" => uuid}), do: %__MODULE__{uuid: uuid}
-  def from_response(value) do
-    raise Hound.InvalidElementError, value: value
+  def from_response(element) when is_map(element) do
+    element |> Map.to_list |> from_response
   end
+  def from_response([{"ELEMENT", uuid}]), do: %__MODULE__{uuid: uuid}
+  def from_response([{"element-" <> _id, uuid}]), do: %__MODULE__{uuid: uuid}
+  def from_response(value), do: raise Hound.InvalidElementError, value: value
 end
 
 defimpl Jason.Encoder, for: Hound.Element do

@@ -12,6 +12,7 @@ otp_release:
   - 21.0
 
 env:
+  - WEBDRIVER=selenium
   - WEBDRIVER=phantomjs
 
 matrix:

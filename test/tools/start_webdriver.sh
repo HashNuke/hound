@@ -7,8 +7,8 @@ if [ "$WEBDRIVER" = "phantomjs" ]; then
   sleep 3
 elif [ "$WEBDRIVER" = "selenium" ]; then
   mkdir -p $HOME/src
-  wget http://selenium-release.storage.googleapis.com/2.48/selenium-server-standalone-2.48.2.jar
-  nohup java -jar selenium-server-standalone-2.48.2.jar &
+  wget https://selenium-release.storage.googleapis.com/3.141/selenium-server-standalone-3.141.59.jar
+  nohup java -jar selenium-server-standalone-3.141.59.jar &
   echo "Running with Selenium..."
   sleep 10
 fi

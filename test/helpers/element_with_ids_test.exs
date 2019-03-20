@@ -139,6 +139,7 @@ defmodule ElementTestWithIds do
     navigate_to "http://localhost:9090/page1.html"
     element = find_element(:name, "username")
     submit_element(element)
+    Process.sleep(50)
     assert current_url() == "http://localhost:9090/page2.html"
   end
 

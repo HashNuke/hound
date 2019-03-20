@@ -8,7 +8,7 @@ defmodule PageTest do
 
   test "should get page source" do
     navigate_to("http://localhost:9090/page1.html")
-    assert(Regex.match?(~r/DOCTYPE/, page_source()))
+    assert(Regex.match?(~r/<html>/, page_source()))
   end
 
   test "should get visible page text" do

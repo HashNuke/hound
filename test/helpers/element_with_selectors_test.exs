@@ -149,6 +149,7 @@ defmodule ElementWithSelectorsTest do
   test "should submit a form element, when selector is passed" do
     navigate_to "http://localhost:9090/page1.html"
     submit_element({:name, "username"})
+    Process.sleep(50)
     assert current_url() == "http://localhost:9090/page2.html"
   end
 
