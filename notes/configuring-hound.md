@@ -9,7 +9,7 @@ config :hound, driver: "selenium"
 
 ```elixir
 # Use Chrome with the default driver (selenium)
-config :hound, browser: "chrome"
+config :hound, driver: "chrome"
 ```
 
 ```elixir
