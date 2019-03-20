@@ -24,11 +24,6 @@ defmodule MultipleBrowserSessionTest do
     assert url1 == current_url()
   end
 
-
-  # FIXME: for some reasons this fails on Travis
-  # could not reproduce locally
-
-  @tag :issue_travis_selenium
   test "should be able to run multiple sessions using in_browser_session" do
     url1 = "http://localhost:9090/page1.html"
     url2 = "http://localhost:9090/page2.html"
@@ -46,7 +41,6 @@ defmodule MultipleBrowserSessionTest do
     assert url1 == current_url()
   end
 
-  @tag :issue_travis_selenium
   test "should preserve session after using in_browser_session" do
     url1 = "http://localhost:9090/page1.html"
     url2 = "http://localhost:9090/page2.html"
@@ -75,7 +69,6 @@ defmodule MultipleBrowserSessionTest do
     assert url1 == current_url()
   end
 
-  @tag :issue_travis_selenium
   test "in_browser_session should return the result of the given function" do
     url1 = "http://localhost:9090/page1.html"
 
