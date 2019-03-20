@@ -1,5 +1,3 @@
-dist: xenial
-
 language: elixir
 
 elixir:
@@ -35,4 +33,4 @@ before_script:
   - "/sbin/start-stop-daemon --start --quiet --pidfile /tmp/custom_xvfb_99.pid --make-pidfile --background --exec /usr/bin/Xvfb -- :99 -ac -screen 0 1280x1024x16"
   - bash $TRAVIS_BUILD_DIR/test/tools/start_webdriver.sh
 
-script: mix test --exclude=issue_travis_$WEBDRIVER
+script: mix test --exclude=issue_travis_${WEBDRIVER}
