@@ -11,9 +11,9 @@ defmodule Hound.RequestUtils do
         {:error, _} -> make_retry(type, path, params, options, retries)
         result      -> result
       end
-    catch
-      _ -> make_retry(type, path, params, options, retries)
     rescue
+      _ -> make_retry(type, path, params, options, retries)
+    catch
       _ -> make_retry(type, path, params, options, retries)
     end
   end
