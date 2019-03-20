@@ -1,13 +1,12 @@
 language: elixir
 
 elixir:
-  - 1.0.4
   - 1.4
   - 1.5
   - 1.6
+  - 1.7
+  - 1.8
 otp_release:
-  - 17.4
-  - 18.3
   - 19.3
   - 20.3
   - 21.0
@@ -17,27 +16,16 @@ env:
 
 matrix:
   exclude:
-    - elixir: 1.0.4
-      otp_release: 18.3
-    - elixir: 1.0.4
+    - elixir: 1.7
       otp_release: 19.3
-    - elixir: 1.0.4
-      otp_release: 20.3
-    - elixir: 1.0.4
-      otp_release: 21.0
+    - elixir: 1.8
+      otp_release: 19.3
     - elixir: 1.4
-      otp_release: 17.4
-    - elixir: 1.4
-      otp_release: 21.0
+      otp_release: 21
     - elixir: 1.5
-      otp_release: 17.4
-    - elixir: 1.5
-      otp_release: 21.0
+      otp_release: 21
     - elixir: 1.6
-      otp_release: 17.4
-    - elixir: 1.6
-      otp_release: 18.3
-
+      otp_release: 21
 
 before_script:
   - "export DISPLAY=:99.0"
