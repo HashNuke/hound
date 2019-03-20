@@ -1,7 +1,7 @@
 defmodule Hound.RequestUtils do
   @moduledoc false
 
-  def make_req(type, path, params \\ %{}, options \\ %{}, retries \\ 0)
+  def make_req(type, path, params \\ %{}, options \\ %{}, retries \\ retries())
   def make_req(type, path, params, options, 0) do
     send_req(type, path, params, options)
   end
@@ -91,5 +91,9 @@ defmodule Hound.RequestUtils do
 
   defp http_options() do
     Application.get_env(:hound, :http, [])
+  end
+
+  defp retries() do
+    Application.get_env(:hound, :retries, 0)
   end
 end
