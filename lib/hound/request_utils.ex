@@ -75,7 +75,7 @@ defmodule Hound.RequestUtils do
         Hound.ResponseParsers.PhantomJs
 
       other_driver ->
-        raise "No response parser found for #{other_driver}"
+        raise "No response parser found for #{inspect other_driver}"
     end
   end
 
