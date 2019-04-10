@@ -71,6 +71,9 @@ defmodule Hound.RequestUtils do
       {"chrome_driver", _} ->
         Hound.ResponseParsers.ChromeDriver
 
+      {"geckodriver", _} ->
+        Hound.ResponseParsers.GeckoDriver
+
       {"phantomjs", _} ->
         Hound.ResponseParsers.PhantomJs
 
