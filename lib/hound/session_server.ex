@@ -10,7 +10,7 @@ defmodule Hound.SessionServer do
 
 
   def session_for_pid(pid, opts) do
-    current_session_id(pid) ||
+    {:ok, current_session_id(pid)} ||
       change_current_session_for_pid(pid, :default, opts)
   end
 
@@ -58,34 +58,49 @@ defmodule Hound.SessionServer do
     {:ok, state}
   end
 
-
-  def handle_call({:change_session, pid, session_name, opts}, _from, state) do
-    {:ok, driver_info} = Hound.driver_info
-
-    {ref, sessions} =
-      case :ets.lookup(@name, pid) do
-        [{^pid, ref, _session_id, sessions}] ->
-          {ref, sessions}
-        [] ->
-          {Process.monitor(pid), %{}}
-      end
-
-    {session_id, sessions} =
-      case Map.fetch(sessions, session_name) do
-        {:ok, session_id} ->
-          {session_id, sessions}
-        :error ->
-          session_id = create_session(driver_info, opts)
-          {session_id, Map.put(sessions, session_name, session_id)}
-      end
-
-    :ets.insert(@name, {pid, ref, session_id, sessions})
-    {:reply, session_id, Map.put(state, ref, pid)}
-  end
-
   def handle_call({:destroy_sessions, pid}, _from, state) do
     destroy_sessions(pid)
     {:reply, :ok, state}
+  end
+
+  def handle_call({:change_session, pid, session_name, opts}, _from, state) do
+    {ref, sessions} = case :ets.lookup(@name, pid) do
+      [{^pid, ref, _session_id, sessions}] ->
+        {ref, sessions}
+      [] ->
+        {Process.monitor(pid), %{}}
+    end
+
+
+    case find_existing_session(sessions, session_name) do
+      {:ok, {session_id, sessions}} ->
+        add_session_to_table(pid, ref, session_id, sessions)
+
+        {:reply, {:ok, session_id}, Map.put(state, ref, pid)}
+
+      :error ->
+        {:ok, driver_info} = Hound.driver_info()
+
+        case create_session(driver_info, opts) do
+          {:error, _} = e -> {:reply, e, state}
+
+          {:ok, session_id} ->
+            sessions = Map.put(sessions, session_name, session_id)
+            add_session_to_table(pid, ref, session_id, sessions)
+
+            {:reply, {:ok, session_id}, Map.put(state, ref, pid)}
+        end
+    end
+  end
+
+  defp add_session_to_table(pid, ref, session_id, sessions) do
+    :ets.insert(@name, {pid, ref, session_id, sessions})
+  end
+
+  defp find_existing_session(sessions, session_name) do
+    with {:ok, session_id} <- Map.fetch(sessions, session_name) do
+       {:ok, {session_id, sessions}}
+    end
   end
 
   def handle_info({:DOWN, ref, _, _, _}, state) do
@@ -96,10 +111,7 @@ defmodule Hound.SessionServer do
   end
 
   defp create_session(driver_info, opts) do
-    case Hound.Session.create_session(driver_info[:browser], opts) do
-      {:ok, session_id} -> session_id
-      {:error, reason} -> raise "could not create a new session: #{reason}, check webdriver is running"
-    end
+    Hound.Session.create_session(driver_info[:browser], opts)
   end
 
   defp destroy_sessions(pid) do
