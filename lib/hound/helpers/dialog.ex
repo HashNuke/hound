@@ -4,6 +4,21 @@ defmodule Hound.Helpers.Dialog do
   import Hound.RequestUtils
 
   @doc """
+  Checks if a dialog, javascript alert(), confirm() or prompt(), exists
+
+      dialog_present?()
+  """
+  @spec dialog_present?() :: Boolean.t
+  def dialog_present? do
+    try do
+      dialog_text()
+      true
+    rescue
+      RuntimeError -> false
+    end
+  end
+
+  @doc """
   Gets text of a javascript alert(), confirm() or prompt().
 
       dialog_text()
