@@ -23,18 +23,18 @@ defmodule Hound.Helpers.Element do
 
   @spec inner_html(Hound.Element.selector) :: String.t
   def inner_html(element) do
-    attribute_value(element, "innerHTML")
+    property_value(element, "innerHTML")
   end
 
 
   @spec inner_text(Hound.Element.selector) :: String.t
   def inner_text(element) do
-    attribute_value(element, "innerText")
+    property_value(element, "innerText")
   end
-  
+
   @spec outer_html(Hound.Element.selector) :: String.t
   def outer_html(element) do
-    attribute_value(element, "outerHTML")
+    property_value(element, "outerHTML")
   end
 
   @doc """
@@ -163,6 +163,24 @@ defmodule Hound.Helpers.Element do
     element = get_element(element)
     session_id = Hound.current_session_id
     make_req(:get, "session/#{session_id}/element/#{element}/attribute/#{attribute_name}")
+  end
+
+
+  @doc """
+  Gets an element's property value.
+
+      element = find_element(:name, "example")
+      property_value(element, "innerHTML")
+
+  You can also pass the selector as a tuple, for the first argument
+
+      property_value({:name, "example"}, "innerHTML")
+  """
+  @spec property_value(Hound.Element.selector, String.t) :: String.t | :nil
+  def property_value(element, property_name) do
+    element = get_element(element)
+    session_id = Hound.current_session_id
+    make_req(:get, "session/#{session_id}/element/#{element}/property/#{property_name}")
   end
 
 

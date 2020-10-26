@@ -10,7 +10,7 @@ For browser automation and writing integration tests in Elixir.
 
 * Can run __multiple browser sessions__ simultaneously. [See example](https://github.com/HashNuke/hound/blob/master/test/multiple_browser_session_test.exs).
 
-* Supports Selenium (Firefox, Chrome), ChromeDriver and PhantomJs.
+* Supports Selenium (Firefox, Chrome), ChromeDriver, geckodriver (note: [only supports a single session for now](https://github.com/mozilla/geckodriver/issues/882)) and PhantomJs.
 
 * Supports Javascript-heavy apps. Retries a few times before reporting error.
 

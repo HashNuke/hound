@@ -71,11 +71,14 @@ defmodule Hound.RequestUtils do
       {"chrome_driver", _} ->
         Hound.ResponseParsers.ChromeDriver
 
+      {"geckodriver", _} ->
+        Hound.ResponseParsers.GeckoDriver
+
       {"phantomjs", _} ->
         Hound.ResponseParsers.PhantomJs
 
       other_driver ->
-        raise "No response parser found for #{other_driver}"
+        raise "No response parser found for #{inspect other_driver}"
     end
   end
 

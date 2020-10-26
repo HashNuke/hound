@@ -43,6 +43,9 @@ defmodule Hound.ResponseParser do
   def handle_response(_mod, "session", code, %{"sessionId" => session_id}) when code < 300 do
     {:ok, session_id}
   end
+  def handle_response(_mod, "session", code, %{"value" => %{"sessionId" => session_id}}) when code < 300 do
+    {:ok, session_id}
+  end
   def handle_response(mod, _path, _code, %{"value" => %{"message" => message} = value}) do
     if mod.warning?(message) do
       Logger.warn(message)
@@ -51,7 +54,7 @@ defmodule Hound.ResponseParser do
       mod.handle_error(value)
     end
   end
-  def handle_response(_mod, _path, _code, %{"status" => 0, "value" => value}), do: value
+  def handle_response(_mod, _path, _code, %{"value" => value}), do: value
   def handle_response(_mod, _path, code, _body) when code < 400, do: :ok
   def handle_response(_mod, _path, _code, _body), do: :error
 

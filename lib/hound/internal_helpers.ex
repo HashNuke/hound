@@ -11,6 +11,7 @@ defmodule Hound.InternalHelpers do
       "focus_parent_frame"
     ],
     chrome_driver: [],
+    geckodriver: [],
     selenium: []
   ]
 
