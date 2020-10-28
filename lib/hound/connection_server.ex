@@ -1,5 +1,6 @@
 defmodule Hound.ConnectionServer do
   @moduledoc false
+  use Agent
 
   def start_link(options \\ []) do
     driver = options[:driver] || Application.get_env(:hound, :driver, "selenium")
