@@ -6,7 +6,7 @@ defmodule Hound.Mixfile do
   def project do
     [ app: :hound,
       version: @version,
-      elixir: ">= 1.4.0",
+      elixir: ">= 1.5.0",
       description: "Webdriver library for integration testing and browser automation",
       source_url: "https://github.com/HashNuke/hound",
       deps: deps(),
