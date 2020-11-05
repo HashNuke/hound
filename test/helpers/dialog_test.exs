@@ -6,6 +6,12 @@ defmodule DialogTest do
 
     hound_session()
 
+    test "Dialog present" do
+      navigate_to "http://localhost:9090/page1.html"
+      execute_script("alert('hello')")
+      assert dialog_present?() == true
+    end
+
     test "Get dialog text" do
       navigate_to "http://localhost:9090/page1.html"
       execute_script("alert('hello')")
