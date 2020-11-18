@@ -62,7 +62,17 @@ Application.ensure_all_started(:hound)
 ExUnit.start()
 ```
 
-When you run `mix test`, Hound is automatically started. __You'll need a webdriver server__ running, like Selenium Server or Chrome Driver. If you aren't sure what it is, then [read this](https://github.com/HashNuke/hound/wiki/Starting-a-webdriver-server).
+* Hound does *NOT* start local server automatically. You need to handle it on your own.
+If you use Phoenix, you can edit `config/test.exs` and set `server: true` to launch server
+automatically:
+
+```elixir
+config :myapp, MyAppWeb.Endpoint,
+  http: [port: 4001],
+  server: true
+```
+
+* When you run `mix test`, Hound is automatically started, but __you'll need a webdriver server__ running, like Selenium Server or Chrome Driver. If you aren't sure what it is, then [read this](https://github.com/HashNuke/hound/wiki/Starting-a-webdriver-server).
 
 #### If you're using Phoenix
 Ensure the server is started when your tests are run. In `config/test.exs` change the `server` option of your endpoint config to `true`:

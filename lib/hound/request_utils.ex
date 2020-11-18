@@ -55,7 +55,7 @@ defmodule Hound.RequestUtils do
   end
 
   defp handle_response({:error, reason}, _, _) do
-    {:error, reason}
+    raise Hound.Error, "Webdriver request error: #{inspect(reason)}"
   end
 
   defp response_parser do
