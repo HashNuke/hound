@@ -4,7 +4,7 @@ defmodule Hound.SessionServer do
   use GenServer
   @name __MODULE__
 
-  def start_link do
+  def start_link(_options) do
     GenServer.start_link(__MODULE__, %{}, name: @name)
   end
 
