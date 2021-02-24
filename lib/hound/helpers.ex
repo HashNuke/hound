@@ -7,6 +7,7 @@ defmodule Hound.Helpers do
       import Hound.Helpers.Cookie
       import Hound.Helpers.Dialog
       import Hound.Helpers.Element
+      import Hound.Helpers.File
       import Hound.Helpers.Navigation
       import Hound.Helpers.Orientation
       import Hound.Helpers.Page
