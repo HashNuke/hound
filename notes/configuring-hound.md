@@ -53,6 +53,11 @@ config :hound, http: [recv_timeout: :infinity, proxy: ["socks5", "127.0.0.1", "9
 ```
 
 ```elixir
+# Needed to follow 301, 302, 303 (only POST), 307 redirections
+config :hound, http: [follow_redirect: true]
+```
+
+```elixir
 # Define selenium hub settings
 config :hound,
   driver: "chrome_driver",
