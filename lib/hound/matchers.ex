@@ -1,5 +1,7 @@
 defmodule Hound.Matchers do
-  @moduledoc "Text and element matchers"
+  @moduledoc """
+  Text and element matchers.
+  """
 
   import Hound.Helpers.Page
   import Hound.Helpers.Element
@@ -8,6 +10,7 @@ defmodule Hound.Matchers do
   Returns true if text is found on the page.
 
       visible_in_page?(~r/Paragraph/)
+
   """
   @spec visible_in_page?(Regex.t) :: boolean
   def visible_in_page?(pattern) do
@@ -37,6 +40,7 @@ defmodule Hound.Matchers do
 
       element?(:class, "block")
       element?(:id, "foo")
+
   """
   @spec element?(Hound.Element.strategy, String.t) :: boolean
   def element?(strategy, selector) do

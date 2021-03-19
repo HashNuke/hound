@@ -1,5 +1,7 @@
 defmodule Hound.Browser do
-  @moduledoc "Low level functions to customize browser behavior"
+  @moduledoc """
+  Low level functions to customize browser behavior.
+  """
 
   @type t :: Hound.BrowserLike.t
 
@@ -7,7 +9,9 @@ defmodule Hound.Browser do
 
   @callback default_capabilities(String.t) :: map
 
-  @doc "Creates capabilities for the browser and options, to be sent to the webdriver"
+  @doc """
+  Creates capabilities for the browser and options, to be sent to the webdriver.
+  """
   @spec make_capabilities(t, map | Keyword.t) :: map
   def make_capabilities(browser_name, opts \\ []) do
     browser = browser(browser_name)
@@ -25,7 +29,9 @@ defmodule Hound.Browser do
     |> Map.merge(additional_capabilities)
   end
 
-  @doc "Returns a user agent string"
+  @doc """
+  Returns a user agent string.
+  """
   @spec user_agent(String.t | atom) :: String.t
   def user_agent(ua) when is_binary(ua), do: ua
 

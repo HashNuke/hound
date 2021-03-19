@@ -1,6 +1,7 @@
 defmodule Hound.Metadata do
   @moduledoc """
   Metadata allows to pass and extract custom data through.
+
   This can be useful if you need to identify sessions.
 
   The keys and values must be serializable using `:erlang.term_to_binary/1`.
@@ -50,6 +51,7 @@ defmodule Hound.Metadata do
 
   @doc """
   Extracts and parses the metadata contained in a user agent string.
+
   If the user agent does not contain any metadata, an empty map is returned.
   """
   @spec parse(String.t) :: %{String.t => String.t}

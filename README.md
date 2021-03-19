@@ -1,10 +1,13 @@
 # Hound
 
-For browser automation and writing integration tests in Elixir.
-
-<a href="http://github.com/HashNuke/Hound" target="_parent">Source</a> | <a href="http://hexdocs.pm/hound" target="_parent">Documentation</a>
-
 [![Build Status](https://travis-ci.org/HashNuke/hound.png?branch=master)](https://travis-ci.org/HashNuke/hound)
+[![Module Version](https://img.shields.io/hexpm/v/hound.svg)](https://hex.pm/packages/hound)
+[![Hex Docs](https://img.shields.io/badge/hex-docs-lightgreen.svg)](https://hexdocs.pm/hound/)
+[![Total Download](https://img.shields.io/hexpm/dt/hound.svg)](https://hex.pm/packages/hound)
+[![License](https://img.shields.io/hexpm/l/hound.svg)](https://github.com/HashNuke/hound/blob/master/LICENSE)
+[![Last Updated](https://img.shields.io/github/last-commit/HashNuke/hound.svg)](https://github.com/HashNuke/hound/commits/master)
+
+For browser automation and writing integration tests in Elixir.
 
 ## Features
 
@@ -16,11 +19,127 @@ For browser automation and writing integration tests in Elixir.
 
 * Implements the WebDriver Wire Protocol.
 
-**Internet Explorer may work under Selenium, but hasn't been tested.**
+**Note:** Internet Explorer may work under Selenium, but hasn't been tested.
 
-#### Example
+## Setup
 
-##### ExUnit example
+Hound requires Elixir 1.4 or higher.
+
+Add dependency to your mix project
+
+```elixir
+{:hound, "~> 1.0"}
+```
+
+Start Hound in your `test/test_helper.exs` file **before** the `ExUnit.start()` line:
+
+```elixir
+Application.ensure_all_started(:hound)
+ExUnit.start()
+```
+
+When you run `mix test`, Hound is automatically started. __You'll need a webdriver server__ running, like Selenium Server or Chrome Driver. If you aren't sure what it is, then [read this](https://github.com/HashNuke/hound/wiki/Starting-a-webdriver-server).
+
+### If you're using Phoenix
+
+Ensure the server is started when your tests are run. In `config/test.exs` change the `server` option of your endpoint config to `true`:
+
+```elixir
+config :hello_world_web, HelloWorldWeb.Endpoint,
+  http: [port: 4001],
+  server: true
+```
+
+## Configure
+
+To configure Hound, use the project's `config/config.exs` file or equivalent (v0.14.0 and above). Here are some examples:
+
+```elixir
+# Start with selenium driver (default)
+config :hound, driver: "selenium"
+```
+
+```elixir
+# Use Chrome with the default driver (selenium)
+config :hound, driver: "chrome"
+```
+
+```elixir
+# Start with default driver at port 1234 and use firefox
+config :hound, port: 1234, browser: "firefox"
+```
+
+```elixir
+# Start Hound for PhantomJs
+config :hound, driver: "phantomjs"
+```
+
+```elixir
+# Start Hound for ChromeDriver (default port 9515 assumed)
+config :hound, driver: "chrome_driver"
+```
+
+```elixir
+# Use Chrome in headless mode with ChromeDriver (default port 9515 assumed)
+config :hound, driver: "chrome_driver", browser: "chrome_headless"
+```
+
+```elixir
+# Start Hound for remote PhantomJs server at port 5555
+config :hound, driver: "phantomjs", host: "http://example.com", port: 5555
+```
+
+```elixir
+# Define your application's host and port (defaults to "http://localhost:4001")
+config :hound, app_host: "http://localhost", app_port: 4001
+```
+
+```elixir
+# Define how long the application will wait between failed attempts (in miliseconds)
+config :hound, retry_time: 500
+```
+
+```elixir
+# Define http client settings
+config :hound, http: [recv_timeout: :infinity, proxy: ["socks5", "127.0.0.1", "9050"]]
+```
+
+```elixir
+# Define selenium hub settings
+config :hound,
+  driver: "chrome_driver",
+  host: "http://localhost",
+  port: 32770,
+  path_prefix: "wd/hub/"
+```
+
+```elixir
+# Set genserver timeout
+config :hound, genserver_timeout: 480000
+```
+
+```elixir
+# Set default request retries
+config :hound, retries: 3
+```
+
+## Usage
+
+Add the following lines to your ExUnit test files.
+
+```elixir
+# Import helpers
+use Hound.Helpers
+
+# Start hound session and destroy when tests are run
+hound_session()
+```
+
+If you prefer to manually start and end sessions, use `Hound.start_session` and `Hound.end_session` in the setup and teardown blocks of your tests.
+
+## Examples
+
+### Through ExUnit
 
 ```elixir
 defmodule HoundTest do
@@ -42,61 +161,31 @@ defmodule HoundTest do
 end
 ```
 
-Here's another [simple browser-automation example](https://github.com/HashNuke/hound/blob/master/notes/simple-browser-automation.md).
+### Simple Browser Automation
 
-## Setup
-
-Hound requires Elixir 1.0.4 or higher.
-
-* Add dependency to your mix project
+Make sure to configure Hound first, or you will get an error.
 
 ```elixir
+Application.start :hound
 
-{:hound, "~> 1.0"}
+defmodule Example do
+  use Hound.Helpers
+
+  def run do
+    Hound.start_session
+
+    navigate_to "http://akash.im"
+    IO.inspect page_title()
+
+    # Automatically invoked if the session owner process crashes
+    Hound.end_session
+  end
+end
+
+Example.run
 ```
 
-* Start Hound in your `test/test_helper.exs` file **before** the `ExUnit.start()` line:
-
-```elixir
-Application.ensure_all_started(:hound)
-ExUnit.start()
-```
-
-When you run `mix test`, Hound is automatically started. __You'll need a webdriver server__ running, like Selenium Server or Chrome Driver. If you aren't sure what it is, then [read this](https://github.com/HashNuke/hound/wiki/Starting-a-webdriver-server).
-
-#### If you're using Phoenix
-Ensure the server is started when your tests are run. In `config/test.exs` change the `server` option of your endpoint config to `true`:
-
-```elixir
-config :hello_world_web, HelloWorldWeb.Endpoint,
-  http: [port: 4001],
-  server: true
-```
-
-## Configure
-
-To configure Hound, use your `config/config.exs` file or equivalent.
-
-Example:
-
-```config :hound, driver: "phantomjs"```
-
-[More examples here](https://github.com/HashNuke/hound/blob/master/notes/configuring-hound.md).
-
-## Usage
-
-Add the following lines to your ExUnit test files.
-
-```elixir
-# Import helpers
-use Hound.Helpers
-
-# Start hound session and destroy when tests are run
-hound_session()
-```
-
-If you prefer to manually start and end sessions, use `Hound.start_session` and `Hound.end_session` in the setup and teardown blocks of your tests.
-
+More examples? [Checkout Hound's own test cases](https://github.com/HashNuke/hound/tree/master/test/helpers)
 
 ## Helpers
 
@@ -112,25 +201,21 @@ The documentation pages include examples under each function.
 * [Session](http://hexdocs.pm/hound/Hound.Helpers.Session.html)
 * [Window](http://hexdocs.pm/hound/Hound.Helpers.Window.html)
 
-The docs are at <http://hexdocs.pm/hound>.
-
-### More examples? [Checkout Hound's own test cases](https://github.com/HashNuke/hound/tree/master/test/helpers)
-
 ## FAQ
 
-#### Can I run multiple browser sessions simultaneously
+### Can I run multiple browser sessions simultaneously
 
 Oh yeah ~! [Here is an example](https://github.com/HashNuke/hound/blob/master/test/multiple_browser_session_test.exs).
 
 If you are running PhantomJs, take a look at the *Caveats* section below.
 
-#### Can I run tests async?
+### Can I run tests async?
 
 Yes.
 
 The number of tests you can run async at any point in time, depends on the number of sessions that your webdriver can maintain at a time. For Selenium Standalone, there seems to be a default limit of 15 sessions. You can set ExUnit's async option to limit the number of tests to run parallelly.
 
-#### Will Hound guarantee an isolated session per test?
+### Will Hound guarantee an isolated session per test?
 
 Yes. A separate session is started for each test process.
 
@@ -157,4 +242,4 @@ You need a webdriver in order to run tests. We recommend `phantomjs` but any can
 
 ## Customary proclamation...
 
-Copyright &copy; 2013-2015, Akash Manohar J, under the MIT License (basically, do whatever you want)
+Copyright &copy; 2013-2021, Akash Manohar J, under the MIT License (basically, do whatever you want)

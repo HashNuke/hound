@@ -1,7 +1,7 @@
 defmodule Hound.ResponseParser do
   @moduledoc """
   Defines a behaviour for parsing driver responses
-  and provides a default implementation of the behaviour
+  and provides a default implementation of the behaviour.
   """
 
   require Logger
@@ -56,14 +56,14 @@ defmodule Hound.ResponseParser do
   def handle_response(_mod, _path, _code, _body), do: :error
 
   @doc """
-  Default implementation to check if the message is a warning
+  Default implementation to check if the message is a warning.
   """
   def warning?(message) do
     Regex.match?(~r/#{Regex.escape("not clickable")}/, message)
   end
 
   @doc """
-  Decodes a response body
+  Decodes a response body.
   """
   def decode_content([]), do: Map.new
   def decode_content(content), do: Jason.decode(content)
@@ -71,7 +71,7 @@ defmodule Hound.ResponseParser do
   defmacro __before_compile__(_env) do
     quote do
       @doc """
-      Fallback case if we did not match the message in the using module
+      Fallback case if we did not match the message in the using module.
       """
       def handle_error(response) do
         case response do
