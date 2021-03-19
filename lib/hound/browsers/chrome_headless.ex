@@ -6,6 +6,6 @@ defmodule Hound.Browser.ChromeHeadless do
   def default_user_agent, do: :chrome
 
   def default_capabilities(ua) do
-    %{chromeOptions: %{"args" => ["--user-agent=#{ua}", "--headless", "--disable-gpu"]}}        
+    %{chromeOptions: %{"args" => ["--user-agent=#{ua}", "--headless", "--disable-gpu"]}}
   end
 end

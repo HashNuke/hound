@@ -1,6 +1,6 @@
 defmodule Hound.Element do
   @moduledoc """
-  A representation of a web element
+  A representation of a web element.
   """
 
   defstruct uuid: nil
@@ -11,14 +11,14 @@ defmodule Hound.Element do
   @type selector :: t | matcher
 
   @doc """
-  Returns true if the argument is an Element
+  Returns true if the argument is an Element.
   """
   @spec element?(any) :: boolean
   def element?(%__MODULE__{}), do: true
   def element?(_),             do: false
 
   @doc """
-  Returns an element from a driver element response
+  Returns an element from a driver element response.
   """
   @spec from_response(map) :: t
   def from_response(element) when is_map(element) do
