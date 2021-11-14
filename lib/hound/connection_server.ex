@@ -30,7 +30,7 @@ defmodule Hound.ConnectionServer do
 
     configs = %{
       :host => options[:app_host] || Application.get_env(:hound, :app_host, "http://localhost"),
-      :port => options[:app_port] || Application.get_env(:hound, :app_port, 4001),
+      :port => options[:app_port] || Application.get_env(:hound, :app_port, 4002),
       :temp_dir => options[:temp_dir] || Application.get_env(:hound, :temp_dir, File.cwd!)
     }
 

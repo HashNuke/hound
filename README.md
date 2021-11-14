@@ -69,7 +69,7 @@ Ensure the server is started when your tests are run. In `config/test.exs` chang
 
 ```elixir
 config :hello_world_web, HelloWorldWeb.Endpoint,
-  http: [port: 4001],
+  http: [ip: {127, 0, 0, 1}, port: 4002],
   server: true
 ```
 
