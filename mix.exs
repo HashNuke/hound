@@ -20,7 +20,7 @@ defmodule Hound.Mixfile do
     [
       extra_applications: [:logger],
       mod: {Hound, []},
-      description: 'Integration testing and browser automation library',
+      description: ~c"Integration testing and browser automation library",
     ]
   end
 
